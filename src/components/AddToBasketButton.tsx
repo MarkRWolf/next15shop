@@ -1,6 +1,6 @@
 "use client";
 
-import useBasketStore from "@/store/store";
+import useBasketStore from "@/store/basketStore";
 import { Product } from "../../sanity.types";
 import { useEffect, useState } from "react";
 import { clear } from "console";
@@ -38,7 +38,7 @@ const AddToBasketButton = ({ product, disabled }: AddToBasketButtonProps) => {
       <span className="w-8 text-center font-semibold">{itemCount}</span>
       <button
         onClick={() => addItem(product)}
-        className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors duration-200 ${disabled || itemCount >= (product.stock ?? 0) ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"}`}
+        className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors duration-200 ${disabled || itemCount >= (product.stock ?? 0) ? "bg-gray-400 cursor-not-allowed" : "bg-green-700 hover:bg-green-800"}`}
         disabled={disabled || itemCount >= (product.stock ?? 0)}
       >
         <span className="text-xl font-bold text-white">+</span>
