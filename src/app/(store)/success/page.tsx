@@ -1,6 +1,6 @@
 "use client";
 
-import useBasketStore from "@/store/store";
+import useBasketStore from "@/store/basketStore";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";

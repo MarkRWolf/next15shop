@@ -2,7 +2,7 @@
 import AddToBasketButton from "@/components/AddToBasketButton";
 import Loader from "@/components/Loader";
 import { imageUrl } from "@/lib/imageUrl";
-import useBasketStore from "@/store/store";
+import useBasketStore from "@/store/basketStore";
 import { SignInButton, useAuth, useUser } from "@clerk/nextjs";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -114,13 +114,13 @@ const BasketPage = () => {
             <button
               onClick={handleCheckout}
               disabled={isLoading}
-              className="mt-4 w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:bg-gray-400"
+              className="mt-4 w-full bg-green-700 text-white px-4 py-2 rounded hover:bg-green-800 disabled:bg-gray-400"
             >
               {isLoading ? "Processing..." : "Checkout"}
             </button>
           ) : (
             <SignInButton mode="modal">
-              <button className="mt-4 w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+              <button className="mt-4 w-full bg-green-700 text-white px-4 py-2 rounded hover:bg-green-800">
                 Sign in to Checkout
               </button>
             </SignInButton>

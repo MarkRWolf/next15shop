@@ -2,6 +2,7 @@ import { Product } from "../../sanity.types";
 import Link from "next/link";
 import Image from "next/image";
 import { imageUrl } from "@/lib/imageUrl";
+import AddToBasketButton from "./AddToBasketButton";
 
 const ProductThumb = ({ product }: { product: Product }) => {
   const isOutOfStock = product.stock != null && product.stock < 1;
@@ -29,7 +30,6 @@ const ProductThumb = ({ product }: { product: Product }) => {
       </div>
       <div className="p-4">
         <h2 className="text-lg font-semibold text-gray-800 truncate">{product.name}</h2>
-
         <p className="mt-2 text-sm text-gray-600 line-clamp-2">
           {product.description
             ?.map((block) =>
@@ -41,6 +41,9 @@ const ProductThumb = ({ product }: { product: Product }) => {
           {product.price?.toFixed(2) || "0.00,-"},-
         </p>
       </div>
+      <span onClick={(e) => e.preventDefault()}>
+        <AddToBasketButton product={product} disabled={isOutOfStock} />
+      </span>
     </Link>
   );
 };

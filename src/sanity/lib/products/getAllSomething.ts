@@ -1,4 +1,4 @@
-import { defineQuery } from "next-sanity";
+/* import { defineQuery } from "next-sanity";
 import { sanityFetch } from "../live";
 
 export const getAllSomething = async (value: string) => {
@@ -21,3 +21,4 @@ export const getAllSomething = async (value: string) => {
     return [];
   }
 };
+ */

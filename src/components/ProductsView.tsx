@@ -9,7 +9,7 @@ interface ProductsViewProps {
 
 const ProductsView = ({ products, categories }: ProductsViewProps) => {
   return (
-    <div>
+    <div className="w-full max-w-7xl">
       {/* Categories */}
       <div className="w-full sm:w-[200px]">
         <CategorySelector categories={categories} />

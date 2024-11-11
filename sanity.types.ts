@@ -68,6 +68,23 @@ export type Geopoint = {
   alt?: number;
 };
 
+export type Language = {
+  _id: string;
+  _type: "language";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  sectionName?: string;
+  content?: Array<{
+    key?: string;
+    localizedText?: {
+      daDK?: string;
+      enGB?: string;
+    };
+    _key: string;
+  }>;
+};
+
 export type Sale = {
   _id: string;
   _type: "sale";
@@ -278,8 +295,28 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Sale | Order | Product | Category | Slug | BlockContent | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Language | Sale | Order | Product | Category | Slug | BlockContent | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
 export declare const internalGroqTypeReferenceTo: unique symbol;
+// Source: ./src/sanity/lib/lang/getAllGlobals.ts
+// Variable: ALL_GLOBALS_QUERY
+// Query: *[_type == "language" && sectionName == "global"] | order(name asc)
+export type ALL_GLOBALS_QUERYResult = Array<{
+  _id: string;
+  _type: "language";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  sectionName?: string;
+  content?: Array<{
+    key?: string;
+    localizedText?: {
+      daDK?: string;
+      enGB?: string;
+    };
+    _key: string;
+  }>;
+}>;
+
 // Source: ./src/sanity/lib/orders/getMyOrders.tsx
 // Variable: MY_ORDERS_QUERY
 // Query: *[_type == "order" && clerkUserId == $userId] | order(orderDate desc) {        ...,        products[] {            ...,            product->        }    }
@@ -366,9 +403,23 @@ export type MY_ORDERS_QUERYResult = Array<{
   orderDate?: string;
 }>;
 
-// Source: ./src/sanity/lib/products/getAllSomething.ts
+// Source: ./src/sanity/lib/products/getAllCategories.ts
+// Variable: ALL_CATEGORIES_QUERY
+// Query: *[_type == "category"] | order(name asc)
+export type ALL_CATEGORIES_QUERYResult = Array<{
+  _id: string;
+  _type: "category";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  description?: string;
+}>;
+
+// Source: ./src/sanity/lib/products/getAllProducts.ts
 // Variable: ALL_PRODUCTS_QUERY
-// Query: *[_type == "product"] | order(name asc)
+// Query: *[_type == "product" && !(_id in path("drafts.*"))] | order(lower(name) asc)
 export type ALL_PRODUCTS_QUERYResult = Array<{
   _id: string;
   _type: "product";
@@ -427,18 +478,6 @@ export type ALL_PRODUCTS_QUERYResult = Array<{
     [internalGroqTypeReferenceTo]?: "category";
   }>;
   stock?: number;
-}>;
-// Variable: ALL_CATEGORIES_QUERY
-// Query: *[_type == "category"] | order(name asc)
-export type ALL_CATEGORIES_QUERYResult = Array<{
-  _id: string;
-  _type: "category";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: string;
-  slug?: Slug;
-  description?: string;
 }>;
 
 // Source: ./src/sanity/lib/products/getProductBySlug.ts
@@ -652,9 +691,10 @@ export type ACTIVE_SALE_BY_COUPON_QUERYResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
+    "*[_type == \"language\" && sectionName == \"global\"] | order(name asc)": ALL_GLOBALS_QUERYResult;
     "\n    *[_type == \"order\" && clerkUserId == $userId] | order(orderDate desc) {\n        ...,\n        products[] {\n            ...,\n            product->\n        }\n    }\n    ": MY_ORDERS_QUERYResult;
-    "*[_type == \"product\"] | order(name asc)": ALL_PRODUCTS_QUERYResult;
     "*[_type == \"category\"] | order(name asc)": ALL_CATEGORIES_QUERYResult;
+    "*[_type == \"product\" && !(_id in path(\"drafts.*\"))] | order(lower(name) asc)\n": ALL_PRODUCTS_QUERYResult;
     "\n        *[_type == \"product\" && slug.current == $slug] | order(name asc) [0]": PRODUCT_BY_SLUG_QUERYResult;
     "\n        *[_type == \"product\" && references(*[_type == \"category\" && slug.current == $category]._id)] | order(name asc)": PRODUCTS_BY_CATEGORY_QUERYResult;
     "\n    *[_type == \"product\" && name match $searchParam] | order(name asc)": PRODUCT_SEARCH_QUERYResult;
