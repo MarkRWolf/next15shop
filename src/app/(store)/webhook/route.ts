@@ -79,10 +79,6 @@ async function createOrderInSanity(session: Stripe.Checkout.Session) {
     orderDate: new Date().toISOString(),
   });
 
-<<<<<<< HEAD
-=======
-  // Update stock for each product in the order
->>>>>>> 55f6e7e0d2e169c8570c5474fb9625593146c0c0
   await Promise.all(
     sanityProducts.map(async (item) => {
       const productId = item.product._ref;

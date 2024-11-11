@@ -1,19 +1,14 @@
 import AddToBasketButton from "@/components/AddToBasketButton";
-import { Button } from "@/components/ui/button";
 import { imageUrl } from "@/lib/imageUrl";
 import { getProductBySlug } from "@/sanity/lib/products/getProductBySlug";
 import { PortableText } from "next-sanity";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
-export const dynamic = "force-static";
-export const revalidate = 60;
-
 const ProductPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;
   const product = await getProductBySlug(slug);
-
-  console.log(crypto.randomUUID().slice(0, 5) + `>>> Rendered the product page cache for ${slug}`);
+  let imageCount = 0;
 
   if (!product) notFound();
 
@@ -27,6 +22,8 @@ const ProductPage = async ({ params }: { params: Promise<{ slug: string }> }) =>
         >
           {product.image && (
             <Image
+              loading={imageCount++ < 15 ? "eager" : "lazy"}
+              decoding="sync"
               src={imageUrl(product.image).url()}
               alt={product.name ?? "Product Image"}
               fill
