@@ -79,5 +79,23 @@ async function createOrderInSanity(session: Stripe.Checkout.Session) {
     orderDate: new Date().toISOString(),
   });
 
+  await Promise.all(
+    sanityProducts.map(async (item) => {
+      const productId = item.product._ref;
+      const quantityPurchased = item.quantity || 0;
+      await decreaseProductStock(productId, quantityPurchased);
+    })
+  );
+
   return order;
+}
+
+async function decreaseProductStock(productId: string, quantity: number) {
+  const product = await backendClient.fetch(`*[_type == "product" && _id == $productId][0]`, {
+    productId,
+  });
+  if (product && product.stock !== undefined) {
+    const newStock = Math.max(product.stock - quantity, 0); // Ensure stock doesn’t go negative
+    await backendClient.patch(productId).set({ stock: newStock }).commit();
+  }
 }
