@@ -1,29 +1,31 @@
-// File: app/products/[slug]/page.tsx
+// File: app/products/[slug]/ClientPage.tsx
 
-import { notFound } from "next/navigation";
-import { getProductBySlug } from "@/sanity/lib/products/getProductBySlug";
+"use client";
+
+import { useEffect, useState } from "react";
+import { PortableText } from "next-sanity";
 import Image from "next/image";
 import { imageUrl } from "@/lib/imageUrl";
-import { PortableText } from "@portabletext/react";
 import AddToBasketButton from "@/components/AddToBasketButton";
 import { Product } from "../../../../../sanity.types";
+import { getProductBySlug } from "@/sanity/lib/products/getProductBySlug";
 
-// Enable ISR with revalidation every 60 seconds
-export const revalidate = 60;
-
-interface ProductPageProps {
-  params: { slug: string };
+interface ClientPageProps {
+  initialProduct: Product;
 }
 
-const ProductPage = async ({ params }: ProductPageProps) => {
-  const { slug } = await params;
+const ClientPage = ({ initialProduct }: ClientPageProps) => {
+  const [product, setProduct] = useState<Product>(initialProduct);
 
-  // Fetch product data on the server side
-  const product: Product | null = await getProductBySlug(slug);
+  useEffect(() => {
+    // Fetch live product data after the component has mounted
+    const fetchProduct = async () => {
+      const liveProduct = await getProductBySlug(initialProduct.slug.current);
+      setProduct((prev) => liveProduct ?? prev);
+    };
 
-  if (!product) {
-    notFound();
-  }
+    fetchProduct();
+  }, [initialProduct.slug.current]);
 
   const isOutOfStock = !product.stock || product.stock <= 0;
 
@@ -32,7 +34,7 @@ const ProductPage = async ({ params }: ProductPageProps) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div
           className={`relative aspect-square overflow-hidden rounded-lg shadow-lg ${
-            isOutOfStock ? "opacity-50" : ""
+            isOutOfStock && "opacity-50"
           }`}
         >
           {product.image && (
@@ -68,4 +70,4 @@ const ProductPage = async ({ params }: ProductPageProps) => {
   );
 };
 
-export default ProductPage;
+export default ClientPage;

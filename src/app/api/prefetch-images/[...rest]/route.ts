@@ -1,58 +1,58 @@
-// NextFaster/src/app/api/prefetch-images/[...rest]/route.ts
+// File: app/api/prefetch-images/[...rest]/route.ts
 
 import { defineQuery } from "next-sanity";
 import { sanityFetch } from "@/sanity/lib/live";
 import { NextRequest, NextResponse } from "next/server";
 
-interface PrefetchImage {
+interface ProductData {
+  name: string;
+  price: number;
+  description: string;
+  stock: number;
+  image: string;
   srcset: string;
   sizes: string;
-  src: string;
   alt: string;
   loading: string;
 }
 
 export async function GET(request: NextRequest) {
-  // Extract the pathname from the dynamic route (e.g., t-shirt-black)
   console.log("API Route Hit");
-  const slug = request.nextUrl.pathname;
-  const pathname = "t-shirt-blue";
-  console.log("pathname: ", pathname);
 
-  if (!pathname) {
-    return NextResponse.json({ error: "Missing pathname in URL" }, { status: 400 });
+  // Extract the slug from the dynamic route
+  const slug = await request.nextUrl.pathname.split("/").pop(); // Get the last part of the URL as slug
+  if (!slug) {
+    return NextResponse.json({ error: "Missing slug in URL" }, { status: 400 });
   }
 
-  const IMAGES_QUERY = defineQuery(
-    `*[_type == "product" && !(_id in path("drafts.*")) && slug.current == ${pathname}] {
-      "srcset": image.asset->url,
+  const PRODUCT_QUERY = defineQuery(
+    `*[_type == "product" && !(_id in path("drafts.*")) && slug.current == $slug][0] {
+      name,
+      price,
+      description,
+      stock,
+      "image": image.asset->url,
+      "srcset": image.asset->metadata.lqip,
       "sizes": "100vw",
-      "src": image.asset->url,
       "alt": name,
       "loading": "lazy"
     }`
   );
 
   try {
-    // Fetch images from Sanity using the pathname parameter
-    const result = await sanityFetch({
-      query: IMAGES_QUERY,
-      params: { pathname },
+    // Fetch the product data using the slug parameter
+    const product = await sanityFetch({
+      query: PRODUCT_QUERY,
+      params: { slug },
     });
 
-    console.log("result", result);
+    if (!product) {
+      return NextResponse.json({ error: "Product not found" }, { status: 404 });
+    }
 
-    const images: PrefetchImage[] = (result?.data || []).map((image) => ({
-      srcset: image.srcset || "",
-      sizes: image.sizes,
-      src: image.src || "",
-      alt: image.alt || "",
-      loading: image.loading,
-    })); // Fallback to empty array if data is not found
-
-    return NextResponse.json({ images }, { headers: { "Cache-Control": "public, max-age=3600" } });
+    return NextResponse.json({ product }, { headers: { "Cache-Control": "public, max-age=36" } });
   } catch (error) {
-    console.error("Error fetching images for prefetch:", error);
-    return NextResponse.json({ error: "Failed to fetch images" }, { status: 500 });
+    console.error("Error fetching product data for prefetch:", error);
+    return NextResponse.json({ error: "Failed to fetch product data" }, { status: 500 });
   }
 }

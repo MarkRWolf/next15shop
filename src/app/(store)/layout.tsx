@@ -1,3 +1,5 @@
+// File: app/layout.tsx
+
 import type { Metadata } from "next";
 import "../globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
@@ -7,6 +9,7 @@ import { VisualEditing } from "next-sanity";
 import { draftMode } from "next/headers";
 import { DisableDraftMode } from "@/components/DisableDraftMode";
 import Footer from "@/components/footer/Footer";
+import { Suspense } from "react"; // Import Suspense
 
 export const metadata: Metadata = {
   title: "Shop",
@@ -15,9 +18,9 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <ClerkProvider dynamic>
-      <html lang="en">
-        <body>
+    <html lang="en">
+      <body>
+        <ClerkProvider dynamic>
           {(await draftMode()).isEnabled && (
             <>
               <DisableDraftMode />
@@ -27,11 +30,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <main>
             <Header />
             {children}
-            <Footer />
+            <Suspense fallback={<div>Loading footer...</div>}>
+              <Footer />
+            </Suspense>
           </main>
           <SanityLive />
-        </body>
-      </html>
-    </ClerkProvider>
+        </ClerkProvider>
+      </body>
+    </html>
   );
 }
