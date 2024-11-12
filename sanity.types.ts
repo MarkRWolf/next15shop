@@ -482,16 +482,13 @@ export type ALL_PRODUCTS_QUERYResult = Array<{
 
 // Source: ./src/sanity/lib/products/getProductBySlug.ts
 // Variable: PRODUCT_BY_SLUG_QUERY
-// Query: *[_type == "product" && slug.current == $slug] | order(name asc) [0]
+// Query: *[_type == "product" && slug.current == $slug][0] {      name,      price,      stock,      slug,      image,      description,      // Include other necessary fields    }
 export type PRODUCT_BY_SLUG_QUERYResult = {
-  _id: string;
-  _type: "product";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  name?: string;
-  slug?: Slug;
-  image?: {
+  name: string | null;
+  price: number | null;
+  stock: number | null;
+  slug: Slug | null;
+  image: {
     asset?: {
       _ref: string;
       _type: "reference";
@@ -501,8 +498,8 @@ export type PRODUCT_BY_SLUG_QUERYResult = {
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: "image";
-  };
-  description?: Array<{
+  } | null;
+  description: Array<{
     children?: Array<{
       marks?: Array<string>;
       text?: string;
@@ -531,16 +528,7 @@ export type PRODUCT_BY_SLUG_QUERYResult = {
     alt?: string;
     _type: "image";
     _key: string;
-  }>;
-  price?: number;
-  categories?: Array<{
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    _key: string;
-    [internalGroqTypeReferenceTo]?: "category";
-  }>;
-  stock?: number;
+  }> | null;
 } | null;
 
 // Source: ./src/sanity/lib/products/getProductsByCategory.ts
@@ -689,46 +677,15 @@ export type ACTIVE_SALE_BY_COUPON_QUERYResult = {
 
 // Source: ./src/app/api/prefetch-images/[...rest]/route.ts
 // Variable: PRODUCT_QUERY
-// Query: *[_type == "product" && !(_id in path("drafts.*")) && slug.current == $slug][0] {      name,      price,      description,      stock,      "image": image.asset->url,      "srcset": image.asset->metadata.lqip,      "sizes": "100vw",      "alt": name,      "loading": "lazy"    }
+// Query: *[_type == "product" && !(_id in path("drafts.*")) && slug.current == $slug][0] {      "images": [        {          "src": image.asset->url,          "srcset": image.asset->metadata.lqip,          "sizes": "100vw",          "alt": name,          "loading": "lazy"        }      ]    }
 export type PRODUCT_QUERYResult = {
-  name: string | null;
-  price: number | null;
-  description: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
-    listItem?: "bullet";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  } | {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "image";
-    _key: string;
-  }> | null;
-  stock: number | null;
-  image: string | null;
-  srcset: string | null;
-  sizes: "100vw";
-  alt: string | null;
-  loading: "lazy";
+  images: Array<{
+    src: string | null;
+    srcset: string | null;
+    sizes: "100vw";
+    alt: string | null;
+    loading: "lazy";
+  }>;
 } | null;
 
 // Query TypeMap
@@ -739,10 +696,10 @@ declare module "@sanity/client" {
     "\n    *[_type == \"order\" && clerkUserId == $userId] | order(orderDate desc) {\n        ...,\n        products[] {\n            ...,\n            product->\n        }\n    }\n    ": MY_ORDERS_QUERYResult;
     "*[_type == \"category\"] | order(name asc)": ALL_CATEGORIES_QUERYResult;
     "*[_type == \"product\" && !(_id in path(\"drafts.*\"))] | order(lower(name) asc)\n": ALL_PRODUCTS_QUERYResult;
-    "\n    *[_type == \"product\" && slug.current == $slug] | order(name asc) [0]\n  ": PRODUCT_BY_SLUG_QUERYResult;
+    "\n    *[_type == \"product\" && slug.current == $slug][0] {\n      name,\n      price,\n      stock,\n      slug,\n      image,\n      description,\n      // Include other necessary fields\n    }\n  ": PRODUCT_BY_SLUG_QUERYResult;
     "\n        *[_type == \"product\" && references(*[_type == \"category\" && slug.current == $category]._id)] | order(name asc)": PRODUCTS_BY_CATEGORY_QUERYResult;
     "\n    *[_type == \"product\" && name match $searchParam] | order(name asc)": PRODUCT_SEARCH_QUERYResult;
     "*[_type == \"sale\" && isActive == true && couponCode == $couponCode] | order(validFrom desc)[0]": ACTIVE_SALE_BY_COUPON_QUERYResult;
-    "*[_type == \"product\" && !(_id in path(\"drafts.*\")) && slug.current == $slug][0] {\n      name,\n      price,\n      description,\n      stock,\n      \"image\": image.asset->url,\n      \"srcset\": image.asset->metadata.lqip,\n      \"sizes\": \"100vw\",\n      \"alt\": name,\n      \"loading\": \"lazy\"\n    }": PRODUCT_QUERYResult;
+    "\n    *[_type == \"product\" && !(_id in path(\"drafts.*\")) && slug.current == $slug][0] {\n      \"images\": [\n        {\n          \"src\": image.asset->url,\n          \"srcset\": image.asset->metadata.lqip,\n          \"sizes\": \"100vw\",\n          \"alt\": name,\n          \"loading\": \"lazy\"\n        }\n      ]\n    }\n  ": PRODUCT_QUERYResult;
   }
 }

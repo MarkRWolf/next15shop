@@ -19,7 +19,7 @@ const ProductPage = async ({ params }: ProductPageProps) => {
   const { slug } = await params;
 
   // Fetch product data on the server side
-  const product: Product | null = await getProductBySlug(slug);
+  const product: Product[] = await getProductBySlug(slug);
 
   if (!product) {
     notFound();
@@ -42,6 +42,9 @@ const ProductPage = async ({ params }: ProductPageProps) => {
               src={imageUrl(product.image).url()}
               alt={product.name ?? "Product Image"}
               fill
+              sizes="(max-width: 768px) 100vw, (max-width:1200px) 50vw, 33vw"
+              quality={65}
+              priority
               className="object-contain transition-transform duration-300 hover:scale-105"
             />
           )}

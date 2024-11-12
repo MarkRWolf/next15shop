@@ -1,4 +1,4 @@
-// File: components/ui/link.tsx
+// File: components/ui/Link.tsx
 
 "use client";
 
@@ -13,27 +13,6 @@ type PrefetchImage = {
   alt: string;
   loading: string;
 };
-
-function sleep(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-async function prefetchImages(href: string) {
-  if (!href.startsWith("/") || href.startsWith("/order") || href === "/") {
-    return [];
-  }
-  const url = new URL(href, window.location.href);
-  const imageResponse = await fetch(`/api/prefetch-images${url.pathname}`, {
-    priority: "low",
-  });
-
-  if (!imageResponse.ok && process.env.NODE_ENV === "development") {
-    throw new Error("Failed to prefetch images");
-  }
-  const data = await imageResponse.json();
-  const images = Array.isArray(data.images) ? data.images : [];
-  return images as PrefetchImage[];
-}
 
 const seen = new Set<string>();
 
@@ -62,7 +41,6 @@ export const Link = ({ children, prefetch = false, ...props }: LinkProps) => {
         if (entry.isIntersecting) {
           prefetchTimeout = setTimeout(async () => {
             router.prefetch(String(props.href));
-            await sleep(0);
             try {
               const images = await prefetchImages(String(props.href));
               images.forEach((image) => {
@@ -139,11 +117,28 @@ export const Link = ({ children, prefetch = false, ...props }: LinkProps) => {
   );
 };
 
+async function prefetchImages(href: string) {
+  if (!href.startsWith("/") || href.startsWith("/order") || href === "/") {
+    return [];
+  }
+  const url = new URL(href, window.location.href);
+  const imageResponse = await fetch(`/api/prefetch-images${url.pathname}`, {
+    priority: "low",
+  });
+
+  if (!imageResponse.ok && process.env.NODE_ENV === "development") {
+    throw new Error("Failed to prefetch images");
+  }
+  const data = await imageResponse.json();
+  const images = Array.isArray(data.images) ? data.images : [];
+  return images as PrefetchImage[];
+}
+
 function prefetchImage(image: PrefetchImage) {
   if (image.loading === "lazy" || seen.has(image.srcset)) return;
   const img = new Image();
   img.decoding = "async";
-  img.fetchPriority = "low"; // Note: fetchPriority is not standard yet
+  (img as any).fetchPriority = "low"; // Note: fetchPriority is not standard yet
   img.sizes = image.sizes;
   seen.add(image.srcset);
   img.srcset = image.srcset;
