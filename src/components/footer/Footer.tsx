@@ -1,6 +1,7 @@
 import { getAllGlobals } from "@/sanity/lib/lang/getAllGlobals";
 import { Language } from "../../../sanity.types";
 import FooterInfo from "./FooterInfo";
+import { Suspense } from "react"; // Import Suspense
 
 const Footer = async () => {
   const globalLangs: Language[] = await getAllGlobals();
@@ -8,7 +9,9 @@ const Footer = async () => {
   return (
     <footer className="border-t border-t-gray-600 py-4 flex flex-col gap-2">
       FOOTER
-      <FooterInfo globals={globalLangs} />
+      <Suspense fallback={null}>
+        <FooterInfo globals={globalLangs} />
+      </Suspense>
     </footer>
   );
 };

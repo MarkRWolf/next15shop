@@ -8,6 +8,7 @@ interface ProductsViewProps {
 }
 
 const ProductsView = ({ products, categories }: ProductsViewProps) => {
+  
   return (
     <div className="w-full max-w-7xl">
       {/* Categories */}
