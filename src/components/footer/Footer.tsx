@@ -7,7 +7,7 @@ const Footer = async () => {
   const globalLangs: Language[] = await getAllGlobals();
 
   return (
-    <footer className="border-t border-t-gray-600 py-4 flex flex-col gap-2">
+    <footer className="border-t p-4 w-full absolute bottom-0 left-0 border-black border-1 ">
       FOOTER
       <Suspense fallback={null}>
         <FooterInfo globals={globalLangs} />

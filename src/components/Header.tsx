@@ -1,73 +1,86 @@
 "use client";
 import { ClerkLoaded, SignInButton, UserButton, useUser } from "@clerk/nextjs";
-import Link from "next/link";
-import Form from "next/form";
-import { TrolleyIcon, PackageIcon } from "@sanity/icons";
+import { PiMagnifyingGlass, PiShoppingCartSimpleDuotone, PiUser } from "react-icons/pi";
 import useBasketStore from "@/store/basketStore";
-import { EarthGlobeIcon } from "@sanity/icons";
 import useLangStore from "@/store/langStore";
+import Image from "next/image";
+import NextLink from "next/link";
+import Form from "next/form";
+import { SUPPORTED_LANGUAGES } from "@/types/languages";
+import { useState, useRef } from "react";
 
 function Header() {
   const { user } = useUser();
-  const itemCount = useBasketStore((state) =>
-    state.items.reduce((total, item) => total + item.quantity, 0)
-  );
-  const { lang, setLang } = useLangStore();
+  const { lang, toggleLang } = useLangStore();
+  const searchRef = useRef<HTMLInputElement>(null);
+  const searchBtnRef = useRef<HTMLButtonElement>(null);
+  const [searchVal, setSearchVal] = useState("");
 
   return (
-    <header className="py-2 fixed inset-0 bg-white z-10 max-h-14">
+    <header className="py-2 fixed inset-0 bg-white z-10 max-h-14 shadow-black/30 shadow-md">
       <div className="max-w-7xl mx-auto flex justify-between items-center gap-4">
-        <Link
+        <NextLink
           href="/"
           className="text-3xl font-bold text-green-700 hover:opacity-80 cursor-pointer mx-auto sm:mx-0"
         >
           Grej
-        </Link>
-        <Form action="/search" className="max-w-96 flex-1">
-          <input
-            type="text"
-            name="query"
-            placeholder="Search for products"
-            className="bg-gray-100 text-gray-800 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-green-800 focus:ring-opacity-50 border border-gray-400 focus:border-transparent w-full max-w-4xl"
-          ></input>
-        </Form>
-        <EarthGlobeIcon
-          width={32}
-          height={32}
-          onClick={() => setLang((lang) => (lang === "daDK" ? "enGB" : "daDK"))}
-          className="bg-red-200 rounded-full"
-        />
-        <div className="flex items-center space-x-4 mt-4 sm:mt-0 flex-1 sm:flex-none">
+        </NextLink>
+
+        <div className="flex items-center gap-0 sm:gap-1 md:gap-2 space-x-4 mt-4 sm:mt-0 flex-1 sm:flex-none">
+          <Form
+            action="/search"
+            className={`relative max-w-96 flex-1`}
+            onMouseOver={() => {
+              const timer = setTimeout(() => {
+                searchRef.current?.focus();
+              }, 1000);
+              searchRef.current?.addEventListener("mouseleave", () => clearTimeout(timer), {
+                once: true,
+              });
+            }}
+          >
+            <input
+              ref={searchRef}
+              type="text"
+              name="query"
+              value={searchVal}
+              onChange={(e) => setSearchVal(e.target.value)}
+              placeholder="Search for products"
+              className={`absolute top-1/2 right-0 -translate-y-1/2 mt-[0.125rem] bg-gray-100 text-gray-800 pl-0 focus:outline-none focus:ring-opacity-50 border-b border-gray-400  w-44 max-w-4xl `}
+            />
+            <button
+              ref={searchBtnRef}
+              disabled={!searchVal.length}
+              type="submit"
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  if (searchVal.length > 0) searchBtnRef.current?.click();
+                }
+              }}
+            >
+              <PiMagnifyingGlass className="absolute top-1/2 right-0 -translate-y-1/2 h-6 w-6 cursor-pointer" />
+            </button>
+          </Form>
           <ClerkLoaded>
             {user && (
-              <Link
-                href="/orders"
-                className="flex-1 relative flex justify-center sm:justify-start sm:flex-none items-center space-x-2 bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded"
-              >
-                <PackageIcon className="w-6 h-6" />
-                <span>Orders</span>
-              </Link>
+              <NextLink href="/profile/orders" className="">
+                <PiUser className="h-6 w-6" />
+              </NextLink>
             )}
           </ClerkLoaded>
-          <Link href="/basket" className="relative">
-            <TrolleyIcon className="w-8 h-8 text-gray-700" />
-            <span className="absolute -top-2 -right-2 bg-green-700 text-white rounded-full w-[22px] h-[22px] grid place-content-center pr-0.5 text-xs">
-              {itemCount}
-            </span>
-          </Link>
-          <ClerkLoaded>
-            {user ? (
-              <div className="flex items-center space-x-2">
-                <UserButton />
-                <div className="hidden sm:block text-xs">
-                  <p className="text-gray-400">Welcome Back</p>
-                  <p className="font-bold">{user.fullName}!</p>
-                </div>
-              </div>
-            ) : (
-              <SignInButton mode="modal" />
-            )}
-          </ClerkLoaded>
+          <NextLink href="/basket" className="relative">
+            <PiShoppingCartSimpleDuotone className="w-6 h-6" />
+          </NextLink>{" "}
+          <Image
+            src={`https://flagcdn.com/w40/${lang.slice(-2).toLowerCase()}.png`}
+            alt={lang + " flag"}
+            width={96}
+            height={96}
+            quality={100}
+            className="object-contain w-6 cursor-pointer"
+            onClick={toggleLang}
+          />
+          <ClerkLoaded>{user ? <UserButton /> : <SignInButton mode="modal" />}</ClerkLoaded>
         </div>
       </div>
     </header>

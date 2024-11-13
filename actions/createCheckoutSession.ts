@@ -3,6 +3,7 @@
 import { imageUrl } from "@/lib/imageUrl";
 import stripe from "@/lib/stripe";
 import { BasketItem } from "@/store/basketStore";
+import { auth } from "@clerk/nextjs/server";
 
 export type Metadata = {
   orderNumber: string;
@@ -18,6 +19,12 @@ export type GroupedBasketItem = {
 
 export const createCheckoutSession = async (items: GroupedBasketItem[], metadata: Metadata) => {
   try {
+    const { userId } = await auth();
+
+    if (!userId || userId !== metadata.clerkUserId) {
+      throw new Error("User authentication failed.");
+    }
+
     const itemsWithoutPrice = items.filter((item) => !item.product.price);
     if (itemsWithoutPrice.length > 0) throw new Error("some items do not have a price");
 

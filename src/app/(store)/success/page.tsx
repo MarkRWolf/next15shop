@@ -4,7 +4,7 @@ import useBasketStore from "@/store/basketStore";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import NextLink from "next/link";
 
 const SuccessPage = () => {
   const searchParams = useSearchParams();
@@ -58,10 +58,10 @@ const SuccessPage = () => {
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button asChild className="bg-green-600 hover:bg-green-700">
-            <Link href="/orders">View Orders</Link>
+            <NextLink href="/profile/orders">View Orders</NextLink>
           </Button>
           <Button asChild variant="outline">
-            <Link href="/">Continue Shopping</Link>
+            <NextLink href="/">Continue Shopping</NextLink>
           </Button>
         </div>
       </div>

@@ -26,7 +26,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               <VisualEditing />
             </>
           )}
-          <main className="mt-1 bg-gray-100">
+          <main className="min-h-[100dvh] flex flex-col relative pt-16 bg-gray-100">
             <Header />
             {children}
             <Footer />
