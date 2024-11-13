@@ -1,8 +1,8 @@
 // File: components/ProductThumb.tsx
 
 import { Product } from "../../sanity.types";
-import { Link } from "./ui/link";
-import Image from "next/image";
+import NextLink from "next/link";
+import NextImage from "next/image";
 import { imageUrl } from "@/lib/imageUrl";
 import AddToBasketButton from "./AddToBasketButton";
 
@@ -13,10 +13,8 @@ interface ProductThumbProps {
 const ProductThumb = ({ product }: ProductThumbProps) => {
   const isOutOfStock = product.stock != null && product.stock < 1;
 
-  let imageCount = 0;
-
   return (
-    <Link prefetch={true} href={`/products/${product.slug?.current}`}>
+    <NextLink prefetch={false} href={`/products/${product.slug?.current}`}>
       <span
         className={`group flex flex-col bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden ${
           isOutOfStock && "opacity-50"
@@ -24,9 +22,7 @@ const ProductThumb = ({ product }: ProductThumbProps) => {
       >
         <div className="relative aspect-square w-full h-full overflow-hidden">
           {product.image && (
-            <Image
-              loading={imageCount++ < 15 ? "eager" : "lazy"}
-              decoding="sync"
+            <NextImage
               className="object-contain transition-transform duration-300 group-hover:scale-105"
               src={imageUrl(product.image).url()}
               alt={product.name || "Product Image"}
@@ -58,7 +54,7 @@ const ProductThumb = ({ product }: ProductThumbProps) => {
           <AddToBasketButton product={product} disabled={isOutOfStock} />
         </span>
       </span>
-    </Link>
+    </NextLink>
   );
 };
 

@@ -2,24 +2,17 @@
 
 import { notFound } from "next/navigation";
 import { getProductBySlug } from "@/sanity/lib/products/getProductBySlug";
-import Image from "next/image";
+import NextImage from "next/image";
 import { imageUrl } from "@/lib/imageUrl";
-import { PortableText } from "@portabletext/react";
+import { Suspense } from "react";
 import AddToBasketButton from "@/components/AddToBasketButton";
 import { Product } from "../../../../../sanity.types";
 
-// Enable ISR with revalidation every 60 seconds
-export const revalidate = 60;
-
-interface ProductPageProps {
-  params: { slug: string };
-}
-
-const ProductPage = async ({ params }: ProductPageProps) => {
+const ProductPage = async ({ params }: { params: { slug: string } }) => {
   const { slug } = await params;
 
   // Fetch product data on the server side
-  const product: Product[] = await getProductBySlug(slug);
+  const product: Product | null = await getProductBySlug(slug);
 
   if (!product) {
     notFound();
@@ -36,15 +29,12 @@ const ProductPage = async ({ params }: ProductPageProps) => {
           }`}
         >
           {product.image && (
-            <Image
-              loading="eager"
-              decoding="sync"
+            <NextImage
               src={imageUrl(product.image).url()}
               alt={product.name ?? "Product Image"}
               fill
               sizes="(max-width: 768px) 100vw, (max-width:1200px) 50vw, 33vw"
               quality={65}
-              priority
               className="object-contain transition-transform duration-300 hover:scale-105"
             />
           )}
@@ -58,12 +48,14 @@ const ProductPage = async ({ params }: ProductPageProps) => {
           <div>
             <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
             <div className="text-xl font-semibold mb-4">{product.price?.toFixed(2)},-</div>
-            <div className="prose max-w-none mb-6">
+            {/*             <div className="prose max-w-none mb-6">
               {Array.isArray(product.description) && <PortableText value={product.description} />}
-            </div>
+            </div> */}
           </div>
           <div className="mt-6">
-            <AddToBasketButton product={product} disabled={isOutOfStock} />
+            <Suspense fallback={null}>
+              <AddToBasketButton product={product} disabled={isOutOfStock} />
+            </Suspense>
           </div>
         </div>
       </div>

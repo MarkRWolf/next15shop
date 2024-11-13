@@ -9,7 +9,6 @@ import { VisualEditing } from "next-sanity";
 import { draftMode } from "next/headers";
 import { DisableDraftMode } from "@/components/DisableDraftMode";
 import Footer from "@/components/footer/Footer";
-import { Suspense } from "react"; // Import Suspense
 
 export const metadata: Metadata = {
   title: "Shop",
@@ -30,9 +29,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <main className="mt-1 bg-gray-100">
             <Header />
             {children}
-            <Suspense fallback={<div>Loading footer...</div>}>
-              <Footer />
-            </Suspense>
+            <Footer />
           </main>
           <SanityLive />
         </ClerkProvider>
