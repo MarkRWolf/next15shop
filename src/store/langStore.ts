@@ -1,23 +1,17 @@
+import { LanguageKey } from "@/types/languages";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-export interface langStates {
-  lang: string;
-}
-
 interface LangState {
-  lang: string;
-  setLang: (lang: string | ((lang: string) => string)) => void;
+  lang: LanguageKey;
+  setLang: (lang: LanguageKey) => void;
 }
 
 const useLangStore = create<LangState>()(
   persist(
     (set) => ({
-      lang: "daDK",
-      setLang: (lang) =>
-        set((state) => ({
-          lang: typeof lang === "function" ? lang(state.lang) : lang,
-        })),
+      lang: "enGB",
+      setLang: (lang) => set({ lang }),
     }),
     { name: "lang-store" }
   )

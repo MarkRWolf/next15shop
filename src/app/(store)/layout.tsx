@@ -27,7 +27,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               <VisualEditing />
             </>
           )}
-          <main>
+          <main className="mt-1 bg-gray-100">
             <Header />
             {children}
             <Suspense fallback={<div>Loading footer...</div>}>
