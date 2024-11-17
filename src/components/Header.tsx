@@ -46,7 +46,7 @@ function Header() {
               value={searchVal}
               onChange={(e) => setSearchVal(e.target.value)}
               placeholder="Search for products"
-              className={`absolute top-1/2 right-0 -translate-y-1/2 mt-[0.125rem] bg-gray-100 text-gray-800 pl-0 focus:outline-none focus:ring-opacity-50 border-b border-gray-400  w-44 max-w-4xl `}
+              className={`absolute top-1/2 right-0 -translate-y-1/2 mt-[0.125rem] bg-transparent text-gray-800 pl-0 focus:outline-none focus:ring-opacity-50 border-b border-gray-400  w-44 max-w-4xl `}
             />
             <button
               ref={searchBtnRef}
@@ -69,7 +69,7 @@ function Header() {
             )}
           </ClerkLoaded>
           <NextLink href="/basket" className="relative">
-            <PiShoppingCartSimpleDuotone className="w-6 h-6" />
+            <PiShoppingCartSimpleDuotone className="w-6 h-6 fill-black" />
           </NextLink>{" "}
           <Image
             src={`https://flagcdn.com/w40/${lang.slice(-2).toLowerCase()}.png`}

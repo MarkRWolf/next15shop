@@ -52,8 +52,9 @@ const ProductPage = async ({ params }: { params: { slug: string } }) => {
               {Array.isArray(product.description) && <PortableText value={product.description} />}
             </div> */}
           </div>
-          <div className="mt-6">
+          <div className="mt-6 mb-20">
             <Suspense fallback={null}>
+              <p className="text-center">{product.stock} stk på lager</p>
               <AddToBasketButton product={product} disabled={isOutOfStock} />
             </Suspense>
           </div>
