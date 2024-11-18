@@ -25,7 +25,10 @@ const AddToBasketButton = ({ product, disabled }: AddToBasketButtonProps) => {
   return (
     <div className="flex items-center justify-center space-x-2">
       <button
-        onClick={() => removeItem(product._id)}
+        onClick={(e) => {
+          e.preventDefault();
+          removeItem(product._id);
+        }}
         className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors duration-200 ${itemCount === 0 ? "bg-gray-100 cursor-not-allowed" : "bg-gray-200 hover:bg-gray-300"}`}
         disabled={itemCount === 0 || disabled}
       >
@@ -37,7 +40,10 @@ const AddToBasketButton = ({ product, disabled }: AddToBasketButtonProps) => {
       </button>
       <span className="w-8 text-center font-semibold">{itemCount}</span>
       <button
-        onClick={() => addItem(product)}
+        onClick={(e) => {
+          e.preventDefault();
+          addItem(product);
+        }}
         className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors duration-200 ${disabled || itemCount >= (product.stock ?? 0) ? "bg-gray-400 cursor-not-allowed" : "bg-green-700 hover:bg-green-800"}`}
         disabled={disabled || itemCount >= (product.stock ?? 0)}
       >

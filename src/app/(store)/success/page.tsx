@@ -40,7 +40,7 @@ const SuccessPage = () => {
           <p className="text-lg text-gray-700 mb-4">
             Your order went through and will be processed by our staff.
           </p>
-          <div className="stace-y-2">
+          <div className="space-y-2">
             {orderNumber && (
               <p className="text-gray-600 flex items-center space-x-5">
                 <span>Order Number:</span>

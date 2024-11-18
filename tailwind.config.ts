@@ -56,6 +56,14 @@ const config: Config = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      boxShadow: {
+        DEFAULT: "3px 3px 10px rgba(299, 200, 200, 0.1)",
+        md: "0 0 20px rgba(0, 0, 0, 0.1)",
+        lg: "0 0 30px rgba(0, 0, 0, 0.1)",
+      },
+      fontFamily: {
+        mono: ["JetBrains Mono", "monospace"],
+      },
     },
   },
   plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
