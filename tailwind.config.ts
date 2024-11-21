@@ -64,8 +64,20 @@ const config: Config = {
       fontFamily: {
         mono: ["JetBrains Mono", "monospace"],
       },
+      transitionDuration: {
+        700: "700ms", // Adds duration-700 class
+      },
+      animation: {
+        border: "border 4s linear infinite",
+      },
+      keyframes: {
+        border: {
+          to: { "--border-angle": "360deg" },
+        },
+      },
     },
   },
   plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 };
+
 export default config;

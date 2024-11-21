@@ -11,7 +11,7 @@ export default async function Home() {
     <div>
       <BlackFridayBanner />
 
-      <div className="flex flex-col items-center justify-top min-h-screen p-4">
+      <div className="mx-auto px-8 max-w-7xl">
         <ProductsView products={products} categories={categories} />
       </div>
     </div>

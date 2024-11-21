@@ -8,21 +8,14 @@ interface ProductsViewProps {
 }
 
 const ProductsView = ({ products, categories }: ProductsViewProps) => {
-  
   return (
-    <div className="w-full max-w-7xl">
-      {/* Categories */}
-      <div className="w-full sm:w-[200px]">
-        <CategorySelector categories={categories} />
-      </div>
+    <div className="max-w-7xl mt-20">
+      <CategorySelector categories={categories} />
 
-      {/* Products */}
-      <div className="flex-1">
-        <div>
-          <ProductGrid products={products} />
+      <div className="mt-12">
+        <ProductGrid products={products} />
 
-          <hr className="w-1/2 sm:w-3/4" />
-        </div>
+        <hr className="w-1/2 sm:w-3/4" />
       </div>
     </div>
   );

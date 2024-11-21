@@ -15,33 +15,54 @@ const ProductThumb = ({ product }: ProductThumbProps) => {
 
   return (
     <NextLink
-      prefetch={false}
       href={`/products/${product.slug?.current}`}
-      className="flex flex-col items-center shadow shadow-gray-400/40 rounded-md p-4"
+      className="w-[300px] relative group z-[3]"
     >
-      {product.image ? (
-        <NextImage
-          className="w-full aspect-square object-contain"
-          src={imageUrl(product.image).url()}
-          alt={product.name || "Product Image"}
-          width={400}
-          height={400}
-        />
-      ) : (
-        <span className="w-full aspect-square object-cover bg-gray-200 rounded-lg"></span>
-      )}
-      <div className="w-full font-mono self-start tracking-wider px-2 py-4">
-        <h2 className="text-2xl">{product.name}</h2>
-        <p className="my-4">
-          {product.description?.map((block) =>
-            block._type === "block"
-              ? block.children?.map((child) => child.text).join("")
-              : "No description"
-          )}
-        </p>
-        <div onClick={(e) => e.preventDefault()} className="w-full flex gap-10 justify-between">
-          <p className="text-xl">{product.price?.toFixed(2) || "??"},-</p>
-          <AddToBasketButton product={product} disabled={isOutOfStock} />
+      <div
+        className={` absolute z-[1] rounded-md top-0 left-0 w-0 h-0 bg-transparent border-t-4 border-l-4 border-transparent group-hover:w-full group-hover:h-full ${isOutOfStock ? "group-hover:border-red-800" : "group-hover:border-emerald-600/70"} transition-[width,height,border-color] duration-700 ease-in-out`}
+      ></div>
+
+      <div
+        className={`absolute z-[1] rounded-md bottom-0 right-0 w-0 h-0 bg-transparent border-b-4 border-r-4 border-transparent group-hover:w-full group-hover:h-full ${isOutOfStock ? "group-hover:border-red-800" : "group-hover:border-emerald-600/70"} transition-[width,height,border-color] duration-700 ease-in-out`}
+      ></div>
+
+      <div className="relative z-[2] bg-transparent flex flex-col items-center shadow shadow-gray-400/40 rounded-md p-4 border-transparent">
+        {product.image ? (
+          <NextImage
+            className="w-full aspect-square object-contain"
+            src={imageUrl(product.image).url()}
+            alt={product.name || "Product Image"}
+            width={400}
+            height={400}
+          />
+        ) : (
+          <span className="w-full aspect-square object-cover bg-gray-200 rounded-lg"></span>
+        )}
+        <div className="w-full font-mono self-start tracking-wider px-2 py-4">
+          <h2 className="text-2xl">{product.name}</h2>
+          <h2>{product.price}</h2>
+          <p className="my-4">
+            {product.description?.map((block) =>
+              block._type === "block"
+                ? block.children?.map((child) => child.text).join("")
+                : "No description"
+            )}
+          </p>
+          <div className="relative z-[3] w-full flex items-center justify-between">
+            <p className="text-xl relative z-50">{product.price?.toFixed(2)},-</p>
+            <div
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+              }}
+            >
+              <AddToBasketButton
+                isOutOfStock={isOutOfStock}
+                product={product}
+                disabled={isOutOfStock}
+              />
+            </div>
+          </div>
         </div>
       </div>
     </NextLink>
