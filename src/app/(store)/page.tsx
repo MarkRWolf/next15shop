@@ -8,10 +8,10 @@ export default async function Home() {
   const categories = await getAllCategories();
 
   return (
-    <div>
+    <div className="">
       <BlackFridayBanner />
 
-      <div className="mx-auto max-w-7xl">
+      <div className="mx-auto max-w-sm sm:max-w-2xl md:max-w-3xl lg:max-w-4xl xl:max-w-6xl">
         <ProductsView products={products} categories={categories} />
       </div>
     </div>
