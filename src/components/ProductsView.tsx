@@ -14,8 +14,6 @@ const ProductsView = ({ products, categories }: ProductsViewProps) => {
 
       <div className="mt-12">
         <ProductGrid products={products} />
-
-        <hr className="w-1/2 sm:w-3/4" />
       </div>
     </div>
   );

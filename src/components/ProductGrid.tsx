@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import ProductThumb from "./ProductThumb";
 const ProductGrid = ({ products }: { products: Product[] }) => {
   return (
-    <div className=" flex flex-wrap gap-10  mt-4">
+    <div className="flex flex-wrap gap-10 mt-4">
       {products.map((product) => (
         <AnimatePresence key={product._id}>
           <motion.div
@@ -12,7 +12,7 @@ const ProductGrid = ({ products }: { products: Product[] }) => {
             initial={{ opacity: 0.2 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="flex flex-grow justify-center"
+            className="flex flex-grow "
           >
             <ProductThumb product={product} />
           </motion.div>
