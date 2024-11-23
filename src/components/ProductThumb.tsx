@@ -18,18 +18,20 @@ const ProductThumb = ({ product }: ProductThumbProps) => {
       href={`/products/${product.slug?.current}`}
       className="w-[350px] flex-grow relative group z-[3] bg-white"
     >
+      {/* BORDER ANIMATE SIDES */}
       <div
-        className={` absolute z-[1] rounded-md top-0 left-0 w-0 h-0 bg-transparent border-t-2 border-l-2  border-transparent group-hover:w-full group-hover:h-full ${isOutOfStock ? "group-hover:border-red-800/20" : "group-hover:border-emerald-600/20"} transition-[width,height,border-color] duration-700 ease-in-out`}
+        className={` absolute z-[1] rounded-md top-0 left-0 w-0 h-0 bg-transparent border-t-8 border-l-8  border-transparent group-hover:w-full group-hover:h-full ${isOutOfStock ? "group-hover:border-red-800" : "group-hover:border-emerald-600/20"} transition-[width,height,border-color] duration-700 ease-in-out`}
       ></div>
       <div
-        className={`absolute z-[1] rounded-md bottom-0 right-0 w-0 h-0 bg-transparent border-b-2 border-r-2 border-transparent group-hover:w-full group-hover:h-full ${isOutOfStock ? "group-hover:border-red-800/20" : "group-hover:border-emerald-600/20"} transition-[width,height,border-color] duration-700 ease-in-out`}
+        className={`absolute z-[1] rounded-md bottom-0 right-0 w-0 h-0 bg-transparent border-b-8 border-r-8 border-transparent group-hover:w-full group-hover:h-full ${isOutOfStock ? "group-hover:border-red-800" : "group-hover:border-emerald-600/20"} transition-[width,height,border-color] duration-700 ease-in-out`}
       ></div>
-      <div
+      {/* BORDER BLUR ON HOVER */}
+      {/*      <div
         className={` absolute z-[0] blur-0  group-hover:blur-[12px] opacity-50 transition-all duration-700 rounded-md top-0 border-transparent border-t-8 border-l-8   w-[calc(100%+8px)] -translate-x-1.5 h-[calc(100%+8px)] -translate-y-1.5 ${isOutOfStock ? "group-hover:border-red-700" : "group-hover:border-emerald-700"}`}
       ></div>
       <div
         className={`absolute z-[0] blur-0  group-hover:blur-[12px] opacity-50 transition-all  duration-700 rounded-md bottom-0 border-transparent border-b-8 border-r-8 w-[calc(100%+8px)]  h-[calc(100%+8px)] translate-y-1.5 ${isOutOfStock ? "group-hover:border-red-700" : "group-hover:border-emerald-700"} `}
-      ></div>
+      ></div> */}
       <div className="relative z-[2] bg-transparent flex flex-col items-center shadow shadow-gray-400/40 rounded-md p-4 border-transparent">
         {product.image ? (
           <NextImage
