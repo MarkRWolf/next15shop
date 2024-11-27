@@ -11,7 +11,7 @@ export default async function Home() {
     <div className="">
       <SalesSlider />
 
-      <div className="mx-auto max-w-sm sm:max-w-2xl md:max-w-3xl lg:max-w-4xl xl:max-w-6xl">
+      <div className="mx-auto max-w-sm sm:max-w-2xl md:max-w-3xl lg:max-w-4xl xl:max-w-7xl ">
         <ProductsView products={products} categories={categories} />
       </div>
     </div>
