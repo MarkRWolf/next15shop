@@ -35,7 +35,7 @@ const ProductPage = async ({ params }: { params: { slug: string } }) => {
               className="object-contain w-full transition-transform duration-300 hover:scale-105"
             />
           )}
-          {!isOutOfStock && (
+          {isOutOfStock && (
             <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-20">
               <span className="text-white font-bold text-lg">Out of Stock</span>
             </div>
@@ -50,10 +50,8 @@ const ProductPage = async ({ params }: { params: { slug: string } }) => {
             </div>
           </div>
           <div className="mt-6 mb-20">
-            <Suspense fallback={null}>
-              <p className="text-center">{product.stock} stk på lager</p>
-              <AddToBasketButton product={product} disabled={isOutOfStock} />
-            </Suspense>
+            <p className="text-center">{product.stock} stk på lager</p>
+            <AddToBasketButton product={product} disabled={isOutOfStock} />
           </div>
         </div>
       </div>

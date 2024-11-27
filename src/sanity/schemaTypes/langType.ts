@@ -1,9 +1,11 @@
+import { EarthGlobeIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
 export const langType = defineType({
-  name: "language", 
-  title: "Language", 
+  name: "language",
+  title: "Language",
   type: "document",
+  icon: EarthGlobeIcon,
   fields: [
     defineField({
       name: "sectionName",
@@ -34,13 +36,13 @@ export const langType = defineType({
               fields: [
                 defineField({
                   name: "daDK",
-                  title: "Danish (da-DK)",
+                  title: "Danish (daDK)",
                   type: "string",
                   description: "Text in Danish",
                 }),
                 defineField({
                   name: "enGB",
-                  title: "English (en-GB)",
+                  title: "English (enGB)",
                   type: "string",
                   description: "Text in English",
                 }),
