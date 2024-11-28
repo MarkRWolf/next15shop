@@ -27,7 +27,6 @@ const FooterInfo = ({ globals }: FooterInfoProps) => {
 
   return (
     <div>
-      <p>{lang}</p>
       <p>{privacy}</p>
       <p>{terms}</p>
     </div>

@@ -30,11 +30,13 @@ export const productType = defineType({
       options: {
         hotspot: true,
       },
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "description",
       title: "Description",
       type: "blockContent",
+      validation: (Rule) => Rule.min(1).max(500),
     }),
     defineField({
       name: "price",
@@ -47,6 +49,14 @@ export const productType = defineType({
       title: "Categories",
       type: "array",
       of: [{ type: "reference", to: { type: "category" } }],
+      validation: (Rule) => Rule.min(1),
+    }),
+    defineField({
+      name: "category",
+      title: "Category",
+      type: "string",
+      description: "First category is considered primary",
+      readOnly: true,
     }),
     defineField({
       name: "stock",

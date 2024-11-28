@@ -6,12 +6,12 @@ import NextImage from "next/image";
 import { imageUrl } from "@/lib/imageUrl";
 import { Suspense } from "react";
 import AddToBasketButton from "@/components/AddToBasketButton";
-import { Product } from "../../../../../sanity.types";
+import { Product } from "../../../../../../sanity.types";
 import { PortableText } from "next-sanity";
 
 const ProductPage = async ({ params }: { params: { slug: string } }) => {
   const { slug } = await params;
-
+  
   // Fetch product data on the server side
   const product: Product | null = await getProductBySlug(slug);
 

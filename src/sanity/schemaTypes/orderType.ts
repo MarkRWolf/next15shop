@@ -79,7 +79,7 @@ export const orderType = defineType({
             prepare(select) {
               return {
                 title: `${select.product} x ${select.quantity}`,
-                subtitle: `${select.price} * ${select.currency}`,
+                subtitle: `${select.price} ${select.currency ?? "DKK"}`,
                 media: select.image,
               };
             },

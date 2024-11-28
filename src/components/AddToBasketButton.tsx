@@ -11,10 +11,11 @@ interface AddToBasketButtonProps {
   isOutOfStock?: boolean;
 }
 
-const AddToBasketButton = ({ product, disabled, isOutOfStock }: AddToBasketButtonProps) => {
+const AddToBasketButton = ({ product }: AddToBasketButtonProps) => {
   const { addItem, removeItem, getItemCount } = useBasketStore();
   const itemCount = getItemCount(product._id);
   const [clickedElement, setClickedElement] = useState<string>("");
+  const isOutOfStock = product.stock != null && product.stock < 1;
   const time = useTime();
   const rotate = useTransform(time, [0, 3000], [0, 360], {
     clamp: false,
@@ -52,7 +53,7 @@ const AddToBasketButton = ({ product, disabled, isOutOfStock }: AddToBasketButto
             removeItem(product._id);
           }}
           className={`px-3 h-full -translate-y-0.5 text-4xl  ${itemCount === 0 && "cursor-not-allowed"}`}
-          disabled={itemCount === 0 || disabled}
+          disabled={isOutOfStock}
         >
           -
         </button>
@@ -60,7 +61,7 @@ const AddToBasketButton = ({ product, disabled, isOutOfStock }: AddToBasketButto
         <button
           onMouseDown={() => setClickedElement("+")}
           onMouseUp={() => setClickedElement("")}
-          onClick={(e) => {
+          onClick={() => {
             addItem(product);
           }}
           className={`px-3 h-full -translate-y-[1px] text-2xl ${itemCount >= (product.stock ?? 0) && "cursor-not-allowed"} `}

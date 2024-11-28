@@ -1219,6 +1219,13 @@
         },
         "optional": true
       },
+      "category": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "stock": {
         "type": "objectAttribute",
         "value": {

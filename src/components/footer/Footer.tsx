@@ -7,7 +7,7 @@ const Footer = async () => {
 
   return (
     <footer className="border-t p-4 w-full left-0 border-black border-1 ">
-      FOOTER
+    
       <FooterInfo globals={globalLangs} />
     </footer>
   );

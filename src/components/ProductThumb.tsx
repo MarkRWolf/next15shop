@@ -13,9 +13,13 @@ interface ProductThumbProps {
 const ProductThumb = ({ product }: ProductThumbProps) => {
   const isOutOfStock = product.stock != null && product.stock < 1;
 
+  const category = product.category;
+
+  if (!category) return null;
+
   return (
     <NextLink
-      href={`/products/${product.slug?.current}`}
+      href={`/products/${category.toLowerCase()}/${product.slug?.current}`}
       className="w-[350px] flex-grow relative group z-[3] bg-white"
     >
       {/* BORDER ANIMATE SIDES */}
@@ -46,7 +50,6 @@ const ProductThumb = ({ product }: ProductThumbProps) => {
         )}
         <div className="w-full font-mono self-start tracking-wider px-2 py-4">
           <h2 className="text-2xl">{product.name}</h2>
-          <h2>{product.price}</h2>
           <p className="my-4">
             {product.description?.map((block) =>
               block._type === "block"
@@ -62,11 +65,7 @@ const ProductThumb = ({ product }: ProductThumbProps) => {
                 e.stopPropagation();
               }}
             >
-              <AddToBasketButton
-                isOutOfStock={isOutOfStock}
-                product={product}
-                disabled={isOutOfStock}
-              />
+              <AddToBasketButton product={product} />
             </div>
           </div>
         </div>
