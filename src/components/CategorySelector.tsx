@@ -46,7 +46,7 @@ const CategorySelector = ({ categories }: CategorySelectorProps) => {
                 );
                 if (selectedCategory?.slug?.current) {
                   setValue(selectedCategory._id);
-                  router.push(`/categories/${selectedCategory.slug.current}`);
+                  router.push(`/products/${selectedCategory.slug.current}`);
                   setOpen(false);
                 }
               }
@@ -61,7 +61,7 @@ const CategorySelector = ({ categories }: CategorySelectorProps) => {
                   value={c.title}
                   onSelect={() => {
                     setValue(value === c._id ? "" : c._id);
-                    router.push(`/categories/${c.slug?.current}`);
+                    router.push(`/products/${c.slug?.current}`);
                     setOpen(false);
                   }}
                 >
