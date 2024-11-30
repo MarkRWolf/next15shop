@@ -438,7 +438,7 @@ export type ALL_CATEGORIES_QUERYResult = Array<{
 
 // Source: ./src/sanity/lib/products/getAllProducts.ts
 // Variable: ALL_PRODUCTS_QUERY
-// Query: *[_type == "product" && !(_id in path("drafts.*"))] | order(lower(name) asc) {  ...,  "category": (coalesce(categories[0]->title, "Uncategorized") + "")}
+// Query: *[_type == "product" && !(_id in path("drafts.*"))] | order(lower(name) asc) {..., "category": (coalesce(categories[0]->title, "Uncategorized") + "")}
 export type ALL_PRODUCTS_QUERYResult = Array<{
   _id: string;
   _type: "product";
@@ -735,7 +735,7 @@ declare module "@sanity/client" {
     "*[_type == \"language\" && sectionName == \"global\"] | order(name asc)": ALL_GLOBALS_QUERYResult;
     "\n    *[_type == \"order\" && clerkUserId == $userId] | order(orderDate desc) {\n        ...,\n        products[] {\n            ...,\n            product->\n        }\n    }\n    ": MY_ORDERS_QUERYResult;
     "*[_type == \"category\"] | order(name asc)": ALL_CATEGORIES_QUERYResult;
-    "*[_type == \"product\" && !(_id in path(\"drafts.*\"))] | order(lower(name) asc) {\n  ...,\n  \"category\": (coalesce(categories[0]->title, \"Uncategorized\") + \"\")\n}\n": ALL_PRODUCTS_QUERYResult;
+    "*[_type == \"product\" && !(_id in path(\"drafts.*\"))] | order(lower(name) asc) {..., \"category\": (coalesce(categories[0]->title, \"Uncategorized\") + \"\")}\n": ALL_PRODUCTS_QUERYResult;
     "\n    *[_type == \"product\" && slug.current == $slug && !(_id in path(\"drafts.**\"))][0]\n  ": PRODUCT_BY_SLUG_QUERYResult;
     "\n        *[_type == \"product\" && references(*[_type == \"category\" && slug.current == $category]._id) && !(_id in path(\"drafts.*\"))] | order(name asc) {..., \"category\": (coalesce(categories[0]->title, \"Uncategorized\") + \"\")}": PRODUCTS_BY_CATEGORY_QUERYResult;
     "\n    *[_type == \"product\" && name match $searchParam] | order(name asc)": PRODUCT_SEARCH_QUERYResult;

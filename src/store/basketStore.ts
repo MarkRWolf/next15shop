@@ -37,7 +37,7 @@ const useBasketStore = create<BasketState>()(
         }),
       removeItem: (productId) =>
         set((state) => ({
-          items: state.items.reduce((acc, item) => {
+          items: state.items.reduce<BasketItem[]>((acc, item) => {
             if (item.product._id === productId) {
               if (item.quantity > 1) {
                 acc.push({ ...item, quantity: item.quantity - 1 });
@@ -46,7 +46,7 @@ const useBasketStore = create<BasketState>()(
               acc.push(item);
             }
             return acc;
-          }, [] as BasketItem[]),
+          }, []),
         })),
       clearBasket: () => set({ items: [] }),
       getTotalPrice: () =>

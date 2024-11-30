@@ -3,10 +3,7 @@ import { sanityFetch } from "../live";
 
 export const getAllProducts = async () => {
   const ALL_PRODUCTS_QUERY = defineQuery(
-    `*[_type == "product" && !(_id in path("drafts.*"))] | order(lower(name) asc) {
-  ...,
-  "category": (coalesce(categories[0]->title, "Uncategorized") + "")
-}
+    `*[_type == "product" && !(_id in path("drafts.*"))] | order(lower(name) asc) {..., "category": (coalesce(categories[0]->title, "Uncategorized") + "")}
 `
   );
 

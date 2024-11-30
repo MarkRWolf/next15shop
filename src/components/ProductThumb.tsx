@@ -23,7 +23,7 @@ const ProductThumb = ({ product }: ProductThumbProps) => {
       className="w-[350px] flex-grow relative group z-[3] bg-white"
     >
       {/* BORDER ANIMATE SIDES */}
-      {/*   <div
+      {/* <div
         className={` absolute z-[1] rounded-md top-0 left-0 w-0 h-0 bg-transparent border-t-[3px] border-l-[3px]  border-transparent group-hover:w-full group-hover:h-full ${isOutOfStock ? "group-hover:border-red-800" : "group-hover:border-emerald-600"} transition-[width,height,border-color] duration-700 ease-in-out`}
       ></div>
       <div
@@ -31,7 +31,7 @@ const ProductThumb = ({ product }: ProductThumbProps) => {
       ></div> */}
       {/* BORDER BLUR */}
       <div
-        className={` absolute z-[0] blur-0  group-hover:blur-[5px] opacity-20 transition-all duration-500 rounded-md top-0 border-transparent border-t-8 border-l-8   w-[calc(100%+8px)] -translate-x-1.5 h-[calc(100%+8px)] -translate-y-1.5 ${isOutOfStock ? "group-hover:border-red-700" : "group-hover:border-emerald-700"}`}
+        className={`absolute z-[0] blur-0  group-hover:blur-[5px] opacity-20 transition-all duration-500 rounded-md top-0 border-transparent border-t-8 border-l-8   w-[calc(100%+8px)] -translate-x-1.5 h-[calc(100%+8px)] -translate-y-1.5 ${isOutOfStock ? "group-hover:border-red-700" : "group-hover:border-emerald-700"}`}
       ></div>
       <div
         className={`absolute z-[0] blur-0  group-hover:blur-[5px] opacity-20 transition-all  duration-500 rounded-md bottom-0 border-transparent border-b-8 border-r-8 w-[calc(100%+8px)]  h-[calc(100%+8px)] translate-y-1.5 ${isOutOfStock ? "group-hover:border-red-700" : "group-hover:border-emerald-700"} `}

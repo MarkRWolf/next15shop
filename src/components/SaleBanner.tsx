@@ -3,7 +3,7 @@ import { Sale } from "../../sanity.types";
 const SaleBanner = ({ sale }: { sale: Sale }) => {
   return (
     <>
-      <div className="w-full max-w-7xl mx-auto bg-gradient-to-r from-slate-900 to-slate-900/90 text-gray-200 px-6 py-10 mt-2">
+      <div className="w-full xl:max-w-7xl max-w-sm sm:max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto bg-gradient-to-r from-slate-900 to-slate-900/90 text-gray-200 px-6 py-10 mt-2">
         <div className="container mx-auto flex items-center justify-between">
           <div className="flex-1">
             <h2 className="text-3xl sm:text-5xl font-extrabold text-left mb-4">{sale.title}</h2>

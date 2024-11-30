@@ -13,8 +13,8 @@ interface AddToBasketButtonProps {
 
 const AddToBasketButton = ({ product }: AddToBasketButtonProps) => {
   const { addItem, removeItem, getItemCount } = useBasketStore();
-  const itemCount = getItemCount(product._id);
   const [clickedElement, setClickedElement] = useState<string>("");
+  const itemCount = getItemCount(product._id);
   const isOutOfStock = product.stock != null && product.stock < 1;
   const time = useTime();
   const rotate = useTransform(time, [0, 3000], [0, 360], {
