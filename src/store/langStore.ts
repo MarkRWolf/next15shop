@@ -12,7 +12,7 @@ interface LangState {
 const useLangStore = create<LangState>()(
   persist(
     (set, get) => ({
-      lang: "enGB",
+      lang: "daDK",
       defaultLang: DEFAULT_LANGUAGE,
       setLang: (lang) => set({ lang }),
       toggleLang: () => set({ lang: get().lang === "enGB" ? "daDK" : "enGB" }),
