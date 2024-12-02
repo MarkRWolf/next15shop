@@ -169,7 +169,7 @@ export const producttestType = defineType({
   preview: {
     select: {
       title: "name",
-      media: "images.0",
+      media: "images.0.asset",
       subtitle: "price",
     },
     prepare(select) {
