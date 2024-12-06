@@ -74,9 +74,9 @@ export type Texts = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  sectionName?: string;
+  sectionName: string;
   content?: Array<{
-    key?: string;
+    key: string;
     localizedText?: {
       daDK?: string;
       enGB?: string;
@@ -91,9 +91,9 @@ export type Language = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  sectionName?: string;
+  sectionName: string;
   content?: Array<{
-    key?: string;
+    key: string;
     localizedText?: {
       daDK?: string;
       enGB?: string;
@@ -123,13 +123,13 @@ export type Order = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  orderNumber?: string;
+  orderNumber: string;
   stripeCheckoutSessionId?: string;
-  stripeCustomerId?: string;
-  clerkUserId?: string;
-  customerName?: string;
-  email?: string;
-  stripePaymentIntentId?: string;
+  stripeCustomerId: string;
+  clerkUserId: string;
+  customerName: string;
+  email: string;
+  stripePaymentIntentId: string;
   products?: Array<{
     product?: {
       _ref: string;
@@ -140,11 +140,92 @@ export type Order = {
     quantity?: number;
     _key: string;
   }>;
-  totalPrice?: number;
-  currency?: string;
+  totalPrice: number;
+  currency: string;
   discountAmount?: number;
   status?: "pending" | "paid" | "shipped" | "delivered" | "cancelled";
-  orderDate?: string;
+  orderDate: string;
+};
+
+export type Producttest = {
+  _id: string;
+  _type: "producttest";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  names: Array<{
+    lang: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "langs";
+    };
+    language?: string;
+    value?: string;
+    _key: string;
+  }>;
+  slug: Slug;
+  images?: Array<{
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+    _key: string;
+  }>;
+  descriptions?: Array<{
+    lang: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "langs";
+    };
+    description?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote";
+      listItem?: "bullet";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    } | {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+      _key: string;
+    }>;
+    _key: string;
+  }>;
+  price: number;
+  categories?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "category";
+  }>;
+  category: string;
+  stock?: number;
 };
 
 export type Product = {
@@ -153,9 +234,9 @@ export type Product = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name?: string;
-  slug?: Slug;
-  image?: {
+  name: string;
+  slug: Slug;
+  image: {
     asset?: {
       _ref: string;
       _type: "reference";
@@ -196,7 +277,7 @@ export type Product = {
     _type: "image";
     _key: string;
   }>;
-  price?: number;
+  price: number;
   categories?: Array<{
     _ref: string;
     _type: "reference";
@@ -221,8 +302,17 @@ export type Category = {
 
 export type Slug = {
   _type: "slug";
-  current?: string;
+  current: string;
   source?: string;
+};
+
+export type Langs = {
+  _id: string;
+  _type: "langs";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
 };
 
 export type BlockContent = Array<{
@@ -313,7 +403,7 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Texts | Language | Sale | Order | Product | Category | Slug | BlockContent | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Texts | Language | Sale | Order | Producttest | Product | Category | Slug | Langs | BlockContent | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/lang/getAllGlobals.ts
 // Variable: ALL_GLOBALS_QUERY
@@ -324,9 +414,9 @@ export type ALL_GLOBALS_QUERYResult = Array<{
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  sectionName?: string;
+  sectionName: string;
   content?: Array<{
-    key?: string;
+    key: string;
     localizedText?: {
       daDK?: string;
       enGB?: string;
@@ -344,13 +434,13 @@ export type MY_ORDERS_QUERYResult = Array<{
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  orderNumber?: string;
+  orderNumber: string;
   stripeCheckoutSessionId?: string;
-  stripeCustomerId?: string;
-  clerkUserId?: string;
-  customerName?: string;
-  email?: string;
-  stripePaymentIntentId?: string;
+  stripeCustomerId: string;
+  clerkUserId: string;
+  customerName: string;
+  email: string;
+  stripePaymentIntentId: string;
   products: Array<{
     product: {
       _id: string;
@@ -358,9 +448,9 @@ export type MY_ORDERS_QUERYResult = Array<{
       _createdAt: string;
       _updatedAt: string;
       _rev: string;
-      name?: string;
-      slug?: Slug;
-      image?: {
+      name: string;
+      slug: Slug;
+      image: {
         asset?: {
           _ref: string;
           _type: "reference";
@@ -401,7 +491,7 @@ export type MY_ORDERS_QUERYResult = Array<{
         _type: "image";
         _key: string;
       }>;
-      price?: number;
+      price: number;
       categories?: Array<{
         _ref: string;
         _type: "reference";
@@ -415,11 +505,11 @@ export type MY_ORDERS_QUERYResult = Array<{
     quantity?: number;
     _key: string;
   }> | null;
-  totalPrice?: number;
-  currency?: string;
+  totalPrice: number;
+  currency: string;
   discountAmount?: number;
   status?: "cancelled" | "delivered" | "paid" | "pending" | "shipped";
-  orderDate?: string;
+  orderDate: string;
 }>;
 
 // Source: ./src/sanity/lib/products/getAllCategories.ts
@@ -445,9 +535,9 @@ export type ALL_PRODUCTS_QUERYResult = Array<{
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name?: string;
-  slug?: Slug;
-  image?: {
+  name: string;
+  slug: Slug;
+  image: {
     asset?: {
       _ref: string;
       _type: "reference";
@@ -488,7 +578,7 @@ export type ALL_PRODUCTS_QUERYResult = Array<{
     _type: "image";
     _key: string;
   }>;
-  price?: number;
+  price: number;
   categories?: Array<{
     _ref: string;
     _type: "reference";
@@ -500,18 +590,102 @@ export type ALL_PRODUCTS_QUERYResult = Array<{
   stock?: number;
 }>;
 
+// Source: ./src/sanity/lib/products/getAllTestProducts.ts
+// Variable: ALL_TEST_PRODUCTS_QUERY
+// Query: *[   _type == "producttest" &&  !(_id in path("drafts.*"))] | order(lower(names[0].value) asc) {  ...,  "names": names[] { ..., "language": lang->name },  price,}
+export type ALL_TEST_PRODUCTS_QUERYResult = Array<{
+  _id: string;
+  _type: "producttest";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  names: Array<{
+    lang: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "langs";
+    };
+    language: string;
+    value?: string;
+    _key: string;
+  }>;
+  slug: Slug;
+  images?: Array<{
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+    _key: string;
+  }>;
+  descriptions?: Array<{
+    lang: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "langs";
+    };
+    description?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+      listItem?: "bullet";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    } | {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+      _key: string;
+    }>;
+    _key: string;
+  }>;
+  price: number;
+  categories?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "category";
+  }>;
+  category: string;
+  stock?: number;
+}>;
+
 // Source: ./src/sanity/lib/products/getProductBySlug.ts
 // Variable: PRODUCT_BY_SLUG_QUERY
-// Query: *[_type == "product" && slug.current == $slug && !(_id in path("drafts.**"))][0]
-export type PRODUCT_BY_SLUG_QUERYResult = {
+// Query: *[_type == "product" && slug.current == $slug && !(_id in path("drafts.**"))]  {  ...,}
+export type PRODUCT_BY_SLUG_QUERYResult = Array<{
   _id: string;
   _type: "product";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name?: string;
-  slug?: Slug;
-  image?: {
+  name: string;
+  slug: Slug;
+  image: {
     asset?: {
       _ref: string;
       _type: "reference";
@@ -552,7 +726,7 @@ export type PRODUCT_BY_SLUG_QUERYResult = {
     _type: "image";
     _key: string;
   }>;
-  price?: number;
+  price: number;
   categories?: Array<{
     _ref: string;
     _type: "reference";
@@ -562,7 +736,7 @@ export type PRODUCT_BY_SLUG_QUERYResult = {
   }>;
   category?: string;
   stock?: number;
-} | null;
+}>;
 
 // Source: ./src/sanity/lib/products/getProductsByCategory.ts
 // Variable: PRODUCTS_BY_CATEGORY_QUERY
@@ -573,9 +747,9 @@ export type PRODUCTS_BY_CATEGORY_QUERYResult = Array<{
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name?: string;
-  slug?: Slug;
-  image?: {
+  name: string;
+  slug: Slug;
+  image: {
     asset?: {
       _ref: string;
       _type: "reference";
@@ -616,7 +790,7 @@ export type PRODUCTS_BY_CATEGORY_QUERYResult = Array<{
     _type: "image";
     _key: string;
   }>;
-  price?: number;
+  price: number;
   categories?: Array<{
     _ref: string;
     _type: "reference";
@@ -637,9 +811,9 @@ export type PRODUCT_SEARCH_QUERYResult = Array<{
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name?: string;
-  slug?: Slug;
-  image?: {
+  name: string;
+  slug: Slug;
+  image: {
     asset?: {
       _ref: string;
       _type: "reference";
@@ -680,7 +854,7 @@ export type PRODUCT_SEARCH_QUERYResult = Array<{
     _type: "image";
     _key: string;
   }>;
-  price?: number;
+  price: number;
   categories?: Array<{
     _ref: string;
     _type: "reference";
@@ -736,7 +910,8 @@ declare module "@sanity/client" {
     "\n    *[_type == \"order\" && clerkUserId == $userId] | order(orderDate desc) {\n        ...,\n        products[] {\n            ...,\n            product->\n        }\n    }\n    ": MY_ORDERS_QUERYResult;
     "*[_type == \"category\"] | order(name asc)": ALL_CATEGORIES_QUERYResult;
     "*[_type == \"product\" && !(_id in path(\"drafts.*\"))] | order(lower(name) asc) {..., \"category\": (coalesce(categories[0]->title, \"Uncategorized\") + \"\")}\n": ALL_PRODUCTS_QUERYResult;
-    "\n    *[_type == \"product\" && slug.current == $slug && !(_id in path(\"drafts.**\"))][0]\n  ": PRODUCT_BY_SLUG_QUERYResult;
+    "*[ \n  _type == \"producttest\" &&\n  !(_id in path(\"drafts.*\"))\n] | order(lower(names[0].value) asc) {\n  ...,\n  \"names\": names[] { ..., \"language\": lang->name },\n  price,\n}\n": ALL_TEST_PRODUCTS_QUERYResult;
+    "\n    *[_type == \"product\" && slug.current == $slug && !(_id in path(\"drafts.**\"))]  {\n  ...,\n}\n  ": PRODUCT_BY_SLUG_QUERYResult;
     "\n        *[_type == \"product\" && references(*[_type == \"category\" && slug.current == $category]._id) && !(_id in path(\"drafts.*\"))] | order(name asc) {..., \"category\": (coalesce(categories[0]->title, \"Uncategorized\") + \"\")}": PRODUCTS_BY_CATEGORY_QUERYResult;
     "\n    *[_type == \"product\" && name match $searchParam] | order(name asc)": PRODUCT_SEARCH_QUERYResult;
     "*[_type == \"sale\" && isActive == true && couponCode == $couponCode] | order(validFrom desc)[0]": ACTIVE_SALE_BY_COUPON_QUERYResult;

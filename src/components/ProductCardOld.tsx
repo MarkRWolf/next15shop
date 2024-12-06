@@ -1,4 +1,4 @@
-// File: components/ProductThumb.tsx
+// File: components/ProductCard.tsx
 
 import { Product } from "../../sanity.types";
 import NextLink from "next/link";
@@ -6,11 +6,11 @@ import NextImage from "next/image";
 import { imageUrl } from "@/lib/imageUrl";
 import AddToBasketButton from "./AddToBasketButton";
 
-interface ProductThumbProps {
+interface ProductCardProps {
   product: Product;
 }
 
-const ProductThumb = ({ product }: ProductThumbProps) => {
+const ProductCard = ({ product }: ProductCardProps) => {
   const isOutOfStock = product.stock != null && product.stock < 1;
 
   const category = product.category;
@@ -74,4 +74,4 @@ const ProductThumb = ({ product }: ProductThumbProps) => {
   );
 };
 
-export default ProductThumb;
+export default ProductCard;

@@ -1,12 +1,12 @@
 "use client";
 
 import useBasketStore from "@/store/basketStore";
-import { Product } from "../../sanity.types";
+import { Producttest } from "../../sanity.types";
 import { useEffect, useState } from "react";
 import { motion, useTime, useTransform } from "framer-motion";
 
 interface AddToBasketButtonProps {
-  product: Product;
+  product: Producttest;
   disabled?: boolean;
   isOutOfStock?: boolean;
 }

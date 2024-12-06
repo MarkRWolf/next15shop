@@ -1,10 +1,10 @@
 import ProductsView from "@/components/ProductsView";
 import SalesSlider from "@/components/SalesSlider";
 import { getAllCategories } from "@/sanity/lib/products/getAllCategories";
-import { getAllProducts } from "@/sanity/lib/products/getAllProducts";
+import { getAllTestProducts } from "@/sanity/lib/products/getAllTestProducts";
 
 export default async function Home() {
-  const products = await getAllProducts();
+  const products = await getAllTestProducts();
   const categories = await getAllCategories();
 
   return (

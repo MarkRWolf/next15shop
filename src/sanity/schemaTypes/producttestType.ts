@@ -1,6 +1,5 @@
 import { TrolleyIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
-import { DEFAULT_LANGUAGE } from "@/types/languages";
 
 export const producttestType = defineType({
   name: "producttest",
@@ -9,9 +8,9 @@ export const producttestType = defineType({
   icon: TrolleyIcon,
   fields: [
     defineField({
-      name: "name",
-      title: "Product Name",
-      description: `${DEFAULT_LANGUAGE} should always be first!!`,
+      name: "names",
+      title: "Product Names",
+      description: `should always be first!!`,
       type: "array",
       of: [
         {
@@ -25,10 +24,17 @@ export const producttestType = defineType({
               validation: (Rule) => Rule.required(),
             }),
             defineField({
+              name: "language",
+              title: "Language",
+              type: "string",
+              description: "Ignore field",
+              readOnly: true,
+            }),
+            defineField({
               name: "value",
               title: "Name",
               type: "string",
-              validation: (Rule) => Rule.required(),
+              validation: (Rule) => Rule.min(1),
             }),
           ],
           preview: {
@@ -46,28 +52,31 @@ export const producttestType = defineType({
         },
       ],
       validation: (Rule) =>
-        Rule.custom((names) => {
-          if (!names || names.length === 0) {
+        Rule.required()
+          .min(1)
+          .custom((names) => {
+            // Ensure at least one name is present
+            if (!names || names.length < 1) {
+              return "At least one name is required.";
+            }
+
+            const langIds = names.map((item) => item.lang?._ref).filter(Boolean);
+
+            const uniqueLangIds = new Set(langIds);
+            if (langIds.length !== uniqueLangIds.size) {
+              return "Duplicate language detected. Each language must be unique.";
+            }
+
             return true;
-          }
-
-          const langIds = names.map((item) => item.lang?._ref);
-          const uniqueLangIds = new Set(langIds);
-
-          if (langIds.length !== uniqueLangIds.size) {
-            return "double language detected";
-          }
-
-          return true;
-        }),
+          }),
     }),
     defineField({
       name: "slug",
       title: "Slug",
-      description: `${DEFAULT_LANGUAGE} should always be first!! ^`,
+      description: `should always be first!! ^`,
       type: "slug",
       options: {
-        source: "name.0.value",
+        source: "names.0.value",
         maxLength: 96,
       },
       validation: (Rule) => Rule.required(),
@@ -143,7 +152,7 @@ export const producttestType = defineType({
       name: "price",
       title: "Price",
       type: "number",
-      validation: (Rule) => Rule.min(0),
+      validation: (Rule) => Rule.required().min(0),
     }),
     defineField({
       name: "categories",
@@ -158,6 +167,7 @@ export const producttestType = defineType({
       type: "string",
       description: "First category is considered primary",
       readOnly: true,
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "stock",
@@ -168,7 +178,7 @@ export const producttestType = defineType({
   ],
   preview: {
     select: {
-      title: "name",
+      title: "names.0.value",
       media: "images.0.asset",
       subtitle: "price",
     },

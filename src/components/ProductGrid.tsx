@@ -1,8 +1,8 @@
 "use client";
-import { Product } from "../../sanity.types";
+import { Producttest } from "../../sanity.types";
 import { AnimatePresence, motion } from "framer-motion";
-import ProductThumb from "./ProductThumb";
-const ProductGrid = ({ products }: { products: Product[] }) => {
+import ProductCard from "./ProductCard";
+const ProductGrid = ({ products }: { products: Producttest[] }) => {
   return (
     <div className="w-full flex flex-wrap gap-20 justify-start mt-4">
       {products.map((product) => (
@@ -15,7 +15,7 @@ const ProductGrid = ({ products }: { products: Product[] }) => {
             exit={{ opacity: 0 }}
             className="w-[350px] max-w-[370px] flex-grow"
           >
-            <ProductThumb product={product} />
+            <ProductCard product={product} />
           </motion.div>
         </AnimatePresence>
       ))}
