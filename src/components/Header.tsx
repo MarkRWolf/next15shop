@@ -23,7 +23,7 @@ function Header() {
           href="/"
           className="text-3xl font-bold text-green-700 hover:opacity-80 cursor-pointer mx-auto sm:mx-0"
         >
-          Grej
+          Shop
         </NextLink>
 
         <div className="flex items-center gap-0 sm:gap-1 md:gap-2 space-x-4 mt-4 sm:mt-0 flex-1 sm:flex-none">

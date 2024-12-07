@@ -13,15 +13,11 @@ interface ProductCardProps {
 
 const ProductCard = ({ product }: ProductCardProps) => {
   const isOutOfStock = product.stock != null && product.stock < 1;
-
-  const category = product.category;
-
   const name = product.names.find((name) => name.language === DEFAULT_LANGUAGE)?.language ?? "";
-  console.log(product);
 
   return (
     <NextLink
-      href={`/products/${category.toLowerCase()}/${product.slug?.current}`}
+      href={`/products/${product.category.toLowerCase()}/${product.slug.current}`}
       className="w-[350px] flex-grow relative group z-[3] bg-white"
     >
       {/* BORDER ANIMATE SIDES */}
