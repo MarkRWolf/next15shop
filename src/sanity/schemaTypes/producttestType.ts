@@ -1,4 +1,4 @@
-import { TrolleyIcon } from "@sanity/icons";
+import { EditIcon, TrolleyIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
 export const producttestType = defineType({
@@ -15,6 +15,7 @@ export const producttestType = defineType({
       of: [
         {
           type: "object",
+          icon: EditIcon,
           fields: [
             defineField({
               name: "lang",
@@ -42,10 +43,11 @@ export const producttestType = defineType({
               lang: "lang.name",
               value: "value",
             },
-            prepare(select) {
+            prepare({ lang, value }) {
               return {
-                title: select.lang || "No lang selected",
-                subtitle: select.value || "No name",
+                title: lang || "No lang selected",
+                subtitle: value || "No name",
+                media: EditIcon,
               };
             },
           },
@@ -55,13 +57,11 @@ export const producttestType = defineType({
         Rule.required()
           .min(1)
           .custom((names) => {
-            // Ensure at least one name is present
             if (!names || names.length < 1) {
               return "At least one name is required.";
             }
 
             const langIds = names.map((item) => item.lang?._ref).filter(Boolean);
-
             const uniqueLangIds = new Set(langIds);
             if (langIds.length !== uniqueLangIds.size) {
               return "Duplicate language detected. Each language must be unique.";
@@ -123,10 +123,10 @@ export const producttestType = defineType({
               lang: "lang.name",
               description: "description.0.children.0.text",
             },
-            prepare(select) {
+            prepare({ lang, description }) {
               return {
-                title: select.lang || "No language selected",
-                subtitle: select.description || "No description",
+                title: lang || "No language selected",
+                subtitle: description || "No description",
               };
             },
           },
@@ -157,6 +157,7 @@ export const producttestType = defineType({
     defineField({
       name: "categories",
       title: "Categories",
+      description: "First category is considered primary",
       type: "array",
       of: [{ type: "reference", to: { type: "category" } }],
       validation: (Rule) => Rule.min(1),
@@ -165,8 +166,8 @@ export const producttestType = defineType({
       name: "category",
       title: "Category",
       type: "string",
-      description: "First category is considered primary",
       readOnly: true,
+      hidden: true,
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -182,12 +183,11 @@ export const producttestType = defineType({
       media: "images.0.asset",
       subtitle: "price",
     },
-    prepare(select) {
-      const firstName = Array.isArray(select.title) && select.title[0]?.value;
+    prepare({ title, subtitle, media }) {
       return {
-        title: firstName || "No name",
-        subtitle: `DKK: ${select.subtitle}`,
-        media: select.media,
+        title: title || "No name",
+        subtitle: `DKK: ${subtitle}`,
+        media: media,
       };
     },
   },
