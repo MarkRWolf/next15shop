@@ -160,7 +160,7 @@ export const producttestType = defineType({
       description: "First category is considered primary",
       type: "array",
       of: [{ type: "reference", to: { type: "category" } }],
-      validation: (Rule) => Rule.min(1),
+      validation: (Rule) => Rule.required().min(1),
     }),
     defineField({
       name: "category",
@@ -174,7 +174,7 @@ export const producttestType = defineType({
       name: "stock",
       title: "Stock",
       type: "number",
-      validation: (Rule) => Rule.min(0),
+      validation: (Rule) => Rule.required().min(0),
     }),
   ],
   preview: {

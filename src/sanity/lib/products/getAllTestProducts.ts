@@ -9,8 +9,8 @@ export const getAllTestProducts = async () => {
 ] | order(lower(names[0].value) asc) {
   ...,
   "names": names[] { ..., "language": lang->name },
-"category": (coalesce(categories[0]->title, "Uncategorized") + "")
-  }
+"category": coalesce(categories[0]->title, ""),
+}
 `
   );
 

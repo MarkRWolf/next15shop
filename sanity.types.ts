@@ -217,7 +217,7 @@ export type Producttest = {
     _key: string;
   }>;
   price: number;
-  categories?: Array<{
+  categories: Array<{
     _ref: string;
     _type: "reference";
     _weak?: boolean;
@@ -225,7 +225,7 @@ export type Producttest = {
     [internalGroqTypeReferenceTo]?: "category";
   }>;
   category: string;
-  stock?: number;
+  stock: number;
 };
 
 export type Product = {
@@ -425,93 +425,6 @@ export type ALL_GLOBALS_QUERYResult = Array<{
   }>;
 }>;
 
-// Source: ./src/sanity/lib/orders/getMyOrders.tsx
-// Variable: MY_ORDERS_QUERY
-// Query: *[_type == "order" && clerkUserId == $userId] | order(orderDate desc) {        ...,        products[] {            ...,            product->        }    }
-export type MY_ORDERS_QUERYResult = Array<{
-  _id: string;
-  _type: "order";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  orderNumber: string;
-  stripeCheckoutSessionId?: string;
-  stripeCustomerId: string;
-  clerkUserId: string;
-  customerName: string;
-  email: string;
-  stripePaymentIntentId: string;
-  products: Array<{
-    product: {
-      _id: string;
-      _type: "product";
-      _createdAt: string;
-      _updatedAt: string;
-      _rev: string;
-      name: string;
-      slug: Slug;
-      image: {
-        asset?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-        };
-        hotspot?: SanityImageHotspot;
-        crop?: SanityImageCrop;
-        _type: "image";
-      };
-      description?: Array<{
-        children?: Array<{
-          marks?: Array<string>;
-          text?: string;
-          _type: "span";
-          _key: string;
-        }>;
-        style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
-        listItem?: "bullet";
-        markDefs?: Array<{
-          href?: string;
-          _type: "link";
-          _key: string;
-        }>;
-        level?: number;
-        _type: "block";
-        _key: string;
-      } | {
-        asset?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-        };
-        hotspot?: SanityImageHotspot;
-        crop?: SanityImageCrop;
-        alt?: string;
-        _type: "image";
-        _key: string;
-      }>;
-      price: number;
-      categories?: Array<{
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        _key: string;
-        [internalGroqTypeReferenceTo]?: "category";
-      }>;
-      category?: string;
-      stock?: number;
-    } | null;
-    quantity?: number;
-    _key: string;
-  }> | null;
-  totalPrice: number;
-  currency: string;
-  discountAmount?: number;
-  status?: "cancelled" | "delivered" | "paid" | "pending" | "shipped";
-  orderDate: string;
-}>;
-
 // Source: ./src/sanity/lib/products/getAllCategories.ts
 // Variable: ALL_CATEGORIES_QUERY
 // Query: *[_type == "category"] | order(name asc)
@@ -592,7 +505,7 @@ export type ALL_PRODUCTS_QUERYResult = Array<{
 
 // Source: ./src/sanity/lib/products/getAllTestProducts.ts
 // Variable: ALL_TEST_PRODUCTS_QUERY
-// Query: *[   _type == "producttest" &&  !(_id in path("drafts.*"))] | order(lower(names[0].value) asc) {  ...,  "names": names[] { ..., "language": lang->name },"category": (coalesce(categories[0]->title, "Uncategorized") + "")  }
+// Query: *[   _type == "producttest" &&  !(_id in path("drafts.*"))] | order(lower(names[0].value) asc) {  ...,  "names": names[] { ..., "language": lang->name },"category": coalesce(categories[0]->title, ""),price,stock }
 export type ALL_TEST_PRODUCTS_QUERYResult = Array<{
   _id: string;
   _type: "producttest";
@@ -663,15 +576,15 @@ export type ALL_TEST_PRODUCTS_QUERYResult = Array<{
     _key: string;
   }>;
   price: number;
-  categories?: Array<{
+  categories: Array<{
     _ref: string;
     _type: "reference";
     _weak?: boolean;
     _key: string;
     [internalGroqTypeReferenceTo]?: "category";
   }>;
-  category: string | "Uncategorized";
-  stock?: number;
+  category: string | "";
+  stock: number;
 }>;
 
 // Source: ./src/sanity/lib/products/getProductBySlug.ts
@@ -902,19 +815,106 @@ export type GET_ACTIVE_SALESResult = Array<{
   isActive?: boolean;
 }>;
 
+// Source: ./src/sanity/lib/orders/getMyOrders.tsx
+// Variable: MY_ORDERS_QUERY
+// Query: *[_type == "order" && clerkUserId == $userId] | order(orderDate desc) {        ...,        products[] {            ...,            product->        }    }
+export type MY_ORDERS_QUERYResult = Array<{
+  _id: string;
+  _type: "order";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  orderNumber: string;
+  stripeCheckoutSessionId?: string;
+  stripeCustomerId: string;
+  clerkUserId: string;
+  customerName: string;
+  email: string;
+  stripePaymentIntentId: string;
+  products: Array<{
+    product: {
+      _id: string;
+      _type: "product";
+      _createdAt: string;
+      _updatedAt: string;
+      _rev: string;
+      name: string;
+      slug: Slug;
+      image: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: "image";
+      };
+      description?: Array<{
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+        listItem?: "bullet";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      } | {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt?: string;
+        _type: "image";
+        _key: string;
+      }>;
+      price: number;
+      categories?: Array<{
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        _key: string;
+        [internalGroqTypeReferenceTo]?: "category";
+      }>;
+      category?: string;
+      stock?: number;
+    } | null;
+    quantity?: number;
+    _key: string;
+  }> | null;
+  totalPrice: number;
+  currency: string;
+  discountAmount?: number;
+  status?: "cancelled" | "delivered" | "paid" | "pending" | "shipped";
+  orderDate: string;
+}>;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     "*[_type == \"language\" && sectionName == \"global\"] | order(name asc)": ALL_GLOBALS_QUERYResult;
-    "\n    *[_type == \"order\" && clerkUserId == $userId] | order(orderDate desc) {\n        ...,\n        products[] {\n            ...,\n            product->\n        }\n    }\n    ": MY_ORDERS_QUERYResult;
     "*[_type == \"category\"] | order(name asc)": ALL_CATEGORIES_QUERYResult;
     "*[_type == \"product\" && !(_id in path(\"drafts.*\"))] | order(lower(name) asc) {..., \"category\": (coalesce(categories[0]->title, \"Uncategorized\") + \"\")}\n": ALL_PRODUCTS_QUERYResult;
-    "*[ \n  _type == \"producttest\" &&\n  !(_id in path(\"drafts.*\"))\n] | order(lower(names[0].value) asc) {\n  ...,\n  \"names\": names[] { ..., \"language\": lang->name },\n\"category\": (coalesce(categories[0]->title, \"Uncategorized\") + \"\")\n  }\n": ALL_TEST_PRODUCTS_QUERYResult;
+    "*[ \n  _type == \"producttest\" &&\n  !(_id in path(\"drafts.*\"))\n] | order(lower(names[0].value) asc) {\n  ...,\n  \"names\": names[] { ..., \"language\": lang->name },\n\"category\": coalesce(categories[0]->title, \"\"),\nprice,\nstock }\n": ALL_TEST_PRODUCTS_QUERYResult;
     "\n    *[_type == \"product\" && slug.current == $slug && !(_id in path(\"drafts.**\"))]  {\n  ...,\n}\n  ": PRODUCT_BY_SLUG_QUERYResult;
     "\n        *[_type == \"product\" && references(*[_type == \"category\" && slug.current == $category]._id) && !(_id in path(\"drafts.*\"))] | order(name asc) {..., \"category\": (coalesce(categories[0]->title, \"Uncategorized\") + \"\")}": PRODUCTS_BY_CATEGORY_QUERYResult;
     "\n    *[_type == \"product\" && name match $searchParam] | order(name asc)": PRODUCT_SEARCH_QUERYResult;
     "*[_type == \"sale\" && isActive == true && couponCode == $couponCode] | order(validFrom desc)[0]": ACTIVE_SALE_BY_COUPON_QUERYResult;
     "*[_type == \"sale\" && isActive == true && !(_id in path(\"drafts.*\"))] | order(validFrom desc)": GET_ACTIVE_SALESResult;
+    "\n    *[_type == \"order\" && clerkUserId == $userId] | order(orderDate desc) {\n        ...,\n        products[] {\n            ...,\n            product->\n        }\n    }\n    ": MY_ORDERS_QUERYResult;
   }
 }
