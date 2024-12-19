@@ -6,18 +6,21 @@ import NextImage from "next/image";
 import { imageUrl } from "@/lib/imageUrl";
 import AddToBasketButton from "./AddToBasketButton";
 import { DEFAULT_LANGUAGE } from "@/types/languages";
+import useLangStore from "@/store/langStore";
 
 interface ProductCardProps {
   product: Producttest;
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
+  const { lang } = useLangStore();
   const isOutOfStock = product.stock != null && product.stock < 1;
-  const name = product.names.find((name) => name.language === DEFAULT_LANGUAGE)?.language ?? "";
-
+  const name = product.names?.find((n) => n.language === lang)?.value;
+  const description = product.descriptions?.find((d) => d.language === lang)?.description;
+  console.log("descriptions:", product.descriptions);
   return (
     <NextLink
-      href={`/products/${product.category.toLowerCase()}/${product.slug.current}`}
+      href={`/products/${product.category?.toLowerCase()}/${product.slug.current}`}
       className="w-[350px] flex-grow relative group z-[3] bg-white"
     >
       {/* BORDER ANIMATE SIDES */}
@@ -47,9 +50,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
           <span className="w-full aspect-square object-cover bg-gray-200 rounded-lg"></span>
         )}
         <div className="w-full font-mono self-start tracking-wider px-2 py-4">
-          <h2 className="text-2xl">{name}</h2>
+          <h2 className="text-2xl capitalize">{name}</h2>
           <p className="my-4">
-            {product.descriptions?.[0].description?.map((block) =>
+            {description?.map((block) =>
               block._type === "block"
                 ? block.children?.map((child) => child.text).join("")
                 : "No description"

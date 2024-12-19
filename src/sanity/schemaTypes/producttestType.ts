@@ -30,6 +30,7 @@ export const producttestType = defineType({
               type: "string",
               description: "Ignore field",
               readOnly: true,
+              hidden: true,
             }),
             defineField({
               name: "value",
@@ -112,6 +113,14 @@ export const producttestType = defineType({
               validation: (Rule) => Rule.required(),
             }),
             defineField({
+              name: "language",
+              title: "Language",
+              type: "string",
+              description: "Ignore field",
+              readOnly: true,
+              hidden: true,
+            }),
+            defineField({
               name: "description",
               title: "Description",
               type: "blockContent",
@@ -133,20 +142,22 @@ export const producttestType = defineType({
         },
       ],
       validation: (Rule) =>
-        Rule.custom((descriptions) => {
-          if (!descriptions || descriptions.length === 0) {
+        Rule.required()
+          .min(1)
+          .custom((descriptions) => {
+            if (!descriptions || descriptions.length === 0) {
+              return true;
+            }
+
+            const langIds = descriptions.map((item) => item.lang?._ref);
+            const uniqueLangIds = new Set(langIds);
+
+            if (langIds.length !== uniqueLangIds.size) {
+              return "Double languages detected";
+            }
+
             return true;
-          }
-
-          const langIds = descriptions.map((item) => item.lang?._ref);
-          const uniqueLangIds = new Set(langIds);
-
-          if (langIds.length !== uniqueLangIds.size) {
-            return "Double languages detected";
-          }
-
-          return true;
-        }),
+          }),
     }),
     defineField({
       name: "price",
@@ -168,7 +179,6 @@ export const producttestType = defineType({
       type: "string",
       readOnly: true,
       hidden: true,
-      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "stock",

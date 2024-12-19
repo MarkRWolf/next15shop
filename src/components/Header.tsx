@@ -6,15 +6,18 @@ import useLangStore from "@/store/langStore";
 import Image from "next/image";
 import NextLink from "next/link";
 import Form from "next/form";
-import { SUPPORTED_LANGUAGES } from "@/types/languages";
 import { useState, useRef } from "react";
+import { Language } from "../../sanity.types";
 
-function Header() {
+function Header({ globals }: { globals: Language[] }) {
   const { user } = useUser();
   const { lang, toggleLang } = useLangStore();
   const searchRef = useRef<HTMLInputElement>(null);
   const searchBtnRef = useRef<HTMLButtonElement>(null);
   const [searchVal, setSearchVal] = useState("");
+  const formPlaceholder = globals[0]?.content.find((g) => g.key === "search")?.localizedText?.[
+    lang
+  ];
 
   return (
     <header className="py-2 fixed inset-0 bg-white z-10 max-h-14 shadow-black/30 shadow-md">
