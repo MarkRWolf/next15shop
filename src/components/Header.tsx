@@ -8,6 +8,7 @@ import NextLink from "next/link";
 import Form from "next/form";
 import { useState, useRef } from "react";
 import { Language } from "../../sanity.types";
+import { DEFAULT_LANGUAGE } from "@/types/languages";
 
 function Header({ globals }: { globals: Language[] }) {
   const { user } = useUser();
@@ -15,10 +16,17 @@ function Header({ globals }: { globals: Language[] }) {
   const searchRef = useRef<HTMLInputElement>(null);
   const searchBtnRef = useRef<HTMLButtonElement>(null);
   const [searchVal, setSearchVal] = useState("");
-  const formPlaceholder = globals[0]?.content.find((g) => g.key === "search")?.localizedText?.[
-    lang
-  ];
+  const globalsContent = globals[0]?.content || [];
 
+  const getLocalizedText = (key: string) => {
+    const contentItem = globalsContent?.find((g) => g.key === key);
+    const localizedText = contentItem?.localizedText?.[lang];
+    return localizedText && localizedText.length > 0
+      ? localizedText
+      : contentItem?.localizedText?.[DEFAULT_LANGUAGE];
+  };
+
+  const searchPlaceholder = getLocalizedText("search");
   return (
     <header className="py-2 fixed inset-0 bg-white z-10 max-h-14 shadow-black/30 shadow-md">
       <div className="max-w-7xl mx-auto flex justify-between items-center gap-4">
@@ -48,7 +56,7 @@ function Header({ globals }: { globals: Language[] }) {
               name="query"
               value={searchVal}
               onChange={(e) => setSearchVal(e.target.value)}
-              placeholder="Search for products"
+              placeholder={searchPlaceholder}
               className={`absolute top-1/2 right-0 -translate-y-1/2 mt-[0.125rem] bg-transparent text-gray-800 pl-0 focus:outline-none focus:ring-opacity-50 border-b border-gray-400  w-44 max-w-4xl `}
             />
             <button

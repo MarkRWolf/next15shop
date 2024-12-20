@@ -513,42 +513,6 @@ export type MY_ORDERS_QUERYResult = Array<{
   orderDate: string;
 }>;
 
-// Source: ./src/sanity/lib/sales/getActiveSaleByCouponCode.ts
-// Variable: ACTIVE_SALE_BY_COUPON_QUERY
-// Query: *[_type == "sale" && isActive == true && couponCode == $couponCode] | order(validFrom desc)[0]
-export type ACTIVE_SALE_BY_COUPON_QUERYResult = {
-  _id: string;
-  _type: "sale";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: string;
-  description?: string;
-  discountAmount?: number;
-  couponCode?: string;
-  startDate?: string;
-  endDate?: string;
-  isActive?: boolean;
-} | null;
-
-// Source: ./src/sanity/lib/sales/getActiveSales.ts
-// Variable: GET_ACTIVE_SALES
-// Query: *[_type == "sale" && isActive == true && !(_id in path("drafts.*"))] | order(validFrom desc)
-export type GET_ACTIVE_SALESResult = Array<{
-  _id: string;
-  _type: "sale";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: string;
-  description?: string;
-  discountAmount?: number;
-  couponCode?: string;
-  startDate?: string;
-  endDate?: string;
-  isActive?: boolean;
-}>;
-
 // Source: ./src/sanity/lib/products/getAllCategories.ts
 // Variable: ALL_CATEGORIES_QUERY
 // Query: *[_type == "category"] | order(name asc)
@@ -785,44 +749,26 @@ export type PRODUCT_BY_SLUG_QUERYResult = Array<{
 
 // Source: ./src/sanity/lib/products/getProductsByCategory.ts
 // Variable: PRODUCTS_BY_CATEGORY_QUERY
-// Query: *[_type == "product" && references(*[_type == "category" && slug.current == $category]._id) && !(_id in path("drafts.*"))] | order(name asc) {..., "category": (coalesce(categories[0]->title, "Uncategorized") + "")}
+// Query: *[_type == "producttest" && references(*[_type == "category" && slug.current == $category]._id) && !(_id in path("drafts.*"))] | order(name asc) {    ...,    "names": names[] { ..., "language": lang->name },    "descriptions": descriptions[] { ..., "language": lang->name },    "category": coalesce(categories[0]->title, "")  }
 export type PRODUCTS_BY_CATEGORY_QUERYResult = Array<{
   _id: string;
-  _type: "product";
+  _type: "producttest";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name: string;
-  slug: Slug;
-  image: {
-    asset?: {
+  names: Array<{
+    lang: {
       _ref: string;
       _type: "reference";
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      [internalGroqTypeReferenceTo]?: "langs";
     };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
-  description?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
-    listItem?: "bullet";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
+    language: string;
+    value?: string;
     _key: string;
-  } | {
+  }>;
+  slug: Slug;
+  images?: Array<{
     asset?: {
       _ref: string;
       _type: "reference";
@@ -831,20 +777,59 @@ export type PRODUCTS_BY_CATEGORY_QUERYResult = Array<{
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    alt?: string;
     _type: "image";
     _key: string;
   }>;
+  descriptions: Array<{
+    lang: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "langs";
+    };
+    language: string;
+    description?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+      listItem?: "bullet";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    } | {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+      _key: string;
+    }>;
+    _key: string;
+  }>;
   price: number;
-  categories?: Array<{
+  categories: Array<{
     _ref: string;
     _type: "reference";
     _weak?: boolean;
     _key: string;
     [internalGroqTypeReferenceTo]?: "category";
   }>;
-  category: string | "Uncategorized";
-  stock?: number;
+  category: string | "";
+  stock: number;
 }>;
 
 // Source: ./src/sanity/lib/products/getTestProductBySlug.ts
@@ -1081,22 +1066,58 @@ export type PRODUCT_SEARCH_QUERYResult = Array<{
   stock?: number;
 }>;
 
+// Source: ./src/sanity/lib/sales/getActiveSaleByCouponCode.ts
+// Variable: ACTIVE_SALE_BY_COUPON_QUERY
+// Query: *[_type == "sale" && isActive == true && couponCode == $couponCode] | order(validFrom desc)[0]
+export type ACTIVE_SALE_BY_COUPON_QUERYResult = {
+  _id: string;
+  _type: "sale";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  description?: string;
+  discountAmount?: number;
+  couponCode?: string;
+  startDate?: string;
+  endDate?: string;
+  isActive?: boolean;
+} | null;
+
+// Source: ./src/sanity/lib/sales/getActiveSales.ts
+// Variable: GET_ACTIVE_SALES
+// Query: *[_type == "sale" && isActive == true && !(_id in path("drafts.*"))] | order(validFrom desc)
+export type GET_ACTIVE_SALESResult = Array<{
+  _id: string;
+  _type: "sale";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  description?: string;
+  discountAmount?: number;
+  couponCode?: string;
+  startDate?: string;
+  endDate?: string;
+  isActive?: boolean;
+}>;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     "*[_type == \"language\" && sectionName == \"global\"] | order(name asc)": ALL_GLOBALS_QUERYResult;
     "\n    *[_type == \"order\" && clerkUserId == $userId] | order(orderDate desc) {\n        ...,\n        products[] {\n            ...,\n            product->\n        }\n    }\n    ": MY_ORDERS_QUERYResult;
-    "*[_type == \"sale\" && isActive == true && couponCode == $couponCode] | order(validFrom desc)[0]": ACTIVE_SALE_BY_COUPON_QUERYResult;
-    "*[_type == \"sale\" && isActive == true && !(_id in path(\"drafts.*\"))] | order(validFrom desc)": GET_ACTIVE_SALESResult;
     "*[_type == \"category\"] | order(name asc)": ALL_CATEGORIES_QUERYResult;
     "*[_type == \"product\" && !(_id in path(\"drafts.*\"))] | order(lower(name) asc) {..., \"category\": (coalesce(categories[0]->title, \"Uncategorized\") + \"\")}\n": ALL_PRODUCTS_QUERYResult;
     "*[ \n  _type == \"producttest\" &&\n  !(_id in path(\"drafts.*\"))\n] | order(lower(names[0].value) asc) {\n  ...,\n  \"names\": names[] { ..., \"language\": lang->name },\n  \"descriptions\": descriptions[] { ..., \"language\": lang->name },\n\"category\": coalesce(categories[0]->title, \"\"),\n}\n": ALL_TEST_PRODUCTS_QUERYResult;
     "*[\n        _type == \"producttest\" &&\n        !(_id in path(\"drafts.*\"))\n    ] | order(lower(names[0].value) asc) {\n        \"slug\": slug.current\n    }": ALL_TEST_SLUGS_QUERYResult;
     "\n    *[_type == \"product\" && slug.current == $slug && !(_id in path(\"drafts.**\"))]  {\n  ...,\n}\n  ": PRODUCT_BY_SLUG_QUERYResult;
-    "\n        *[_type == \"product\" && references(*[_type == \"category\" && slug.current == $category]._id) && !(_id in path(\"drafts.*\"))] | order(name asc) {..., \"category\": (coalesce(categories[0]->title, \"Uncategorized\") + \"\")}": PRODUCTS_BY_CATEGORY_QUERYResult;
+    "\n        *[_type == \"producttest\" && references(*[_type == \"category\" && slug.current == $category]._id) && !(_id in path(\"drafts.*\"))] | order(name asc) {\n    ...,\n    \"names\": names[] { ..., \"language\": lang->name },\n    \"descriptions\": descriptions[] { ..., \"language\": lang->name },\n    \"category\": coalesce(categories[0]->title, \"\")\n  }": PRODUCTS_BY_CATEGORY_QUERYResult;
     "\n  *[_type == \"producttest\" && slug.current == $slug && !(_id in path(\"drafts.**\"))][0] {\n    ...,\n    \"names\": names[] { ..., \"language\": lang->name },\n    \"descriptions\": descriptions[] { ..., \"language\": lang->name },\n    \"category\": coalesce(categories[0]->title, \"\")\n  }\n": TESTPRODUCT_BY_SLUG_QUERYResult;
     "\n        *[_type == \"producttest\" && references(*[_type == \"category\" && slug.current == $category]._id) && !(_id in path(\"drafts.*\"))] | order(name asc) {\n  ...,\n  \"names\": names[] { ..., \"language\": lang->name },\n  \"descriptions\": descriptions[] { ..., \"language\": lang->name },\n\"category\": coalesce(categories[0]->title, \"\"),\n}": TESTPRODUCTS_BY_CATEGORY_QUERYResult;
     "\n    *[_type == \"product\" && name match $searchParam] | order(name asc)": PRODUCT_SEARCH_QUERYResult;
+    "*[_type == \"sale\" && isActive == true && couponCode == $couponCode] | order(validFrom desc)[0]": ACTIVE_SALE_BY_COUPON_QUERYResult;
+    "*[_type == \"sale\" && isActive == true && !(_id in path(\"drafts.*\"))] | order(validFrom desc)": GET_ACTIVE_SALESResult;
   }
 }
