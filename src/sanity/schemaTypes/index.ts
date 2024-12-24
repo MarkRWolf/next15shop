@@ -3,13 +3,13 @@ import { type SchemaTypeDefinition } from "sanity";
 import { blockContentType } from "./blockContentType";
 import { categoryType } from "./categoryType";
 
-import { productType } from "./productType";
+import { productTypeOld } from "./productTypeOld";
 import { orderType } from "./orderType";
 import { salesType } from "./salesType";
 import { langType } from "./langType";
 import { textType } from "./textType";
 import { langsType } from "./langsType";
-import { producttestType } from "./producttestType";
+import { productType } from "./productType";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -17,7 +17,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     langsType,
     categoryType,
     productType,
-    producttestType,
     orderType,
     salesType,
     langType,

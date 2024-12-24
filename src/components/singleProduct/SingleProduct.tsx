@@ -4,23 +4,28 @@ import NextImage from "next/image";
 import { imageUrl } from "@/lib/imageUrl";
 import AddToBasketButton from "@/components/AddToBasketButton";
 import { PortableText } from "next-sanity";
-import { Producttest } from "../../../sanity.types";
+import { Product } from "../../../sanity.types";
 import useLangStore from "@/store/langStore";
 import { useState } from "react";
+import { DEFAULT_LANGUAGE } from "@/types/languages";
 
-const SingleProduct = ({ product }: { product: Producttest }) => {
+const SingleProduct = ({ product }: { product: Product }) => {
   const { lang } = useLangStore();
   const [selectedImg, setSelectedImg] = useState(0);
   const [hoveredImg, setHoveredImg] = useState(-1);
   const isOutOfStock = !product.stock || product.stock <= 0;
-  const name = product.names.find((n) => n.language === lang)?.value;
-  const description = product.descriptions?.find((d) => d.language === lang)?.description;
+  const name =
+    product.names?.find((n) => n.language === lang)?.value ||
+    product.names?.find((n) => n.language === DEFAULT_LANGUAGE)?.value;
+  const description =
+    product.descriptions?.find((d) => d.language === lang)?.description ||
+    product.descriptions?.find((d) => d.language === DEFAULT_LANGUAGE)?.description;
   console.log("images:", product.images);
   return (
     <div className="px-4 py-8">
       <div className="mx-auto max-w-7xl flex gap-8 lg:gap-16">
         <div
-          className={`relative w-2/5 h-100 flex flex-wrap rounded-lg  ${isOutOfStock ? "opacity-50" : ""}`}
+          className={`relative w-2/5 h-100 flex flex-wrap rounded-lg  ${isOutOfStock && "opacity-50"}`}
         >
           <div className="w-full h-96 relative border">
             {product.images?.length && (

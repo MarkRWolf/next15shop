@@ -1,9 +1,9 @@
 import { defineQuery } from "next-sanity";
 import { sanityFetch } from "../live";
 
-export const getTestProductsByCategory = async (category: string) => {
-  const TESTPRODUCTS_BY_CATEGORY_QUERY = defineQuery(`
-        *[_type == "producttest" && references(*[_type == "category" && slug.current == $category]._id) && !(_id in path("drafts.*"))] | order(name asc) {
+export const getProductsByCategory = async (category: string) => {
+  const PRODUCTS_BY_CATEGORY_QUERY_OLD = defineQuery(`
+        *[_type == "product" && references(*[_type == "category" && slug.current == $category]._id) && !(_id in path("drafts.*"))] | order(name asc) {
   ...,
   "names": names[] { ..., "language": lang->name },
   "descriptions": descriptions[] { ..., "language": lang->name },
@@ -12,7 +12,7 @@ export const getTestProductsByCategory = async (category: string) => {
 
   try {
     const products = await sanityFetch({
-      query: TESTPRODUCTS_BY_CATEGORY_QUERY,
+      query: PRODUCTS_BY_CATEGORY_QUERY_OLD,
       params: { category },
     });
 

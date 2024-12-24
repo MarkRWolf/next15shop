@@ -2,9 +2,9 @@ import { defineQuery } from "next-sanity";
 import { sanityFetch } from "../live";
 
 export const getAllTestSlugs = async () => {
-  const ALL_TEST_SLUGS_QUERY = defineQuery(
+  const ALL_SLUGS_QUERY = defineQuery(
     `*[
-        _type == "producttest" &&
+        _type == "product" &&
         !(_id in path("drafts.*"))
     ] | order(lower(names[0].value) asc) {
         "slug": slug.current
@@ -12,7 +12,7 @@ export const getAllTestSlugs = async () => {
   );
 
   try {
-    const data = await sanityFetch({ query: ALL_TEST_SLUGS_QUERY });
+    const data = await sanityFetch({ query: ALL_SLUGS_QUERY });
     return data.data || [];
   } catch (e) {
     console.error(`Error fetching products`, e);

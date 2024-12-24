@@ -1,8 +1,8 @@
 "use client";
-import { Producttest } from "../../sanity.types";
+import { Product } from "../../sanity.types";
 import { AnimatePresence, motion } from "framer-motion";
 import ProductCard from "./ProductCard";
-const ProductGrid = ({ products }: { products: Producttest[] }) => {
+const ProductGrid = ({ products }: { products: Product[] }) => {
   return (
     <div className="w-full flex flex-wrap gap-20 justify-start mt-4">
       {products.map((product) => (
