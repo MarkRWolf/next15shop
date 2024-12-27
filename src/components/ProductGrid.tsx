@@ -2,10 +2,14 @@
 import { Product } from "../../sanity.types";
 import { AnimatePresence, motion } from "framer-motion";
 import ProductCard from "./ProductCard";
+import { cleanProducts } from "@/utils/cleanProduct";
+import useLangStore from "@/store/langStore";
 const ProductGrid = ({ products }: { products: Product[] }) => {
+  const { lang } = useLangStore();
+  const cleanedProducts = cleanProducts(products, lang);
   return (
     <div className="w-full flex flex-wrap gap-20 justify-start mt-4">
-      {products.map((product) => (
+      {cleanedProducts.map((product) => (
         <AnimatePresence key={product._id}>
           <motion.div
             layout
