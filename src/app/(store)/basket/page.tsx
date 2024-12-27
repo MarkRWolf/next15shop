@@ -8,13 +8,14 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { createCheckoutSession, Metadata } from "../../../../actions/createCheckoutSession";
+import useLangStore from "@/store/langStore";
 
 const BasketPage = () => {
+  const { lang } = useLangStore();
   const groupedItems = useBasketStore((state) => state.getGroupedItems());
   const { isSignedIn } = useAuth();
   const { user } = useUser();
   const router = useRouter();
-
   const [isClient, setIsClient] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -73,10 +74,10 @@ const BasketPage = () => {
                 onClick={() => router.push(`/products/${item.product.slug?.current}`)}
               >
                 <div className="w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0 mr-4">
-                  {item.product.image && (
+                  {item.product.images && (
                     <Image
-                      src={imageUrl(item.product.image).url()}
-                      alt={item.product.name ?? "Product image"}
+                      src={imageUrl(item.product.images[0]).url()}
+                      alt={item.product[`name_${lang}`] ?? "Product image"}
                       className="w-full h-full object-cover rounded"
                       width={96}
                       height={96}

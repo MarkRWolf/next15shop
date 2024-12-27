@@ -1,16 +1,15 @@
-import { set } from "sanity";
-import { Product } from "../../sanity.types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { CleanedProduct } from "@/utils/cleanProduct";
 
 export interface BasketItem {
-  product: Product;
+  product: CleanedProduct;
   quantity: number;
 }
 
 interface BasketState {
   items: BasketItem[];
-  addItem: (product: Product) => void;
+  addItem: (product: CleanedProduct) => void;
   removeItem: (productId: string) => void;
   clearBasket: () => void;
   getTotalPrice: () => number;
