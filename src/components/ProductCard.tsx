@@ -6,7 +6,7 @@ import NextImage from "next/image";
 import { imageUrl } from "@/lib/imageUrl";
 import AddToBasketButton from "./AddToBasketButton";
 import useLangStore from "@/store/langStore";
-import { CleanedProduct } from "@/utils/cleanProduct";
+import { CleanedProduct } from "@/utils/cleanProducts";
 
 interface ProductCardProps {
   product: CleanedProduct;

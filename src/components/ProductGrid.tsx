@@ -2,7 +2,7 @@
 import { Product } from "../../sanity.types";
 import { AnimatePresence, motion } from "framer-motion";
 import ProductCard from "./ProductCard";
-import { cleanProducts } from "@/utils/cleanProduct";
+import { cleanProducts } from "@/utils/cleanProducts";
 import useLangStore from "@/store/langStore";
 const ProductGrid = ({ products }: { products: Product[] }) => {
   const { lang } = useLangStore();

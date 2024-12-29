@@ -8,19 +8,15 @@ import { Product } from "../../../sanity.types";
 import useLangStore from "@/store/langStore";
 import { useState } from "react";
 import { DEFAULT_LANGUAGE } from "@/types/languages";
+import { cleanProduct } from "@/utils/cleanProduct";
 
 const SingleProduct = ({ product }: { product: Product }) => {
   const { lang } = useLangStore();
   const [selectedImg, setSelectedImg] = useState(0);
   const [hoveredImg, setHoveredImg] = useState(-1);
   const isOutOfStock = !product.stock || product.stock <= 0;
-  const name =
-    product.names?.find((n) => n.language === lang)?.value ||
-    product.names?.find((n) => n.language === DEFAULT_LANGUAGE)?.value;
-  const description =
-    product.descriptions?.find((d) => d.language === lang)?.description ||
-    product.descriptions?.find((d) => d.language === DEFAULT_LANGUAGE)?.description;
-  console.log("images:", product.images);
+  const cleanedProduct = cleanProduct(product, lang);
+  const { name, description } = cleanedProduct;
   return (
     <div className="px-4 py-8">
       <div className="mx-auto max-w-7xl flex gap-8 lg:gap-16">

@@ -1,3 +1,4 @@
+import { DEFAULT_LANGUAGE } from "@/types/languages";
 import { BasketIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
@@ -70,9 +71,9 @@ export const orderType = defineType({
           ],
           preview: {
             select: {
-              product: "product.name",
+              product: `product.name_${DEFAULT_LANGUAGE}`,
               quantity: "quantity",
-              image: "product.image",
+              image: "product.images[0]",
               price: "product.price",
               currency: "product.currency",
             },

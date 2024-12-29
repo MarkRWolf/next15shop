@@ -3,7 +3,7 @@
 import useBasketStore from "@/store/basketStore";
 import { useEffect, useState } from "react";
 import { motion, useTime, useTransform } from "framer-motion";
-import { CleanedProduct } from "@/utils/cleanProduct";
+import { CleanedProduct } from "@/utils/cleanProducts";
 
 interface AddToBasketButtonProps {
   product: CleanedProduct;

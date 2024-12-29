@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { CleanedProduct } from "@/utils/cleanProduct";
+import { CleanedProduct } from "@/utils/cleanProducts";
 
 export interface BasketItem {
   product: CleanedProduct;

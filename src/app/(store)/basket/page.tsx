@@ -85,7 +85,9 @@ const BasketPage = () => {
                   )}
                 </div>
                 <div className="min-w-0">
-                  <h2 className="text-lg sm:text-xl font-semibold truncate">{item.product.name}</h2>
+                  <h2 className="text-lg sm:text-xl font-semibold truncate">
+                    {item.product[`name_${lang}`]}
+                  </h2>
                   <p className="text-sm sm:text-base">
                     {((item.product.price ?? 0) * item.quantity).toFixed(2)},-
                   </p>
