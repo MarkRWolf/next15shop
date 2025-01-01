@@ -1,6 +1,5 @@
 "use client";
 import AddToBasketButton from "@/components/AddToBasketButton";
-import Loader from "@/components/Loader";
 import { imageUrl } from "@/lib/imageUrl";
 import useBasketStore from "@/store/basketStore";
 import { SignInButton, useAuth, useUser } from "@clerk/nextjs";
@@ -9,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { createCheckoutSession, Metadata } from "../../../../actions/createCheckoutSession";
 import useLangStore from "@/store/langStore";
+import Throbber from "@/components/Throbber";
 
 const BasketPage = () => {
   const { lang } = useLangStore();
@@ -24,7 +24,7 @@ const BasketPage = () => {
   }, []);
 
   if (!isClient) {
-    return <Loader />;
+    return <Throbber />;
   }
 
   if (groupedItems.length === 0)

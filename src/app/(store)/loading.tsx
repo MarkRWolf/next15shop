@@ -1,7 +1,7 @@
-import Loader from "@/components/Loader";
+import Throbber from "@/components/Throbber";
 
 const loading = () => {
-  return <Loader />;
+  return <Throbber />;
 };
 
 export default loading;
