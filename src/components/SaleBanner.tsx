@@ -7,9 +7,18 @@ const SaleBanner = ({ sale }: { sale: Sale }) => {
   const { lang } = useLangStore();
   const title = sale[`title_${lang}`] ?? sale[`title_${DEFAULT_LANGUAGE}`];
   const description = sale[`description_${lang}`] ?? sale[`description_${DEFAULT_LANGUAGE}`];
+
   return (
-    <>
-      <div className="w-full xl:max-w-7xl max-w-sm sm:max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto bg-gradient-to-r from-slate-900 to-slate-900/90 text-gray-200 px-6 py-10 mt-2">
+    <div className="w-full">
+      <p>{title}</p>
+      <p>{description}</p>
+    </div>
+  );
+};
+
+export default SaleBanner;
+
+/* <div className="w-full mx-auto bg-gradient-to-r from-slate-900 to-slate-900/90 text-gray-200 px-6 py-10 mt-2">
         <div className="container mx-auto flex items-center justify-between">
           <div className="flex-1">
             <h2 className="text-3xl sm:text-5xl font-extrabold text-left mb-4">{title}</h2>
@@ -26,9 +35,4 @@ const SaleBanner = ({ sale }: { sale: Sale }) => {
             </div>
           </div>
         </div>
-      </div>
-    </>
-  );
-};
-
-export default SaleBanner;
+      </div> */
