@@ -17,7 +17,7 @@ export const productType = defineType({
           title: lang.label,
           value: lang.code,
         })),
-        layout: "dropdown",
+        layout: "radio",
       },
       initialValue: DEFAULT_LANGUAGE,
     }),

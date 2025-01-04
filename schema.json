@@ -554,19 +554,50 @@
           "type": "string"
         }
       },
-      "title": {
+      "langSelector": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "enGB"
+            },
+            {
+              "type": "string",
+              "value": "daDK"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "title_enGB": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
         },
         "optional": true
       },
-      "description": {
+      "title_daDK": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": false
+      },
+      "description_enGB": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
         },
         "optional": true
+      },
+      "description_daDK": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": false
       },
       "discountAmount": {
         "type": "objectAttribute",

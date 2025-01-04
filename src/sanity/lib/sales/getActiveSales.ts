@@ -5,7 +5,7 @@ export const getActiveSales = async () => {
   const GET_ACTIVE_SALES = defineQuery(
     `*[_type == "sale" && isActive == true && !(_id in path("drafts.*"))] | order(validFrom desc)`
   );
-  /* { _id, title, description, discountAmount, couponCode, startDate, endDate, isActive } */
+  /* { _id, title_${lang}, description_${lang}, discountAmount, couponCode, startDate, endDate, isActive } */
 
   try {
     const data = await sanityFetch({
