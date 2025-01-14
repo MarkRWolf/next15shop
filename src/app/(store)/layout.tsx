@@ -28,8 +28,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               <VisualEditing />
             </>
           )}
-          <main className="min-h-[100dvh] flex flex-col relative pt-16 bg-gray-100">
-            <MainHeader />  
+          <main className="min-h-[100dvh] flex flex-col relative pt-14 bg-gray-100">
+            <MainHeader />
             <Breadcrumb />
             {children}
             <hr className="h-52" />

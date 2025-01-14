@@ -1,7 +1,8 @@
 "use client";
 import useLangStore from "@/store/langStore";
-import { Sale } from "../../sanity.types";
+import { Sale } from "../../../sanity.types";
 import { DEFAULT_LANGUAGE } from "@/types/languages";
+import SalePagination from "./SalePagination";
 
 const SaleBanner = ({ sale }: { sale: Sale }) => {
   const { lang } = useLangStore();
@@ -9,9 +10,11 @@ const SaleBanner = ({ sale }: { sale: Sale }) => {
   const description = sale[`description_${lang}`] ?? sale[`description_${DEFAULT_LANGUAGE}`];
 
   return (
-    <div className="w-full">
-      <p>{title}</p>
-      <p>{description}</p>
+    <div className="w-full mx-auto bg-gradient-to-r from-slate-900 to-slate-900/90 text-gray-200 px-6 py-10">
+      <div className="relative">
+        <p>{title}</p>
+        <p>{description}</p>
+      </div>
     </div>
   );
 };

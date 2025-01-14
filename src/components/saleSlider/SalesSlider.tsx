@@ -1,7 +1,5 @@
 import { getActiveSales } from "@/sanity/lib/sales/getActiveSales";
-import SaleBanner from "./SaleBanner";
-import { Sale } from "../../sanity.types";
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Sale } from "../../../sanity.types";
 import SaleSwiper from "./SaleSwiper";
 
 const SalesSlider = async () => {
