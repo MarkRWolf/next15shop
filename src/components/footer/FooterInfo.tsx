@@ -19,11 +19,7 @@ const FooterInfo = ({ globals }: FooterInfoProps) => {
       : contentItem?.localizedText?.[DEFAULT_LANGUAGE];
   };
 
-  console.log("Globals", globalsContent);
-  console.log("_______________________");
-
   const privacy = getLocalizedText("privacy");
-  console.log("privacy", getLocalizedText("privacy"));
   const terms = getLocalizedText("terms");
   const about = getLocalizedText("about");
 
