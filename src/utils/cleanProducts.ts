@@ -6,6 +6,7 @@ type LocalizedField<T extends string> = `${T}_${LanguageKey}`;
 export interface CleanedProduct extends Product {
   name: Product[LocalizedField<"name">];
   description: Product[LocalizedField<"description">];
+  price: Product["price"];
 }
 
 export const cleanProducts = (products: Product[], lang: LanguageKey): CleanedProduct[] => {

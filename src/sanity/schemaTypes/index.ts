@@ -3,7 +3,6 @@ import { type SchemaTypeDefinition } from "sanity";
 import { blockContentType } from "./blockContentType";
 import { categoryType } from "./categoryType";
 
-import { productTypeOld } from "./productTypeOld";
 import { orderType } from "./orderType";
 import { salesType } from "./salesType";
 import { langType } from "./langType";

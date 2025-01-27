@@ -7,7 +7,6 @@ import { PortableText } from "next-sanity";
 import { Product } from "../../../sanity.types";
 import useLangStore from "@/store/langStore";
 import { useState } from "react";
-import { DEFAULT_LANGUAGE } from "@/types/languages";
 import { cleanProduct } from "@/utils/cleanProduct";
 
 const SingleProduct = ({ product }: { product: Product }) => {
@@ -69,7 +68,7 @@ const SingleProduct = ({ product }: { product: Product }) => {
           </div>
           <div className="mt-6 mb-20">
             <p className="text-center">{product.stock} stk på lager</p>
-            <AddToBasketButton product={product} disabled={isOutOfStock} />
+            <AddToBasketButton product={cleanedProduct} disabled={isOutOfStock} />
           </div>
         </div>
       </div>

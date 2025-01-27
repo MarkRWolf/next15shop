@@ -5,7 +5,7 @@ import { Product } from "../../../../../../sanity.types";
 import { getProductBySlug } from "@/sanity/lib/products/getProductBySlug";
 import SingleProduct from "@/components/singleProduct/SingleProduct";
 
-const ProductPage = async ({ params }: { params: { slug: string } }) => {
+const ProductPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;
   // Fetch product data on the server side
   const product: Product | null = await getProductBySlug(slug);
