@@ -1,6 +1,5 @@
 "use client";
 import AddToBasketButton from "@/components/AddToBasketButton";
-import Loader from "@/components/Loader";
 import { imageUrl } from "@/lib/imageUrl";
 import useBasketStore from "@/store/basketStore";
 import { SignInButton, useAuth, useUser } from "@clerk/nextjs";
@@ -8,13 +7,15 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { createCheckoutSession, Metadata } from "../../../../actions/createCheckoutSession";
+import useLangStore from "@/store/langStore";
+import Throbber from "@/components/Throbber";
 
 const BasketPage = () => {
+  const { lang } = useLangStore();
   const groupedItems = useBasketStore((state) => state.getGroupedItems());
   const { isSignedIn } = useAuth();
   const { user } = useUser();
   const router = useRouter();
-
   const [isClient, setIsClient] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -23,7 +24,7 @@ const BasketPage = () => {
   }, []);
 
   if (!isClient) {
-    return <Loader />;
+    return <Throbber />;
   }
 
   if (groupedItems.length === 0)
@@ -73,10 +74,10 @@ const BasketPage = () => {
                 onClick={() => router.push(`/products/${item.product.slug?.current}`)}
               >
                 <div className="w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0 mr-4">
-                  {item.product.image && (
+                  {item.product.images && (
                     <Image
-                      src={imageUrl(item.product.image).url()}
-                      alt={item.product.name ?? "Product image"}
+                      src={imageUrl(item.product.images[0]).url()}
+                      alt={item.product[`name_${lang}`] ?? "Product image"}
                       className="w-full h-full object-cover rounded"
                       width={96}
                       height={96}
@@ -84,7 +85,9 @@ const BasketPage = () => {
                   )}
                 </div>
                 <div className="min-w-0">
-                  <h2 className="text-lg sm:text-xl font-semibold truncate">{item.product.name}</h2>
+                  <h2 className="text-lg sm:text-xl font-semibold truncate">
+                    {item.product[`name_${lang}`]}
+                  </h2>
                   <p className="text-sm sm:text-base">
                     {((item.product.price ?? 0) * item.quantity).toFixed(2)},-
                   </p>

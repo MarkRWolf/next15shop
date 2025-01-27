@@ -1,4 +1,4 @@
-import { Product, Category } from "../../sanity.types";
+import { Category, Product } from "../../sanity.types";
 import CategorySelector from "./CategorySelector";
 import ProductGrid from "./ProductGrid";
 

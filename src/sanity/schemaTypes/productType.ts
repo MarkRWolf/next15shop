@@ -1,3 +1,4 @@
+import { SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE } from "@/types/languages";
 import { TrolleyIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
@@ -8,74 +9,104 @@ export const productType = defineType({
   icon: TrolleyIcon,
   fields: [
     defineField({
-      name: "name",
-      title: "Product Name",
+      name: "langSelector",
+      title: "Language Selector",
       type: "string",
-      validation: (Rule) => Rule.required(),
+      options: {
+        list: SUPPORTED_LANGUAGES.map((lang) => ({
+          title: lang.label,
+          value: lang.code,
+        })),
+        layout: "radio",
+      },
+      initialValue: DEFAULT_LANGUAGE,
     }),
+    ...SUPPORTED_LANGUAGES.map((lang) =>
+      defineField({
+        name: `name_${lang.code}`,
+        title: `Name -${lang.label}`,
+        type: "string",
+        hidden: ({ parent }) => parent?.langSelector !== lang.code,
+        validation: (Rule) =>
+          lang.code === DEFAULT_LANGUAGE
+            ? Rule.required().min(1).error("Default language name is required.")
+            : Rule.max(500),
+      })
+    ),
+    ...SUPPORTED_LANGUAGES.map((lang) =>
+      defineField({
+        name: `description_${lang.code}`,
+        title: `Description -${lang.label}`,
+        type: "blockContent",
+        hidden: ({ parent }) => parent?.langSelector !== lang.code,
+        validation: (Rule) =>
+          lang.code === DEFAULT_LANGUAGE
+            ? Rule.required().min(1).error("Default language description is required.")
+            : Rule.max(500),
+      })
+    ),
     defineField({
       name: "slug",
       title: "Slug",
       type: "slug",
       options: {
-        source: "name",
+        source: `name_${DEFAULT_LANGUAGE}`,
         maxLength: 96,
       },
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: "image",
-      title: "Product Image",
-      type: "image",
-      options: {
-        hotspot: true,
-      },
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: "description",
-      title: "Description",
-      type: "blockContent",
-      validation: (Rule) => Rule.min(1).max(500),
+      name: "images",
+      title: "Product Images",
+      type: "array",
+      of: [
+        {
+          type: "image",
+          options: {
+            hotspot: true,
+          },
+        },
+      ],
+      validation: (Rule) => Rule.min(1).error("At least one image is required."),
     }),
     defineField({
       name: "price",
       title: "Price",
       type: "number",
-      validation: (Rule) => Rule.min(0),
+      validation: (Rule) => Rule.required().min(0).error("Price must be at least 0."),
     }),
     defineField({
       name: "categories",
       title: "Categories",
       type: "array",
       of: [{ type: "reference", to: { type: "category" } }],
-      validation: (Rule) => Rule.min(1),
+      validation: (Rule) => Rule.required().min(1),
     }),
     defineField({
       name: "category",
       title: "Category",
       type: "string",
-      description: "First category is considered primary",
       readOnly: true,
+      hidden: true,
     }),
     defineField({
       name: "stock",
       title: "Stock",
       type: "number",
-      validation: (Rule) => Rule.min(0),
+      validation: (Rule) => Rule.required().min(0),
     }),
   ],
   preview: {
     select: {
-      title: "name",
-      media: "image",
+      title: `name_${DEFAULT_LANGUAGE}`,
+      media: "images.0.asset",
       subtitle: "price",
     },
-    prepare(select) {
+    prepare({ title, subtitle, media }) {
       return {
-        title: select.title,
-        subtitle: `DKK: ${select.subtitle}`,
-        media: select.media,
+        title: title || "No name",
+        subtitle: `Price: ${subtitle || "N/A"}`,
+        media: media,
       };
     },
   },

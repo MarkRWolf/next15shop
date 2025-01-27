@@ -3,11 +3,11 @@ import { Language } from "../../../sanity.types";
 import useLangStore from "@/store/langStore";
 import { DEFAULT_LANGUAGE } from "@/types/languages";
 import Link from "next/link";
-interface FooterInfoProps {
+interface AboutProps {
   globals: Language[];
 }
 
-const FooterInfo = ({ globals }: FooterInfoProps) => {
+const About = ({ globals }: AboutProps) => {
   const { lang } = useLangStore();
   const globalsContent = globals[0]?.content || [];
 
@@ -29,11 +29,9 @@ const FooterInfo = ({ globals }: FooterInfoProps) => {
 
   return (
     <div>
-      <p>{privacy}</p>
-      <p>{terms}</p>
-      <Link href={"/about"}>{about}</Link>
+      <h1>{about}</h1>
     </div>
   );
 };
 
-export default FooterInfo;
+export default About;

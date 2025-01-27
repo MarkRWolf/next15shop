@@ -1,6 +1,7 @@
 import { formatCurrency } from "@/lib/formatCurrency";
 import { imageUrl } from "@/lib/imageUrl";
 import { getMyOrders } from "@/sanity/lib/orders/getMyOrders";
+import { DEFAULT_LANGUAGE } from "@/types/languages";
 import { auth } from "@clerk/nextjs/server";
 import Image from "next/image";
 import { redirect } from "next/navigation";
@@ -86,11 +87,11 @@ const OrdersPage = async () => {
                         className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 py-2 border-b last:border-b-0"
                       >
                         <div className="flex items-center gap-3 sm:gap-4">
-                          {product.product?.image && (
+                          {product.product?.images && (
                             <div className="relative h-14 w-14 sm:h-16 flex-shrink-0 rounded-md overflow-hidden">
                               <Image
-                                src={imageUrl(product.product.image).url()}
-                                alt={product.product?.name ?? ""}
+                                src={imageUrl(product.product.images[0]).url()}
+                                alt={product.product?.[`name_${DEFAULT_LANGUAGE}`] ?? ""}
                                 className="object-cover"
                                 fill
                               />
@@ -98,7 +99,7 @@ const OrdersPage = async () => {
                           )}
                           <div>
                             <p className="font-medium text-sm sm:text-base">
-                              {product.product?.name ?? "Unknown product"}
+                              {product.product?.[`name_${DEFAULT_LANGUAGE}`] ?? "Unknown product"}
                             </p>
                             <p className="text-sm text-gray-600">
                               Quantity: {product.quantity ?? "N/A"}

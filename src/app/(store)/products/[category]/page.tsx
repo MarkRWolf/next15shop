@@ -6,7 +6,7 @@ import { getProductsByCategory } from "@/sanity/lib/products/getProductsByCatego
 import ProductsView from "@/components/ProductsView";
 import { getAllCategories } from "@/sanity/lib/products/getAllCategories";
 
-const ProductPage = async ({ params }: { params: { category: string } }) => {
+const ProductPage = async ({ params }: { params: Promise<{ category: string }> }) => {
   const { category } = await params;
 
   const categories = await getAllCategories();

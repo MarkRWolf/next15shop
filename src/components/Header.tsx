@@ -6,16 +6,27 @@ import useLangStore from "@/store/langStore";
 import Image from "next/image";
 import NextLink from "next/link";
 import Form from "next/form";
-import { SUPPORTED_LANGUAGES } from "@/types/languages";
 import { useState, useRef } from "react";
+import { Language } from "../../sanity.types";
+import { DEFAULT_LANGUAGE } from "@/types/languages";
 
-function Header() {
+function Header({ globals }: { globals: Language[] }) {
   const { user } = useUser();
   const { lang, toggleLang } = useLangStore();
   const searchRef = useRef<HTMLInputElement>(null);
   const searchBtnRef = useRef<HTMLButtonElement>(null);
   const [searchVal, setSearchVal] = useState("");
+  const globalsContent = globals[0]?.content || [];
 
+  const getLocalizedText = (key: string) => {
+    const contentItem = globalsContent?.find((g) => g.key === key);
+    const localizedText = contentItem?.localizedText?.[lang];
+    return localizedText && localizedText.length > 0
+      ? localizedText
+      : contentItem?.localizedText?.[DEFAULT_LANGUAGE];
+  };
+
+  const searchPlaceholder = getLocalizedText("search");
   return (
     <header className="py-2 fixed inset-0 bg-white z-10 max-h-14 shadow-black/30 shadow-md">
       <div className="max-w-7xl mx-auto flex justify-between items-center gap-4">
@@ -23,7 +34,7 @@ function Header() {
           href="/"
           className="text-3xl font-bold text-green-700 hover:opacity-80 cursor-pointer mx-auto sm:mx-0"
         >
-          Grej
+          Shop
         </NextLink>
 
         <div className="flex items-center gap-0 sm:gap-1 md:gap-2 space-x-4 mt-4 sm:mt-0 flex-1 sm:flex-none">
@@ -45,7 +56,7 @@ function Header() {
               name="query"
               value={searchVal}
               onChange={(e) => setSearchVal(e.target.value)}
-              placeholder="Search for products"
+              placeholder={searchPlaceholder}
               className={`absolute top-1/2 right-0 -translate-y-1/2 mt-[0.125rem] bg-transparent text-gray-800 pl-0 focus:outline-none focus:ring-opacity-50 border-b border-gray-400  w-44 max-w-4xl `}
             />
             <button

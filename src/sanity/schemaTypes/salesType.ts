@@ -1,3 +1,4 @@
+import { DEFAULT_LANGUAGE, SUPPORTED_LANGUAGES } from "@/types/languages";
 import { TagIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
@@ -8,15 +9,42 @@ export const salesType = defineType({
   icon: TagIcon,
   fields: [
     defineField({
-      name: "title",
-      title: "Sale Title",
+      name: "langSelector",
+      title: "Language Selector",
       type: "string",
+      options: {
+        list: SUPPORTED_LANGUAGES.map((lang) => ({
+          title: lang.label,
+          value: lang.code,
+        })),
+        layout: "radio",
+      },
+      initialValue: DEFAULT_LANGUAGE,
     }),
-    defineField({
-      name: "description",
-      title: "Sale Description",
-      type: "text",
-    }),
+    ...SUPPORTED_LANGUAGES.map((lang) =>
+      defineField({
+        name: `title_${lang.code}`,
+        title: `Title -${lang.label}`,
+        type: "string",
+        hidden: ({ parent }) => parent?.langSelector !== lang.code,
+        validation: (Rule) =>
+          lang.code === DEFAULT_LANGUAGE
+            ? Rule.required().min(1).error("Default language title is required.")
+            : Rule.max(500),
+      })
+    ),
+    ...SUPPORTED_LANGUAGES.map((lang) =>
+      defineField({
+        name: `description_${lang.code}`,
+        title: `Description -${lang.label}`,
+        type: "text",
+        hidden: ({ parent }) => parent?.langSelector !== lang.code,
+        validation: (Rule) =>
+          lang.code === DEFAULT_LANGUAGE
+            ? Rule.required().min(1).error("Default language description is required.")
+            : Rule.max(200),
+      })
+    ),
     defineField({
       name: "discountAmount",
       title: "Discount Amount",
@@ -48,7 +76,7 @@ export const salesType = defineType({
   ],
   preview: {
     select: {
-      title: "title",
+      title: `title_${DEFAULT_LANGUAGE}`,
       discountAmount: "discountAmount",
       couponCode: "couponCode",
       isActive: "isActive",

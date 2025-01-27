@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { Product } from "../../../../sanity.types";
 import ProductsView from "@/components/ProductsView";
 import { getAllCategories } from "@/sanity/lib/products/getAllCategories";
-import { getAllProducts } from "@/sanity/lib/products/getAllProducts";
+import { getAllProducts } from "@/sanity/lib/products/getAllProductsOld";
 
 const ProductPage = async () => {
   const categories = await getAllCategories();

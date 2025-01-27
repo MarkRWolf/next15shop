@@ -1,5 +1,5 @@
 import ProductsView from "@/components/ProductsView";
-import SalesSlider from "@/components/SalesSlider";
+import SalesSlider from "@/components/saleSlider/SalesSlider";
 import { getAllCategories } from "@/sanity/lib/products/getAllCategories";
 import { getAllProducts } from "@/sanity/lib/products/getAllProducts";
 

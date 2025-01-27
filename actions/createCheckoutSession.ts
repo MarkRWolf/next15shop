@@ -57,7 +57,7 @@ export const createCheckoutSession = async (items: GroupedBasketItem[], metadata
             metadata: {
               id: item.product._id,
             },
-            images: item.product.image ? [imageUrl(item.product.image).url()] : undefined,
+            images: item.product.images ? [imageUrl(item.product.images[0]).url()] : undefined,
           },
         },
         quantity: item.quantity,

@@ -10,6 +10,7 @@ import { draftMode } from "next/headers";
 import { DisableDraftMode } from "@/components/DisableDraftMode";
 import Footer from "@/components/footer/Footer";
 import Breadcrumb from "@/components/Breadcrumb";
+import MainHeader from "@/components/MainHeader";
 
 export const metadata: Metadata = {
   title: "Shop",
@@ -27,8 +28,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               <VisualEditing />
             </>
           )}
-          <main className="min-h-[100dvh] flex flex-col relative pt-16 bg-gray-100">
-            <Header />
+          <main className="min-h-[100dvh] flex flex-col relative pt-14 bg-gray-100">
+            <MainHeader />
             <Breadcrumb />
             {children}
             <hr className="h-52" />
