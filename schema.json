@@ -483,14 +483,14 @@
                 "value": {
                   "type": "object",
                   "attributes": {
-                    "daDK": {
+                    "enGB": {
                       "type": "objectAttribute",
                       "value": {
                         "type": "string"
                       },
                       "optional": true
                     },
-                    "enGB": {
+                    "daDK": {
                       "type": "objectAttribute",
                       "value": {
                         "type": "string"
