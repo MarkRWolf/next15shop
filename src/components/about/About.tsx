@@ -9,6 +9,7 @@ interface AboutProps {
 
 const About = ({ globals }: AboutProps) => {
   const { lang } = useLangStore();
+
   const globalsContent = globals[0]?.content || [];
 
   const getLocalizedText = (key: string) => {
