@@ -8,10 +8,7 @@ const ProductGrid = ({ products }: { products: Product[] }) => {
   const { lang } = useLangStore();
   const cleanedProducts = cleanProducts(products, lang);
   return (
-    <div
-      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 3xl:grid-cols-4 mt-4 place-items-center
-"
-    >
+    <div className="grid max-w-4xl lg:max-w-7xl grid-cols-1 mx-auto mt-8 text-center gap-y-4 sm:gap-x-8 sm:grid-cols-2 lg:grid-cols-3 sm:mt-12 lg:mt-20 sm:text-left">
       {cleanedProducts.map((product) => (
         <AnimatePresence key={product._id}>
           <motion.div
@@ -20,7 +17,7 @@ const ProductGrid = ({ products }: { products: Product[] }) => {
             initial={{ opacity: 0.2 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="max-w-[370px]"
+            className=""
           >
             <ProductCard product={product} />
           </motion.div>
