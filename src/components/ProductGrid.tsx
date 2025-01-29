@@ -8,7 +8,10 @@ const ProductGrid = ({ products }: { products: Product[] }) => {
   const { lang } = useLangStore();
   const cleanedProducts = cleanProducts(products, lang);
   return (
-    <div className="w-full flex flex-wrap gap-20 justify-start mt-4">
+    <div
+      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 3xl:grid-cols-4 mt-4 place-items-center
+"
+    >
       {cleanedProducts.map((product) => (
         <AnimatePresence key={product._id}>
           <motion.div
@@ -17,7 +20,7 @@ const ProductGrid = ({ products }: { products: Product[] }) => {
             initial={{ opacity: 0.2 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="w-[350px] max-w-[370px] flex-grow"
+            className="max-w-[370px]"
           >
             <ProductCard product={product} />
           </motion.div>
@@ -28,4 +31,3 @@ const ProductGrid = ({ products }: { products: Product[] }) => {
 };
 
 export default ProductGrid;
-// grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 3xl:grid-cols-4 gap-24 mt-4 place-items-center

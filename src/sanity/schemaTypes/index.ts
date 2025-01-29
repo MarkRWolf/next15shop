@@ -9,6 +9,7 @@ import { langType } from "./langType";
 import { textType } from "./textType";
 import { langsType } from "./langsType";
 import { productType } from "./productType";
+import { colorsType } from "./colorsType";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -20,5 +21,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     salesType,
     langType,
     textType,
+    colorsType,
   ],
 };

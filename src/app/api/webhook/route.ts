@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
   const body = await req.text();
   const headersList = await headers();
   const sig = headersList.get("stripe-signature");
-
+  console.log("hit");
   if (!sig) {
     return NextResponse.json({ error: "No signature" }, { status: 400 });
   }
@@ -31,6 +31,7 @@ export async function POST(req: NextRequest) {
   }
 
   if (event.type === "checkout.session.completed") {
+    console.log("completed");
     const session = event.data.object as Stripe.Checkout.Session;
 
     try {

@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "typegen": "npx sanity@latest schema extract --enforce-required-fields && npx sanity@latest typegen generate",
-    "webhook": "stripe listen --forward-to localhost:3000/webhook"
+    "webhook": "stripe listen --forward-to localhost:3000/api/webhook"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.1.3",

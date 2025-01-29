@@ -8,7 +8,7 @@ export default async function Home() {
   const categories = await getAllCategories();
 
   return (
-    <div className="">
+    <div className="w-full">
       <SalesSlider />
       <div className="mx-auto max-w-sm sm:max-w-2xl md:max-w-3xl lg:max-w-4xl xl:max-w-7xl ">
         <ProductsView products={products} categories={categories} />

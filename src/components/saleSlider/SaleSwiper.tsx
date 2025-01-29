@@ -16,10 +16,10 @@ const SaleSwiper = ({ sales }: { sales: Sale[] }) => {
     <div className="relative w-full">
       <Swiper
         slidesPerView={1}
-        spaceBetween={100}
+        spaceBetween={0}
         loop={true}
         autoplay={{ delay: 3000, disableOnInteraction: false }}
-        className="relative"
+        className="w-full"
       >
         {sales.map((sale) => (
           <SwiperSlide key={sale._id}>
