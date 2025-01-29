@@ -64,7 +64,7 @@ const AddToBasketButton = ({ product }: AddToBasketButtonProps) => {
           onClick={() => {
             addItem(product);
           }}
-          className={`px-3 h-full -translate-y-[1px] text-2xl ${itemCount >= (product.stock ?? 0) && "cursor-not-allowed"} `}
+          className={`px-3 h-full -translate-y-[1px] text-2xl ${itemCount >= (product.stock ?? 0) && "cursor-not-allowed"} ${itemCount >= (product.stock ?? 0) && "text-red-600"}`}
           disabled={itemCount >= (product.stock ?? 0)}
         >
           +
