@@ -1,5 +1,5 @@
 // File: components/ProductCard.tsx
-
+"use client";
 import { Product } from "../../sanity.types";
 import NextLink from "next/link";
 import NextImage from "next/image";
