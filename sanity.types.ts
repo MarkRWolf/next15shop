@@ -68,6 +68,16 @@ export type Geopoint = {
   alt?: number;
 };
 
+export type Colors = {
+  _id: string;
+  _type: "colors";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  hexes: Array<string>;
+};
+
 export type Texts = {
   _id: string;
   _type: "texts";
@@ -358,7 +368,7 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Texts | Language | Sale | Order | Product | Category | Slug | Langs | BlockContent | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Colors | Texts | Language | Sale | Order | Product | Category | Slug | Langs | BlockContent | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/lang/getAllGlobals.ts
 // Variable: ALL_GLOBALS_QUERY
@@ -518,48 +528,6 @@ export type MY_ORDERS_QUERYResult = Array<{
   discountAmount?: number;
   status?: "cancelled" | "delivered" | "paid" | "pending" | "shipped";
   orderDate: string;
-}>;
-
-// Source: ./src/sanity/lib/sales/getActiveSaleByCouponCode.ts
-// Variable: ACTIVE_SALE_BY_COUPON_QUERY
-// Query: *[_type == "sale" && isActive == true && couponCode == $couponCode] | order(validFrom desc)[0]
-export type ACTIVE_SALE_BY_COUPON_QUERYResult = {
-  _id: string;
-  _type: "sale";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  langSelector?: "daDK" | "enGB";
-  title_enGB?: string;
-  title_daDK: string;
-  description_enGB?: string;
-  description_daDK: string;
-  discountAmount?: number;
-  couponCode?: string;
-  startDate?: string;
-  endDate?: string;
-  isActive?: boolean;
-} | null;
-
-// Source: ./src/sanity/lib/sales/getActiveSales.ts
-// Variable: GET_ACTIVE_SALES
-// Query: *[_type == "sale" && isActive == true && !(_id in path("drafts.*"))] | order(validFrom desc)
-export type GET_ACTIVE_SALESResult = Array<{
-  _id: string;
-  _type: "sale";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  langSelector?: "daDK" | "enGB";
-  title_enGB?: string;
-  title_daDK: string;
-  description_enGB?: string;
-  description_daDK: string;
-  discountAmount?: number;
-  couponCode?: string;
-  startDate?: string;
-  endDate?: string;
-  isActive?: boolean;
 }>;
 
 // Source: ./src/sanity/lib/products/getAllCategories.ts
@@ -1171,6 +1139,48 @@ export type PRODUCT_SEARCH_QUERYResult = Array<{
   stock: number;
 }>;
 
+// Source: ./src/sanity/lib/sales/getActiveSaleByCouponCode.ts
+// Variable: ACTIVE_SALE_BY_COUPON_QUERY
+// Query: *[_type == "sale" && isActive == true && couponCode == $couponCode] | order(validFrom desc)[0]
+export type ACTIVE_SALE_BY_COUPON_QUERYResult = {
+  _id: string;
+  _type: "sale";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  langSelector?: "daDK" | "enGB";
+  title_enGB?: string;
+  title_daDK: string;
+  description_enGB?: string;
+  description_daDK: string;
+  discountAmount?: number;
+  couponCode?: string;
+  startDate?: string;
+  endDate?: string;
+  isActive?: boolean;
+} | null;
+
+// Source: ./src/sanity/lib/sales/getActiveSales.ts
+// Variable: GET_ACTIVE_SALES
+// Query: *[_type == "sale" && isActive == true && !(_id in path("drafts.*"))] | order(validFrom desc)
+export type GET_ACTIVE_SALESResult = Array<{
+  _id: string;
+  _type: "sale";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  langSelector?: "daDK" | "enGB";
+  title_enGB?: string;
+  title_daDK: string;
+  description_enGB?: string;
+  description_daDK: string;
+  discountAmount?: number;
+  couponCode?: string;
+  startDate?: string;
+  endDate?: string;
+  isActive?: boolean;
+}>;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
@@ -1178,8 +1188,6 @@ declare module "@sanity/client" {
     "*[_type == \"language\" && sectionName == \"global\"] | order(name asc)": ALL_GLOBALS_QUERYResult;
     "*[_type == \"language\" && sectionName == $section] | order(name asc)": LOCALIZED_TEXTS_QUERYResult;
     "\n    *[_type == \"order\" && clerkUserId == $userId] | order(orderDate desc) {\n        ...,\n        products[] {\n            ...,\n            product->\n        }\n    }\n    ": MY_ORDERS_QUERYResult;
-    "*[_type == \"sale\" && isActive == true && couponCode == $couponCode] | order(validFrom desc)[0]": ACTIVE_SALE_BY_COUPON_QUERYResult;
-    "*[_type == \"sale\" && isActive == true && !(_id in path(\"drafts.*\"))] | order(validFrom desc)": GET_ACTIVE_SALESResult;
     "*[_type == \"category\"] | order(name asc)": ALL_CATEGORIES_QUERYResult;
     "*[ \n  _type == \"product\" &&\n  !(_id in path(\"drafts.*\"))\n] | order(lower(names[0].value) asc) {\n  ...,\n\"category\": coalesce(categories[0]->title, \"\"),\n}\n": ALL_PRODUCTS_QUERYResult;
     "*[_type == \"product\" && !(_id in path(\"drafts.*\"))] | order(lower(name) asc) {..., \"category\": (coalesce(categories[0]->title, \"Uncategorized\") + \"\")}\n": ALL_PRODUCTS_QUERY_OLDResult;
@@ -1188,5 +1196,7 @@ declare module "@sanity/client" {
     "\n        *[_type == \"product\" && references(*[_type == \"category\" && slug.current == $category]._id) && !(_id in path(\"drafts.*\"))] | order(name asc) {\n    ...,\n    \"names\": names[] { ..., \"language\": lang->name },\n    \"descriptions\": descriptions[] { ..., \"language\": lang->name },\n    \"category\": coalesce(categories[0]->title, \"\")\n  }": PRODUCTS_BY_CATEGORY_QUERYResult;
     "\n        *[_type == \"product\" && references(*[_type == \"category\" && slug.current == $category]._id) && !(_id in path(\"drafts.*\"))] | order(name asc) {\n  ...,\n  \"names\": names[] { ..., \"language\": lang->name },\n  \"descriptions\": descriptions[] { ..., \"language\": lang->name },\n\"category\": coalesce(categories[0]->title, \"\"),\n}": PRODUCTS_BY_CATEGORY_QUERY_OLDResult;
     "\n    *[_type == \"product\" && name match $searchParam] | order(name asc)": PRODUCT_SEARCH_QUERYResult;
+    "*[_type == \"sale\" && isActive == true && couponCode == $couponCode] | order(validFrom desc)[0]": ACTIVE_SALE_BY_COUPON_QUERYResult;
+    "*[_type == \"sale\" && isActive == true && !(_id in path(\"drafts.*\"))] | order(validFrom desc)": GET_ACTIVE_SALESResult;
   }
 }

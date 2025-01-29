@@ -1,9 +1,13 @@
 "use client";
 
-import { Language, Order } from "../../../sanity.types";
+import Image from "next/image";
+import { Language, Order, MY_ORDERS_QUERYResult } from "../../../sanity.types";
+import { imageUrl } from "@/lib/imageUrl";
+import { formatCurrency } from "@/lib/formatCurrency";
+import { DEFAULT_LANGUAGE } from "@/types/languages";
 
 interface OrdersProps {
-  orders: Order[];
+  orders: MY_ORDERS_QUERYResult;
   ordersText: Language[];
 }
 function Orders({ orders, ordersText }: OrdersProps) {
