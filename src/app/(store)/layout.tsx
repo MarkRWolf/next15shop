@@ -27,11 +27,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               <VisualEditing />
             </>
           )}
-          <main className="min-h-[100dvh] flex flex-col relative pt-14 bg-gray-100">
+          <main className="min-h-screen flex flex-col justify-between relative pt-14 bg-gray-100">
             <MainHeader />
             <Breadcrumb />
-            {children}
-            <hr className="h-52" />
+            <div className="flex-grow">{children}</div>
             <Footer />
           </main>
           <SanityLive />
