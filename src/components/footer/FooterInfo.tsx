@@ -25,9 +25,15 @@ const FooterInfo = ({ globals }: FooterInfoProps) => {
 
   return (
     <div>
-      <p>{privacy}</p>
-      <p>{terms}</p>
-      <Link href={"/about"}>{about}</Link>
+      <p>
+        <Link href={"/privacy"}>{privacy}</Link>
+      </p>
+      <p>
+        <Link href={"/terms"}>{terms}</Link>
+      </p>
+      <p>
+        <Link href={"/about"}>{about}</Link>
+      </p>
     </div>
   );
 };

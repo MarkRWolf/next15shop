@@ -1,6 +1,6 @@
 import { EarthGlobeIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
-
+import { SUPPORTED_LANGUAGES } from "@/types/languages";
 export const langType = defineType({
   name: "language",
   title: "Language",
@@ -34,19 +34,14 @@ export const langType = defineType({
               title: "Localized Text",
               type: "object",
               fields: [
-                defineField({
-                  name: "daDK",
-                  title: "Danish (daDK)",
-                  type: "string",
-                  description: "Text in Danish",
-                }),
-                defineField({
-                  name: "enGB",
-                  title: "English (enGB)",
-                  type: "string",
-                  description: "Text in English",
-                }),
-                // You can add more languages as needed
+                ...SUPPORTED_LANGUAGES.map((lang) =>
+                  defineField({
+                    name: lang.code,
+                    title: `${lang.label} (${lang.code})`,
+                    type: "string",
+                    description: `Text in ${lang.label}`,
+                  })
+                ),
               ],
             }),
           ],

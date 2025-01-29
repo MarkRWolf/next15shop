@@ -1,7 +1,6 @@
 "use client";
 import { ClerkLoaded, SignInButton, UserButton, useUser } from "@clerk/nextjs";
 import { PiMagnifyingGlass, PiShoppingCartSimpleDuotone, PiUser } from "react-icons/pi";
-import useBasketStore from "@/store/basketStore";
 import useLangStore from "@/store/langStore";
 import Image from "next/image";
 import NextLink from "next/link";
@@ -29,7 +28,7 @@ function Header({ globals }: { globals: Language[] }) {
   const searchPlaceholder = getLocalizedText("search");
   return (
     <header className="py-2 fixed inset-0 bg-white z-10 max-h-14 shadow-black/30 shadow-md">
-      <div className="max-w-7xl mx-auto flex justify-between items-center gap-4">
+      <div className="xl:max-w-7xl lg:max-w-4xl md:max-w-3xl sm:max-w-xl mx-auto flex justify-between items-center gap-4">
         <NextLink
           href="/"
           className="text-3xl font-bold text-green-700 hover:opacity-80 cursor-pointer mx-auto sm:mx-0"

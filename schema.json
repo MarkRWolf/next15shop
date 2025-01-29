@@ -326,6 +326,60 @@
     }
   },
   {
+    "name": "colors",
+    "type": "document",
+    "attributes": {
+      "_id": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_type": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string",
+          "value": "colors"
+        }
+      },
+      "_createdAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_updatedAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_rev": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "title": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": false
+      },
+      "hexes": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "array",
+          "of": {
+            "type": "string"
+          }
+        },
+        "optional": false
+      }
+    }
+  },
+  {
     "name": "texts",
     "type": "document",
     "attributes": {
@@ -483,14 +537,14 @@
                 "value": {
                   "type": "object",
                   "attributes": {
-                    "daDK": {
+                    "enGB": {
                       "type": "objectAttribute",
                       "value": {
                         "type": "string"
                       },
                       "optional": true
                     },
-                    "enGB": {
+                    "daDK": {
                       "type": "objectAttribute",
                       "value": {
                         "type": "string"
