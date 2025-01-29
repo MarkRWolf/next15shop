@@ -47,11 +47,11 @@ const Privacy = ({ privacyText }: PrivacyProps) => {
       <div className="w-full flex flex-col gap-2">
         {privacy?.map((chap, index) =>
           index === 0 ? (
-            <h1 className="font-semibold text-lg border-b border-slate-600" key={index}>
+            <h1 className="font-semibold text-lg pb-4 border-b border-slate-600" key={index}>
               {chap}
             </h1>
           ) : (
-            <div key={index} className="border-b border-slate-500">
+            <div key={index} className="pb-4 border-b border-slate-500">
               {chapterLines(chap)?.map((line, i) => <p key={i}>{line}</p>)}
             </div>
           )

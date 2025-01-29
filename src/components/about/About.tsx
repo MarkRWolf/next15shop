@@ -2,33 +2,63 @@
 import { Language } from "../../../sanity.types";
 import useLangStore from "@/store/langStore";
 import { DEFAULT_LANGUAGE } from "@/types/languages";
-import Link from "next/link";
 interface AboutProps {
-  globals: Language[];
+  aboutText: Language[];
 }
 
-const About = ({ globals }: AboutProps) => {
+const About = ({ aboutText }: AboutProps) => {
   const { lang } = useLangStore();
 
-  const globalsContent = globals[0]?.content || [];
+  const getAllSections = (key: string) => {
+    const content = aboutText[0]?.content || [];
 
-  const getLocalizedText = (key: string) => {
-    const contentItem = globalsContent?.find((g) => g.key === key);
-    const localizedText = contentItem?.localizedText?.[lang];
-    return localizedText && localizedText.length > 0
-      ? localizedText
-      : contentItem?.localizedText?.[DEFAULT_LANGUAGE];
+    /** Put all chapters in array in order
+     * [chap01, chap02, chap03, ...] */
+    const sections = content
+      .filter((g) => g.key.startsWith(key))
+      .sort((a, b) => {
+        const getNumericPart = (key: string) => parseInt(key.replace(/\D/g, ""), 10);
+        return getNumericPart(a.key) - getNumericPart(b.key);
+      });
+
+    /** Return an array of the chapters as strings in selected language
+     *  or fall back to default language */
+    const chapters = sections
+      .map((section) => {
+        const localizedText = section?.localizedText?.[lang];
+        return localizedText && localizedText.length > 0
+          ? localizedText
+          : section?.localizedText?.[DEFAULT_LANGUAGE];
+      })
+      .filter((text): text is string => text !== undefined);
+
+    return chapters;
   };
 
-  const privacy = getLocalizedText("privacy");
-  const terms = getLocalizedText("terms");
-  const about = getLocalizedText("about");
+  const about = getAllSections("chap");
 
-  return (
-    <div>
-      <h1>{about}</h1>
+  const chapterLines = (text: string) => {
+    const normalizedText = text.replace(/\\n/g, "\n");
+    return normalizedText.split("\n");
+  };
+
+  return about?.length ? (
+    <div className="w-full max-w-7xl mx-auto">
+      <div className="w-full flex flex-col gap-2">
+        {about?.map((chap, index) =>
+          index === 0 ? (
+            <h1 className="font-semibold text-lg pb-4 border-b border-slate-600" key={index}>
+              {chap}
+            </h1>
+          ) : (
+            <div key={index} className="pb-4 border-b border-slate-500">
+              {chapterLines(chap)?.map((line, i) => <p key={i}>{line}</p>)}
+            </div>
+          )
+        )}
+      </div>
     </div>
-  );
+  ) : null;
 };
 
 export default About;
