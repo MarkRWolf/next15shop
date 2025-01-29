@@ -1,11 +1,11 @@
-import { getAllGlobals } from "@/sanity/lib/lang/getAllGlobals";
+import Terms from "@/components/terms/Terms";
 import { Language } from "../../../../sanity.types";
-import About from "@/components/about/About";
+import { getLocalizedTexts } from "@/sanity/lib/lang/getLocalizedTexts";
 
 const AboutPage = async () => {
-  const globalLangs: Language[] = await getAllGlobals();
+  const termsText: Language[] = await getLocalizedTexts("terms");
 
-  return <About globals={globalLangs} />;
+  return <Terms termsText={termsText} />;
 };
 
 export default AboutPage;
