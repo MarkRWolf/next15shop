@@ -1,11 +1,11 @@
-import { getAllGlobals } from "@/sanity/lib/lang/getAllGlobals";
+import Privacy from "@/components/privacy/Privacy";
 import { Language } from "../../../../sanity.types";
-import About from "@/components/about/About";
+import { getLocalizedTexts } from "@/sanity/lib/lang/getLocalizedTexts";
 
-const AboutPage = async () => {
-  const globalLangs: Language[] = await getAllGlobals();
+const PrivacyPage = async () => {
+  const privacyText: Language[] = await getLocalizedTexts("privacy");
 
-  return <About globals={globalLangs} />;
+  return <Privacy privacyText={privacyText} />;
 };
 
-export default AboutPage;
+export default PrivacyPage;
