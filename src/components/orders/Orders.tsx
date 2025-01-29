@@ -5,19 +5,51 @@ import { Language, Order, MY_ORDERS_QUERYResult } from "../../../sanity.types";
 import { imageUrl } from "@/lib/imageUrl";
 import { formatCurrency } from "@/lib/formatCurrency";
 import { DEFAULT_LANGUAGE } from "@/types/languages";
+import useLangStore from "@/store/langStore";
+import { useEffect, useState } from "react";
+import Throbber from "../Throbber";
 
 interface OrdersProps {
   orders: MY_ORDERS_QUERYResult;
   ordersText: Language[];
 }
 function Orders({ orders, ordersText }: OrdersProps) {
+  const { lang } = useLangStore();
+  const ordersContent = ordersText[0]?.content || [];
+
+  const getLocalizedText = (key: string) => {
+    const item = ordersContent?.find((g) => g.key === key);
+    const localizedText = item?.localizedText?.[lang];
+    return localizedText && localizedText.length > 0
+      ? localizedText
+      : item?.localizedText?.[DEFAULT_LANGUAGE];
+  };
+
+  const ordersHeader = getLocalizedText("orders");
+  const number = getLocalizedText("number");
+  const date = getLocalizedText("date");
+  const amount = getLocalizedText("amount");
+  const items = getLocalizedText("items");
+  const quantity = getLocalizedText("quantity");
+  const none = getLocalizedText("none");
+
+  /* Hydration Issue */
+  /*   const [isClient, setIsClient] = useState(false);
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return <Throbber />;
+  } */
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 p-4">
       <div className="bg-white p-4 sm:p-8 rounded-xl shadow-lg w-full max-w-4xl">
-        <h1 className="text-4xl font-bold text-gray-900 tracking-tight mb-8">My Orders</h1>
+        <h1 className="text-4xl font-bold text-gray-900 tracking-tight mb-8">{ordersHeader}</h1>
         {orders.length === 0 ? (
           <div className="text-center text-gray-600">
-            <p>You have not placed any orders yet.</p>
+            <p>{none}</p>
           </div>
         ) : (
           <div className="space-y-6 sm:space-y-8">
@@ -29,13 +61,13 @@ function Orders({ orders, ordersText }: OrdersProps) {
                 <div className="p-4 sm:p-6 borer-b border-gray-200">
                   <div className="flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center mb-4">
                     <div>
-                      <p className="text-sm text-gray-600 mb-1 font-bold">Order Number</p>
+                      <p className="text-sm text-gray-600 mb-1 font-bold">{number}</p>
                       <p className="font-mono text-sm text-green-600 break-all">
                         {order.orderNumber}
                       </p>
                     </div>
                     <div className="sm:text-right">
-                      <p className="text-sm text-gray-600 mb-1">Order Date</p>
+                      <p className="text-sm text-gray-600 mb-1">{date}</p>
                       <p className="font-medium">
                         {order.orderDate ? new Date(order.orderDate).toLocaleDateString() : "N/A"}
                       </p>
@@ -52,7 +84,7 @@ function Orders({ orders, ordersText }: OrdersProps) {
                       </span>
                     </div>
                     <div className="sm:text-right">
-                      <p className="text-sm text-gray-600 mb-1">Total Amount</p>
+                      <p className="text-sm text-gray-600 mb-1">{amount}</p>
                       <p className="font-bold text-lg">
                         {formatCurrency(order.totalPrice ?? 0, order.currency)}
                       </p>
@@ -75,7 +107,7 @@ function Orders({ orders, ordersText }: OrdersProps) {
                   ) : null}
                 </div>
                 <div className="px-4 py-3 sm:px-6 sm:py-4">
-                  <p className="text-sm font-semibold text-gray-600 mb-3 sm:mb-4">Order Items</p>
+                  <p className="text-sm font-semibold text-gray-600 mb-3 sm:mb-4">{items}</p>
                   <div className="space-y-3 sm:space-y-4">
                     {order.products?.map((product) => (
                       <div
@@ -98,7 +130,7 @@ function Orders({ orders, ordersText }: OrdersProps) {
                               {product.product?.[`name_${DEFAULT_LANGUAGE}`] ?? "Unknown product"}
                             </p>
                             <p className="text-sm text-gray-600">
-                              Quantity: {product.quantity ?? "N/A"}
+                              {quantity} {product.quantity ?? "N/A"}
                             </p>
                           </div>
                         </div>
