@@ -1,13 +1,26 @@
 "use client";
 import useLangStore from "@/store/langStore";
-import { Sale } from "../../../sanity.types";
+import { Language, Sale } from "../../../sanity.types";
 import { DEFAULT_LANGUAGE } from "@/types/languages";
-import SalePagination from "./SalePagination";
 
-const SaleBanner = ({ sale }: { sale: Sale }) => {
+const SaleBanner = ({ sale, salesText }: { sale: Sale; salesText: Language[] }) => {
   const { lang } = useLangStore();
   const title = sale[`title_${lang}`] ?? sale[`title_${DEFAULT_LANGUAGE}`];
   const description = sale[`description_${lang}`] ?? sale[`description_${DEFAULT_LANGUAGE}`];
+
+  const salesContent = salesText?.[0]?.content || [];
+
+  const getLocalizedText = (key: string) => {
+    const item = salesContent?.find((g) => g.key === key);
+    const localizedText = item?.localizedText?.[lang];
+    return localizedText && localizedText.length > 0
+      ? localizedText
+      : item?.localizedText?.[DEFAULT_LANGUAGE];
+  };
+
+  const useCode = getLocalizedText("useCode");
+  const forText = getLocalizedText("for");
+  const off = getLocalizedText("off");
 
   return (
     <div className="w-full mx-auto bg-gradient-to-r from-slate-900 to-slate-900/90 text-gray-200 px-6 py-10 mt-2">
@@ -18,10 +31,10 @@ const SaleBanner = ({ sale }: { sale: Sale }) => {
           <div className="flex">
             <div className="bg-white text-black py-4 px-6 rounded-full shadow-md transform hover:scale-105 transition duration-300">
               <span className="font-bold text-base sm:text-xl">
-                Use code:<span className="text-red-600">{sale.couponCode}</span>
+                {useCode} <span className="text-red-600">{sale.couponCode}</span>
               </span>
               <span className="ml-2 font-bold text-base sm:text-xl">
-                for {sale.discountAmount}% OFF
+                {forText} {sale.discountAmount}% {off}
               </span>
             </div>
           </div>

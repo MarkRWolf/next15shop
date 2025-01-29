@@ -33,15 +33,15 @@ function Orders({ orders, ordersText }: OrdersProps) {
   const quantity = getLocalizedText("quantity");
   const none = getLocalizedText("none");
 
-  /* Hydration Issue */
-  /*   const [isClient, setIsClient] = useState(false);
+  /* Hydration Issue (Not an issue in build/prod) */
+  const [isClient, setIsClient] = useState(false);
   useEffect(() => {
     setIsClient(true);
   }, []);
 
   if (!isClient) {
     return <Throbber />;
-  } */
+  }
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 p-4">
