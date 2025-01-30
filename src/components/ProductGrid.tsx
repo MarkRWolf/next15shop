@@ -5,21 +5,12 @@ import ProductCard from "./ProductCard";
 import { cleanProducts } from "@/utils/cleanProducts";
 import useLangStore from "@/store/langStore";
 import { DEFAULT_LANGUAGE } from "@/types/languages";
+import useText from "@/hooks/useText";
 const ProductGrid = ({ products, productMsg }: { products: Product[]; productMsg: Language[] }) => {
   const { lang } = useLangStore();
+
   const cleanedProducts = cleanProducts(products, lang);
-
-  const msgContent = productMsg[0]?.content || [];
-
-  const getLocalizedText = (key: string) => {
-    const item = msgContent?.find((g) => g.key === key);
-    const localizedText = item?.localizedText?.[lang];
-    return localizedText && localizedText.length > 0
-      ? localizedText
-      : item?.localizedText?.[DEFAULT_LANGUAGE];
-  };
-
-  const msg = getLocalizedText("msg");
+  const msg = useText(productMsg, "msg", "single");
 
   return (
     <>

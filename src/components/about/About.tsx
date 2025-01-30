@@ -1,49 +1,17 @@
 "use client";
+import useText from "@/hooks/useText";
 import { Language } from "../../../sanity.types";
-import useLangStore from "@/store/langStore";
-import { DEFAULT_LANGUAGE } from "@/types/languages";
+import { arrayFromNewLines } from "@/utils/stringUtils";
+
 interface AboutProps {
   aboutText: Language[];
 }
 
 const About = ({ aboutText }: AboutProps) => {
-  const { lang } = useLangStore();
-
-  const getAllSections = (key: string) => {
-    const content = aboutText[0]?.content || [];
-
-    /** Put all chapters in array in order
-     * [chap01, chap02, chap03, ...] */
-    const sections = content
-      .filter((g) => g.key.startsWith(key))
-      .sort((a, b) => {
-        const getNumericPart = (key: string) => parseInt(key.replace(/\D/g, ""), 10);
-        return getNumericPart(a.key) - getNumericPart(b.key);
-      });
-
-    /** Return an array of the chapters as strings in selected language
-     *  or fall back to default language */
-    const chapters = sections
-      .map((section) => {
-        const localizedText = section?.localizedText?.[lang];
-        return localizedText && localizedText.length > 0
-          ? localizedText
-          : section?.localizedText?.[DEFAULT_LANGUAGE];
-      })
-      .filter((text): text is string => text !== undefined);
-
-    return chapters;
-  };
-
-  const about = getAllSections("chap");
-
-  const chapterLines = (text: string) => {
-    const normalizedText = text.replace(/\\n/g, "\n");
-    return normalizedText.split("\n");
-  };
+  const about = useText(aboutText, "chap", "chapters");
 
   return about?.length ? (
-    <div className="w-full px-2 sm:px-0 xl:max-w-7xl lg:max-w-4xl md:max-w-3xl sm:max-w-xl max-w-lg mx-auto ">
+    <div className="container-main w-full px-2 sm:px-0">
       <div className="w-full flex flex-col gap-2">
         {about?.map((chap, index) =>
           index === 0 ? (
@@ -52,7 +20,7 @@ const About = ({ aboutText }: AboutProps) => {
             </h1>
           ) : (
             <div key={index} className="pb-4 border-b border-slate-500">
-              {chapterLines(chap)?.map((line, i) => <p key={i}>{line}</p>)}
+              {arrayFromNewLines(chap)?.map((line, i) => <p key={i}>{line}</p>)}
             </div>
           )
         )}

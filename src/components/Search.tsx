@@ -5,6 +5,7 @@ import { SetStateAction, useRef, useState } from "react";
 import { PiMagnifyingGlass } from "react-icons/pi";
 import { Language } from "../../sanity.types";
 import useLangStore from "@/store/langStore";
+import useText from "@/hooks/useText";
 
 const Search = ({
   globals,
@@ -18,17 +19,8 @@ const Search = ({
   const searchRef = useRef<HTMLInputElement>(null);
   const searchBtnRef = useRef<HTMLButtonElement>(null);
   const [searchVal, setSearchVal] = useState("");
-  const globalsContent = globals[0]?.content || [];
 
-  const getLocalizedText = (key: string) => {
-    const contentItem = globalsContent?.find((g) => g.key === key);
-    const localizedText = contentItem?.localizedText?.[lang];
-    return localizedText && localizedText.length > 0
-      ? localizedText
-      : contentItem?.localizedText?.[DEFAULT_LANGUAGE];
-  };
-
-  const searchPlaceholder = getLocalizedText("search");
+  const searchPlaceholder = useText(globals, "search", "single");
 
   return (
     <Form

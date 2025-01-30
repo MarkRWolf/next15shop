@@ -16,7 +16,7 @@ const ProductPage = async () => {
 
   return (
     <div className="">
-      <div className="mx-auto max-w-sm sm:max-w-2xl md:max-w-3xl lg:max-w-4xl xl:max-w-7xl ">
+      <div className="container-main">
         <ProductsView products={products} categories={categories} />
       </div>
     </div>

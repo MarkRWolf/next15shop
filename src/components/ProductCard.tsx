@@ -1,5 +1,4 @@
 "use client";
-import { Product } from "../../sanity.types";
 import NextLink from "next/link";
 import NextImage from "next/image";
 import { imageUrl } from "@/lib/imageUrl";
@@ -18,7 +17,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const name = product.name;
   const description = product.description;
   const [imgHovered, setImgHovered] = useState(false);
-  const [transformOrigin, setTransformOrigin] = useState("50% 50%"); // Default center
+  const [transformOrigin, setTransformOrigin] = useState("50% 50%");
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (!imgHovered) return;

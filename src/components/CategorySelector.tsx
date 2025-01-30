@@ -33,7 +33,7 @@ const CategorySelector = ({ categories }: CategorySelectorProps) => {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-44 relative flex justify-center sm:justify-start sm:flex-none items-center space-x-2 bg-emerald-700 hover:bg-emerald-800 hover:text-white text-white font-bold py-2 px-4 rounded"
+          className="w-44 relative flex justify-center sm:justify-between sm:flex-none items-center space-x-2 bg-emerald-700 hover:bg-emerald-800 hover:text-white text-white font-bold py-2 px-4 rounded"
         >
           {value ? categories.find((cat) => cat._id === value)?.title : "Filter by Category"}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0" />{" "}

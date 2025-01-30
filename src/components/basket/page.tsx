@@ -11,6 +11,7 @@ import useLangStore from "@/store/langStore";
 import Throbber from "@/components/Throbber";
 import { Language } from "../../../sanity.types";
 import { DEFAULT_LANGUAGE } from "@/types/languages";
+import useText from "@/hooks/useText";
 interface BasketProps {
   basketText: Language[];
 }
@@ -23,23 +24,13 @@ const Basket = ({ basketText }: BasketProps) => {
   const [isClient, setIsClient] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const basketContent = basketText[0]?.content || [];
-
-  const getLocalizedText = (key: string) => {
-    const item = basketContent?.find((g) => g.key === key);
-    const localizedText = item?.localizedText?.[lang];
-    return localizedText && localizedText.length > 0
-      ? localizedText
-      : item?.localizedText?.[DEFAULT_LANGUAGE];
-  };
-
-  const basket = getLocalizedText("basket");
-  const summary = getLocalizedText("summary");
-  const items = getLocalizedText("items");
-  const total = getLocalizedText("total");
-  const checkout = getLocalizedText("checkout");
-  const empty = getLocalizedText("empty");
-  const signin = getLocalizedText("signin");
+  const basket = useText(basketText, "basket", "single");
+  const summary = useText(basketText, "summary", "single");
+  const items = useText(basketText, "items", "single");
+  const total = useText(basketText, "total", "single");
+  const checkout = useText(basketText, "checkout", "single");
+  const empty = useText(basketText, "empty", "single");
+  const signin = useText(basketText, "signin", "single");
 
   useEffect(() => {
     setIsClient(true);

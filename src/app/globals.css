@@ -81,3 +81,9 @@
     syntax: "<angle>";
   }
 }
+
+@layer components {
+  .container-main {
+    @apply xl:max-w-7xl lg:max-w-4xl md:max-w-3xl sm:max-w-xl max-w-lg mx-auto;
+  }
+}

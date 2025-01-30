@@ -546,7 +546,7 @@ export type ALL_CATEGORIES_QUERYResult = Array<{
 
 // Source: ./src/sanity/lib/products/getAllProducts.ts
 // Variable: ALL_PRODUCTS_QUERY
-// Query: *[   _type == "product" &&  !(_id in path("drafts.*"))] | order(lower(names[0].value) asc) {  ...,"category": coalesce(categories[0]->title, ""),}
+// Query: *[   _type == "product" &&  !(_id in path("drafts.*"))] | order(lower(name_daDK) asc) {  ...,"category": coalesce(categories[0]->title, ""),}
 export type ALL_PRODUCTS_QUERYResult = Array<{
   _id: string;
   _type: "product";
@@ -1044,7 +1044,7 @@ export type PRODUCTS_BY_CATEGORY_QUERY_OLDResult = Array<{
 
 // Source: ./src/sanity/lib/products/searchProducts.ts
 // Variable: PRODUCT_SEARCH_QUERY
-// Query: *[_type == "product" && name match $searchParam] | order(name asc)
+// Query: *[_type == "product" && name_daDK match $searchParam] | order(name asc)
 export type PRODUCT_SEARCH_QUERYResult = Array<{
   _id: string;
   _type: "product";
@@ -1189,13 +1189,13 @@ declare module "@sanity/client" {
     "*[_type == \"language\" && sectionName == $section] | order(name asc)": LOCALIZED_TEXTS_QUERYResult;
     "\n    *[_type == \"order\" && clerkUserId == $userId] | order(orderDate desc) {\n        ...,\n        products[] {\n            ...,\n            product->\n        }\n    }\n    ": MY_ORDERS_QUERYResult;
     "*[_type == \"category\"] | order(name asc)": ALL_CATEGORIES_QUERYResult;
-    "*[ \n  _type == \"product\" &&\n  !(_id in path(\"drafts.*\"))\n] | order(lower(names[0].value) asc) {\n  ...,\n\"category\": coalesce(categories[0]->title, \"\"),\n}\n": ALL_PRODUCTS_QUERYResult;
+    "*[ \n  _type == \"product\" &&\n  !(_id in path(\"drafts.*\"))\n] | order(lower(name_daDK) asc) {\n  ...,\n\"category\": coalesce(categories[0]->title, \"\"),\n}\n": ALL_PRODUCTS_QUERYResult;
     "*[_type == \"product\" && !(_id in path(\"drafts.*\"))] | order(lower(name) asc) {..., \"category\": (coalesce(categories[0]->title, \"Uncategorized\") + \"\")}\n": ALL_PRODUCTS_QUERY_OLDResult;
     "*[\n        _type == \"product\" &&\n        !(_id in path(\"drafts.*\"))\n    ] | order(lower(names[0].value) asc) {\n        \"slug\": slug.current\n    }": ALL_SLUGS_QUERYResult;
     "\n  *[_type == \"product\" && slug.current == $slug && !(_id in path(\"drafts.**\"))][0] {\n    ...,\n    \"names\": names[] { ..., \"language\": lang->name },\n    \"descriptions\": descriptions[] { ..., \"language\": lang->name },\n    \"category\": coalesce(categories[0]->title, \"\")\n  }\n": PRODUCT_BY_SLUG_QUERYResult;
     "\n        *[_type == \"product\" && references(*[_type == \"category\" && slug.current == $category]._id) && !(_id in path(\"drafts.*\"))] | order(name asc) {\n    ...,\n    \"names\": names[] { ..., \"language\": lang->name },\n    \"descriptions\": descriptions[] { ..., \"language\": lang->name },\n    \"category\": coalesce(categories[0]->title, \"\")\n  }": PRODUCTS_BY_CATEGORY_QUERYResult;
     "\n        *[_type == \"product\" && references(*[_type == \"category\" && slug.current == $category]._id) && !(_id in path(\"drafts.*\"))] | order(name asc) {\n  ...,\n  \"names\": names[] { ..., \"language\": lang->name },\n  \"descriptions\": descriptions[] { ..., \"language\": lang->name },\n\"category\": coalesce(categories[0]->title, \"\"),\n}": PRODUCTS_BY_CATEGORY_QUERY_OLDResult;
-    "\n    *[_type == \"product\" && name match $searchParam] | order(name asc)": PRODUCT_SEARCH_QUERYResult;
+    "\n    *[_type == \"product\" && name_daDK match $searchParam] | order(name asc)": PRODUCT_SEARCH_QUERYResult;
     "*[_type == \"sale\" && isActive == true && couponCode == $couponCode] | order(validFrom desc)[0]": ACTIVE_SALE_BY_COUPON_QUERYResult;
     "*[_type == \"sale\" && isActive == true && !(_id in path(\"drafts.*\"))] | order(validFrom desc)": GET_ACTIVE_SALESResult;
   }

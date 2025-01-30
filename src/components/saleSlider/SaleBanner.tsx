@@ -24,7 +24,7 @@ const SaleBanner = ({ sale, salesText }: { sale: Sale; salesText: Language[] }) 
 
   return (
     <div className="w-full mx-auto bg-gradient-to-r from-slate-900 to-slate-900/90 text-gray-200 px-6 py-10 mt-2">
-      <div className="w-full  md:max-w-3xl sm:max-w-2xl lg:max-w-4xl xl:max-w-7xl px-4 mx-auto flex items-center justify-between">
+      <div className="container-main w-full px-4 flex items-center justify-between">
         <div className="flex-1">
           <h2 className="text-3xl sm:text-5xl font-extrabold text-left mb-4">{title}</h2>
           <p className="text-left text-xl sm:text-3xl font-semibold mb-6">{description}</p>
