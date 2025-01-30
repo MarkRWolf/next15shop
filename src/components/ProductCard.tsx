@@ -37,7 +37,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
     >
       {/* Card */}
       <div
-        className={`relative h-full z-[2] bg-transparent flex flex-col border-b border-r ${
+        className={`relative h-full z-[2] bg-[#f9f9f9] flex flex-col border-b border-r ${
           product?.stock > 0 ? "border-emerald-400/40" : "border-red-400/40"
         } justify-between shadow shadow-gray-400/40 rounded-md`}
       >
