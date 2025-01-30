@@ -27,7 +27,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               <VisualEditing />
             </>
           )}
-          <main className="min-h-screen flex flex-col justify-between relative pt-14 bg-gray-100">
+          <main className="min-h-screen font-sans flex flex-col justify-between relative pt-14 bg-gray-100">
             <MainHeader />
             <Breadcrumb />
             <div className="flex-grow">{children}</div>

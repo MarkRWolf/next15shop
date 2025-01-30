@@ -39,17 +39,17 @@ const ProductCard = ({ product }: ProductCardProps) => {
       <div
         className={`relative h-full z-[2] bg-[#f9f9f9] flex flex-col border-b border-r ${
           product?.stock > 0 ? "border-emerald-400/40" : "border-red-400/40"
-        } justify-between shadow shadow-gray-400/40 rounded-md`}
+        } justify-stretch shadow shadow-gray-400/40 rounded-md`}
       >
         {product?.images && (
           <div
-            className="w-full h-full relative overflow-hidden"
+            className="w-full max-h-[340px] lg:max-h-[380px] relative overflow-hidden "
             onMouseEnter={() => setImgHovered(true)}
             onMouseLeave={() => setImgHovered(false)}
             onMouseMove={handleMouseMove}
           >
             <NextImage
-              className={`w-full overflow-hidden transition-transform duration-500 ${
+              className={`w-full object-contain overflow-hidden transition-transform duration-500 ${
                 imgHovered ? "scale-150" : "scale-100"
               }`}
               style={{
@@ -62,17 +62,20 @@ const ProductCard = ({ product }: ProductCardProps) => {
             />
           </div>
         )}
-        <div className="w-full font-mono self-start  px-2 py-4">
-          <h2 className="text-2xl capitalize">{name}</h2>
-          <p className="my-4">
-            {description?.map((block, index) =>
-              block._type === "block"
-                ? block.children?.map((child) => child.text).join("")
-                : `No description${index}`
-            )}
+        <div className="w-full flex-grow self-start px-2 pb-4 flex flex-col justify-between">
+          <h2 className="lg:text-2xl font-mono sm:text-xl capitalize">{name}</h2>
+          <p className="my-4 h-full">
+            {description?.map((block, index) => {
+              if (block._type === "block") {
+                const text = block.children?.map((child) => child.text).join("") || "";
+                const words = text.split(" ");
+                return words.length > 9 ? words.slice(0, 9).join(" ") + "..." : text;
+              }
+              return `No description${index}`;
+            })}
           </p>
           <div className="relative z-[3] w-full flex items-center justify-between">
-            <p className="text-xl relative z-50">{product.price?.toFixed(2)},-</p>
+            <p className="md:text-xl sm:text-xl relative z-50">{product.price?.toFixed(2)},-</p>
             <div
               onClick={(e) => {
                 e.preventDefault();

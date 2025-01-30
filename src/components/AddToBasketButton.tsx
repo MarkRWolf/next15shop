@@ -49,6 +49,8 @@ const AddToBasketButton = ({ product }: AddToBasketButtonProps) => {
         <button
           onMouseDown={() => setClickedElement("-")}
           onMouseUp={() => setClickedElement("")}
+          onTouchStart={() => setClickedElement("-")}
+          onTouchEnd={() => setClickedElement("")}
           onClick={(e) => {
             removeItem(product._id);
           }}
@@ -59,8 +61,10 @@ const AddToBasketButton = ({ product }: AddToBasketButtonProps) => {
         </button>
         <span className={`w-8 text-center font-semibold cursor-default`}>{itemCount}</span>
         <button
-          onMouseDown={() => setClickedElement("+")}
+          onMouseDown={() => setClickedElement("-")}
           onMouseUp={() => setClickedElement("")}
+          onTouchStart={() => setClickedElement("+")}
+          onTouchEnd={() => setClickedElement("")}
           onClick={() => {
             addItem(product);
           }}

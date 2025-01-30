@@ -43,7 +43,7 @@ const About = ({ aboutText }: AboutProps) => {
   };
 
   return about?.length ? (
-    <div className="w-full max-w-7xl mx-auto">
+    <div className="w-full px-2 sm:px-0 xl:max-w-7xl lg:max-w-4xl md:max-w-3xl sm:max-w-xl max-w-lg mx-auto ">
       <div className="w-full flex flex-col gap-2">
         {about?.map((chap, index) =>
           index === 0 ? (
