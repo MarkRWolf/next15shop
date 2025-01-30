@@ -49,7 +49,7 @@ function Header({ globals, navTexts }: { globals: Language[]; navTexts: Language
 
         <div
           onClick={() => setBurgerOpen((prev) => !prev)}
-          className="absolute top-0 right-0 h-full flex items-center pr-2 sm:pr-0"
+          className="absolute top-0 right-0 h-full flex items-center pr-2 sm:pr-0 cursor-pointer"
         >
           <FaBars
             className={`transition-all ${burgerOpen ? "-rotate-90" : "rotate-0"} h-6 w-6 text-black`}
