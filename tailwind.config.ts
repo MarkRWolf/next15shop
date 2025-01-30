@@ -63,6 +63,7 @@ const config: Config = {
       },
       fontFamily: {
         mono: ["JetBrains Mono", "monospace"],
+        sans: ["Noto Sans", "Roboto Flex", "sans-serif"],
       },
       transitionDuration: {
         700: "700ms", // Adds duration-700 class

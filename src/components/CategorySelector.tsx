@@ -1,6 +1,6 @@
 "use client";
 import { ChevronsUpDown, Check } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { Category } from "../../sanity.types";
 import { Button } from "./ui/button";
@@ -19,8 +19,13 @@ interface CategorySelectorProps {
 }
 const CategorySelector = ({ categories }: CategorySelectorProps) => {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState<string>("");
   const router = useRouter();
+  const path = usePathname().split("/")[2];
+  const [value, setValue] = useState<string>(
+    categories.find((c) => c.slug?.current === path)?._id || ""
+  );
+
+  console.log("path", path);
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
