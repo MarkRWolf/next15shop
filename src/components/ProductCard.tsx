@@ -41,7 +41,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
     startNavigating();
     setTimeout(() => {
       router.push(productUrl);
-    }, 250);
+    }, 100);
   };
 
   return (
