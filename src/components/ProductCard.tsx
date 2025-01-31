@@ -6,6 +6,8 @@ import AddToBasketButton from "./AddToBasketButton";
 import useLangStore from "@/store/langStore";
 import { CleanedProduct } from "@/utils/cleanProducts";
 import { useState } from "react";
+import { Router } from "lucide-react";
+import { useRouter } from "next/router";
 
 interface ProductCardProps {
   product: CleanedProduct;
@@ -29,8 +31,13 @@ const ProductCard = ({ product }: ProductCardProps) => {
     setTransformOrigin(`${x}% ${y}%`);
   };
 
+  const router = useRouter();
+
   return (
     <NextLink
+      onMouseOver={() =>
+        router.prefetch(`/products/${product.category?.toLowerCase()}/${product.slug.current}`)
+      }
       href={`/products/${product.category?.toLowerCase()}/${product.slug.current}`}
       className="w-[350px] max-w-[370px] relative group z-[3] bg-white"
     >
