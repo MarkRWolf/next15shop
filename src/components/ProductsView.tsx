@@ -10,10 +10,10 @@ interface ProductsViewProps {
 
 const ProductsView = async ({ products, categories }: ProductsViewProps) => {
   const productMsg = await getLocalizedTexts("productMsg");
-
+  const categoryTexts = await getLocalizedTexts("categorySelector");
   return (
     <div className="mt-20">
-      <CategorySelector categories={categories} />
+      <CategorySelector categories={categories} categoryTexts={categoryTexts} />
       {productMsg && <p className="text-center text-lg mt-4">{}</p>}
       <div className="mt-12">
         <ProductGrid products={products} productMsg={productMsg} />

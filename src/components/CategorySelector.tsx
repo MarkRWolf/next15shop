@@ -2,7 +2,7 @@
 import { ChevronsUpDown, Check } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
-import { Category } from "../../sanity.types";
+import { Category, Language } from "../../sanity.types";
 import { Button } from "./ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { cn } from "@/lib/utils";
@@ -14,18 +14,23 @@ import {
   CommandList,
   CommandInput,
 } from "@/components/ui/command";
+import useText from "@/hooks/useText";
 interface CategorySelectorProps {
   categories: Category[];
+  categoryTexts: Language[];
 }
-const CategorySelector = ({ categories }: CategorySelectorProps) => {
+const CategorySelector = ({ categories, categoryTexts }: CategorySelectorProps) => {
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const path = usePathname().split("/")[2];
+
   const [value, setValue] = useState<string>(
     categories.find((c) => c.slug?.current === path)?._id || ""
   );
 
-  console.log("path", path);
+  const search = useText(categoryTexts, "search", "single");
+  const filterBy = useText(categoryTexts, "filterBy", "single");
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -35,14 +40,14 @@ const CategorySelector = ({ categories }: CategorySelectorProps) => {
           aria-expanded={open}
           className="w-44 relative flex justify-center sm:justify-between sm:flex-none items-center space-x-2 bg-emerald-700 hover:bg-emerald-800 hover:text-white text-white font-bold py-2 px-4 rounded"
         >
-          {value ? categories.find((cat) => cat._id === value)?.title : "Filter by Category"}
+          {value ? categories.find((cat) => cat._id === value)?.title : filterBy}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0" />{" "}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-full p-0">
         <Command>
           <CommandInput
-            placeholder="Search category..."
+            placeholder={search}
             className="h-9"
             onKeyDown={(e) => {
               if (e.key === "Enter") {
