@@ -7,6 +7,7 @@ import useLangStore from "@/store/langStore";
 import { CleanedProduct } from "@/utils/cleanProducts";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import useNaviStore from "@/store/naviStore";
 
 interface ProductCardProps {
   product: CleanedProduct;
@@ -19,7 +20,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const description = product.description;
   const [imgHovered, setImgHovered] = useState(false);
   const [transformOrigin, setTransformOrigin] = useState("50% 50%");
-
+  const startNavigating = useNaviStore((state) => state.startNavigating);
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (!imgHovered) return;
     const img = e.currentTarget.querySelector("img");
@@ -37,6 +38,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   return (
     <NextLink
       onMouseOver={() => router.prefetch(productUrl)}
+      onClick={() => startNavigating()}
       href={`/products/${product.category?.toLowerCase()}/${product.slug.current}`}
       className="w-[350px] max-w-[370px] relative group z-[3] bg-white"
     >
