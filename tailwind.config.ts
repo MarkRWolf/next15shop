@@ -66,7 +66,7 @@ const config: Config = {
         sans: ["Noto Sans", "Roboto Flex", "sans-serif"],
       },
       transitionDuration: {
-        700: "700ms", // Adds duration-700 class
+        700: "700ms",
       },
       animation: {
         border: "border 4s linear infinite",

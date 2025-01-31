@@ -30,13 +30,13 @@ const ProductCard = ({ product }: ProductCardProps) => {
     setTransformOrigin(`${x}% ${y}%`);
   };
 
+  const productUrl = `/products/${product.category?.toLowerCase()}/${product.slug.current}`;
+
   const router = useRouter();
 
   return (
     <NextLink
-      onMouseOver={() =>
-        router.prefetch(`/products/${product.category?.toLowerCase()}/${product.slug.current}`)
-      }
+      onMouseOver={() => router.prefetch(productUrl)}
       href={`/products/${product.category?.toLowerCase()}/${product.slug.current}`}
       className="w-[350px] max-w-[370px] relative group z-[3] bg-white"
     >
