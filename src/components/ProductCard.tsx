@@ -6,8 +6,7 @@ import AddToBasketButton from "./AddToBasketButton";
 import useLangStore from "@/store/langStore";
 import { CleanedProduct } from "@/utils/cleanProducts";
 import { useState } from "react";
-import { Router } from "lucide-react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 interface ProductCardProps {
   product: CleanedProduct;
