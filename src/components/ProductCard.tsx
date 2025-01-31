@@ -35,10 +35,19 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
   const router = useRouter();
 
+  const handleNavigate = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    e.preventDefault();
+
+    startNavigating();
+    setTimeout(() => {
+      router.push(productUrl);
+    }, 150);
+  };
+
   return (
     <NextLink
       onMouseOver={() => router.prefetch(productUrl)}
-      onClick={() => startNavigating()}
+      onClick={handleNavigate}
       href={`/products/${product.category?.toLowerCase()}/${product.slug.current}`}
       className="w-[350px] max-w-[370px] relative group z-[3] bg-white"
     >
