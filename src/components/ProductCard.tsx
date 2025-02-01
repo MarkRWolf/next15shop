@@ -8,6 +8,7 @@ import { CleanedProduct } from "@/utils/cleanProducts";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import useNaviStore from "@/store/naviStore";
+import BetterLink from "./BetterLink";
 
 interface ProductCardProps {
   product: CleanedProduct;
@@ -45,11 +46,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
   };
 
   return (
-    <NextLink
-      onMouseOver={() => router.prefetch(productUrl)}
-      onClick={handleNavigate}
+    <BetterLink
       href={`/products/${product.category?.toLowerCase()}/${product.slug.current}`}
-      className="w-[350px] max-w-[370px] relative group z-[3] bg-white"
+      className="w-[350px] max-w-[370px] relative group z-[3] bg-white font-main"
     >
       {/* Card */}
       <div
@@ -79,7 +78,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           </div>
         )}
         <div className="w-full flex-grow self-start px-2 pb-4 flex flex-col justify-between">
-          <h2 className="lg:text-2xl font-mono sm:text-xl capitalize">{name}</h2>
+          <h2 className="lg:text-2xl sm:text-xl capitalize">{name}</h2>
           <p className="my-4 h-full">
             {description?.map((block, index) => {
               if (block._type === "block") {
@@ -103,7 +102,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           </div>
         </div>
       </div>
-    </NextLink>
+    </BetterLink>
   );
 };
 

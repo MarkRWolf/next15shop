@@ -9,14 +9,14 @@ const Breadcrumb = () => {
   const paths = pathname.split("/").filter((path) => path.length > 0);
 
   return (
-    <div className="container-main my-4 flex gap-1 px-2 sm:px-0">
+    <div className="container-main w-full my-4 flex gap-1 px-2 sm:px-0">
       <NextLink href={"/"}>Home</NextLink>
       {paths.length > 0 && <p>&gt;</p>}
       {paths.map((p, index) => (
         <span key={index} className="flex gap-1">
           <NextLink
             href={`/${paths.slice(0, index + 1).join("/")}`}
-            className={`${index === paths.length - 1 && "font-semibold"}`}
+            className={`${index === paths.length - 1 && "font-main"}`}
           >
             {p}
           </NextLink>

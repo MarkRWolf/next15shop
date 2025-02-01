@@ -63,6 +63,7 @@ const config: Config = {
       },
       fontFamily: {
         mono: ["JetBrains Mono", "monospace"],
+        main: ["Onest", "Noto Sans", "Roboto Flex", "sans-serif"],
         sans: ["Noto Sans", "Roboto Flex", "sans-serif"],
       },
       transitionDuration: {

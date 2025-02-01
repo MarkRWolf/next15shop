@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import Basket from "@/components/basket/page";
 import { Language } from "../../../../sanity.types";
 import { getLocalizedTexts } from "@/sanity/lib/lang/getLocalizedTexts";

@@ -38,14 +38,14 @@ const CategorySelector = ({ categories, categoryTexts }: CategorySelectorProps) 
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-44 relative flex justify-center sm:justify-between sm:flex-none items-center space-x-2 bg-emerald-700 hover:bg-emerald-800 hover:text-white text-white font-bold py-2 px-4 rounded"
+          className="min-w-44 flex justify-between border-gray-400/60"
         >
           {value ? categories.find((cat) => cat._id === value)?.title : filterBy}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0" />{" "}
+          <ChevronsUpDown className="h-4 w-4 shrink-0" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-full p-0">
-        <Command>
+        <Command className="cursor-pointer">
           <CommandInput
             placeholder={search}
             className="h-9"
@@ -69,6 +69,7 @@ const CategorySelector = ({ categories, categoryTexts }: CategorySelectorProps) 
                 <CommandItem
                   key={c._id}
                   value={c.title}
+                  className="cursor-pointer"
                   onSelect={() => {
                     setValue(value === c._id ? "" : c._id);
                     router.push(`/products/${c.slug?.current}`);

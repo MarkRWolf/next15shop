@@ -9,22 +9,14 @@ import { DEFAULT_LANGUAGE } from "@/types/languages";
 import Search from "./Search";
 import { useState } from "react";
 import { FaBars } from "react-icons/fa6";
+import useText from "@/hooks/useText";
 
 function Header({ globals, navTexts }: { globals: Language[]; navTexts: Language[] }) {
   const { user } = useUser();
   const { lang, toggleLang } = useLangStore();
   const [burgerOpen, setBurgerOpen] = useState(false);
-  const navContent = navTexts[0]?.content || [];
 
-  const getLocalizedText = (key: string) => {
-    const contentItem = navContent?.find((g) => g.key === key);
-    const localizedText = contentItem?.localizedText?.[lang];
-    return localizedText && localizedText.length > 0
-      ? localizedText
-      : contentItem?.localizedText?.[DEFAULT_LANGUAGE];
-  };
-
-  const productsText = getLocalizedText("products");
+  const productsText = useText(navTexts, "products", "single");
 
   return (
     <header className="py-2  fixed inset-0 bg-white z-10 max-h-14 shadow-black/30 shadow-md">
@@ -32,9 +24,9 @@ function Header({ globals, navTexts }: { globals: Language[]; navTexts: Language
         <NextLink
           onClick={() => setBurgerOpen(false)}
           href="/"
-          className="text-3xl font-bold text-green-700 hover:opacity-80 cursor-pointer sm:mx-0"
+          className="text-3xl font-main font-extrabold hover:opacity-80 cursor-pointer sm:mx-0"
         >
-          Shop
+          SHOP
         </NextLink>
 
         <div>
