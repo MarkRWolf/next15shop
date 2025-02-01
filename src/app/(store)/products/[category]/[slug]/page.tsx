@@ -11,6 +11,7 @@ const ProductPage = async ({ params }: { params: Promise<{ slug: string }> }) =>
 
   // Fetch product data on the server side
   const product: Product | null = await getProductBySlug(slug);
+
   if (!product) {
     return notFound();
   }

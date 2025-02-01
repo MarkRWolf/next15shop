@@ -1,5 +1,4 @@
 "use client";
-import useNaviStore from "@/store/naviStore";
 import { Link, useTransitionRouter } from "next-view-transitions";
 
 interface BetterLinkProps {
@@ -9,11 +8,9 @@ interface BetterLinkProps {
 }
 
 const BetterLink: React.FC<BetterLinkProps> = ({ children, className, href }) => {
-  const startNavi = useNaviStore((state) => state.startNavi);
   const router = useTransitionRouter();
 
   const handleNavigation = () => {
-    startNavi();
     router.push(href);
   };
 
