@@ -27,7 +27,7 @@ const BetterLink: React.FC<BetterLinkProps> = ({ children, className, href, as }
       href={href}
       as={as}
       className={className}
-      onMouseOver={() => startNavigating()}
+      onMouseOver={() => router.prefetch(href)}
       onClick={handleNavigate}
     >
       {children}
