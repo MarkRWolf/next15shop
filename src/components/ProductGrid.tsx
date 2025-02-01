@@ -1,5 +1,6 @@
 "use client";
 import { Language, Product } from "../../sanity.types";
+import { AnimatePresence, motion } from "framer-motion";
 import ProductCard from "./ProductCard";
 import { cleanProducts } from "@/utils/cleanProducts";
 import useLangStore from "@/store/langStore";
@@ -19,9 +20,18 @@ const ProductGrid = ({ products, productMsg }: { products: Product[]; productMsg
       md:grid-cols-3 xl:grid-cols-4 sm:mt-12 lg:mt-20 "
       >
         {cleanedProducts.map((product) => (
-          <div key={product._id} className="w-full">
-            <ProductCard product={product} />
-          </div>
+          <AnimatePresence key={product._id}>
+            <motion.div
+              layout
+              key={product._id}
+              initial={{ opacity: 0.2 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className=""
+            >
+              <ProductCard product={product} />
+            </motion.div>
+          </AnimatePresence>
         ))}
       </div>
     </>
