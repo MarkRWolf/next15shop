@@ -1,13 +1,11 @@
 "use client";
-import NextLink from "next/link";
+import { useState } from "react";
 import NextImage from "next/image";
 import { imageUrl } from "@/lib/imageUrl";
-import AddToBasketButton from "./AddToBasketButton";
-import useLangStore from "@/store/langStore";
 import { CleanedProduct } from "@/utils/cleanProducts";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import useLangStore from "@/store/langStore";
 import useNaviStore from "@/store/naviStore";
+import AddToBasketButton from "./AddToBasketButton";
 import BetterLink from "./BetterLink";
 
 interface ProductCardProps {
@@ -16,12 +14,14 @@ interface ProductCardProps {
 
 const ProductCard = ({ product }: ProductCardProps) => {
   const { lang } = useLangStore();
-  const isOutOfStock = product.stock != null && product.stock < 1;
-  const name = product.name;
-  const description = product.description;
+  const startNavi = useNaviStore((state) => state.startNavi);
   const [imgHovered, setImgHovered] = useState(false);
   const [transformOrigin, setTransformOrigin] = useState("50% 50%");
-  const startNavigating = useNaviStore((state) => state.startNavigating);
+
+  const isOutOfStock = product.stock != null && product.stock < 1;
+  const description = product.description;
+  const name = product.name;
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (!imgHovered) return;
     const img = e.currentTarget.querySelector("img");
@@ -34,20 +34,11 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
   const productUrl = `/products/${product.category?.toLowerCase()}/${product.slug.current}`;
 
-  const router = useRouter();
 
-  const handleNavigate = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-    e.preventDefault();
-
-    startNavigating();
-    setTimeout(() => {
-      router.push(productUrl);
-    }, 100);
-  };
-
+  
   return (
     <BetterLink
-      href={`/products/${product.category?.toLowerCase()}/${product.slug.current}`}
+      href={productUrl}
       className="w-[350px] max-w-[370px] relative group z-[3] bg-white font-main"
     >
       {/* Card */}

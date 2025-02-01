@@ -1,37 +1,31 @@
 "use client";
 import useNaviStore from "@/store/naviStore";
-import NextLink from "next/link";
-import { useRouter } from "next/navigation";
+import { Link, useTransitionRouter } from "next-view-transitions";
 
 interface BetterLinkProps {
   children: React.ReactNode;
   href: string;
-  as?: string;
   className?: string;
 }
 
-const BetterLink: React.FC<BetterLinkProps> = ({ children, className, href, as }) => {
+const BetterLink: React.FC<BetterLinkProps> = ({ children, className, href }) => {
   const startNavi = useNaviStore((state) => state.startNavi);
-  const router = useRouter();
+  const router = useTransitionRouter();
 
-  const handleNavigate = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleNavigation = () => {
     startNavi();
-    setTimeout(() => {
-      router.push(href);
-    }, 100);
+    router.push(href);
   };
 
   return (
-    <NextLink
+    <Link
       href={href}
-      as={as}
       className={className}
       onMouseOver={() => router.prefetch(href)}
-      onClick={handleNavigate}
+      onClick={handleNavigation}
     >
       {children}
-    </NextLink>
+    </Link>
   );
 };
 

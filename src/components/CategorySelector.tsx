@@ -15,6 +15,7 @@ import {
   CommandInput,
 } from "@/components/ui/command";
 import useText from "@/hooks/useText";
+import BetterLink from "./BetterLink";
 interface CategorySelectorProps {
   categories: Category[];
   categoryTexts: Language[];
@@ -66,6 +67,42 @@ const CategorySelector = ({ categories, categoryTexts }: CategorySelectorProps) 
             <CommandEmpty>No category found.</CommandEmpty>
             <CommandGroup>
               {categories.map((c) => (
+                <CommandItem key={c._id} asChild>
+                  {/* Wrap the entire CommandItem with your custom Link */}
+                  <span
+                    onClick={() => {
+                      setValue((prev) => (prev === c._id ? "" : c._id));
+                      setOpen(false);
+                    }}
+                  >
+                    <BetterLink
+                      href={`/products/${c.slug?.current}`}
+                      className="flex w-full items-center justify-between"
+                    >
+                      {c.title}
+                      <Check
+                        className={cn(
+                          "ml-auto h-4 w-4",
+                          value === c._id ? "opacity-100" : "opacity-0"
+                        )}
+                      />
+                    </BetterLink>
+                  </span>
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </PopoverContent>
+    </Popover>
+  );
+};
+
+export default CategorySelector;
+
+/*  */
+
+/* {categories.map((c) => (
                 <CommandItem
                   key={c._id}
                   value={c.title}
@@ -81,13 +118,4 @@ const CategorySelector = ({ categories, categoryTexts }: CategorySelectorProps) 
                     className={cn("ml-auto h-4 w-4", value === c._id ? "opacity-100" : "opacity-0")}
                   />
                 </CommandItem>
-              ))}
-            </CommandGroup>
-          </CommandList>
-        </Command>
-      </PopoverContent>
-    </Popover>
-  );
-};
-
-export default CategorySelector;
+              ))} */

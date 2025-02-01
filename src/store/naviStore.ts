@@ -13,7 +13,7 @@ interface NaviState {
 const useNaviStore = create<NaviState>((set) => ({
   progress: 0,
   status: "idle",
-  startNavi: () => set({ status: "loading", progress: 0 }),
+  startNavi: () => set({ status: "loading", progress: 20 }),
   setProgress: (value) =>
     set((state) => ({
       progress: typeof value === "function" ? value(state.progress) : value,

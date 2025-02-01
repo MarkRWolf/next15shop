@@ -3,7 +3,7 @@ import { ClerkLoaded, SignInButton, UserButton, useUser } from "@clerk/nextjs";
 import { PiUser, PiShoppingCartSimpleDuotone } from "react-icons/pi";
 import useLangStore from "@/store/langStore";
 import Image from "next/image";
-import NextLink from "next/link";
+import BetterLink from "./BetterLink";
 import { Language } from "../../sanity.types";
 import { DEFAULT_LANGUAGE } from "@/types/languages";
 import Search from "./Search";
@@ -21,22 +21,19 @@ function Header({ globals, navTexts }: { globals: Language[]; navTexts: Language
   return (
     <header className="py-2  fixed inset-0 bg-white z-10 max-h-14 shadow-black/30 shadow-md">
       <div className="relative pl-2 pr-10 sm:pl-0 sm:pr-8 xl:max-w-7xl lg:max-w-4xl md:max-w-3xl sm:max-w-xl max-w-lg mx-auto flex justify-between items-center gap-4 z-10">
-        <NextLink
-          onClick={() => setBurgerOpen(false)}
-          href="/"
-          className="text-3xl font-main font-extrabold hover:opacity-80 cursor-pointer sm:mx-0"
-        >
-          SHOP
-        </NextLink>
-
-        <div>
-          <NextLink
-            onClick={() => setBurgerOpen(false)}
-            href="/products"
-            className={`text-lg hover:opacity-80 cursor-pointer`}
+        <div onClick={() => setBurgerOpen(false)}>
+          <BetterLink
+            href={"/"}
+            className="text-3xl font-main font-extrabold hover:opacity-80 cursor-pointer sm:mx-0"
           >
+            SHOP
+          </BetterLink>
+        </div>
+
+        <div onClick={() => setBurgerOpen(false)}>
+          <BetterLink href="/products" className="text-lg hover:opacity-80 cursor-pointer">
             {productsText}
-          </NextLink>
+          </BetterLink>
         </div>
 
         <div
@@ -55,14 +52,18 @@ function Header({ globals, navTexts }: { globals: Language[]; navTexts: Language
           <Search setBurgerOpen={setBurgerOpen} globals={globals} />
           <ClerkLoaded>
             {user && (
-              <NextLink href="/profile/orders" className="" onClick={() => setBurgerOpen(false)}>
-                <PiUser className="h-6 w-6" />
-              </NextLink>
+              <div onClick={() => setBurgerOpen(false)}>
+                <BetterLink href="/profile/orders" className="">
+                  <PiUser className="h-6 w-6" />
+                </BetterLink>
+              </div>
             )}
           </ClerkLoaded>
-          <NextLink href="/basket" className="relative" onClick={() => setBurgerOpen(false)}>
-            <PiShoppingCartSimpleDuotone className="w-6 h-6 fill-black" />
-          </NextLink>
+          <div onClick={() => setBurgerOpen(false)}>
+            <BetterLink href="/basket" className="relative">
+              <PiShoppingCartSimpleDuotone className="w-6 h-6 fill-black" />
+            </BetterLink>
+          </div>
           <Image
             src={`https://flagcdn.com/w40/${lang.slice(-2).toLowerCase()}.png`}
             alt={lang + " flag"}

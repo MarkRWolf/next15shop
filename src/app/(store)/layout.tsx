@@ -10,8 +10,7 @@ import { DisableDraftMode } from "@/components/DisableDraftMode";
 import Footer from "@/components/footer/Footer";
 import Breadcrumb from "@/components/Breadcrumb";
 import MainHeader from "@/components/MainHeader";
-import BreatheOverlay from "@/components/BreatheOverlay";
-import ProgressProvider from "./progressProvider";
+import PageTransition from "./pageTransition";
 
 export const metadata: Metadata = {
   title: "Shop",
@@ -30,11 +29,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             </>
           )}
           <main className="min-h-screen font-sans flex flex-col justify-between relative pt-14 bg-gray-100">
-            <BreatheOverlay />
             <MainHeader />
             <Breadcrumb />
             <div className="flex-grow">
-              <ProgressProvider>{children}</ProgressProvider>
+              <PageTransition>{children}</PageTransition>
             </div>
             <Footer />
           </main>

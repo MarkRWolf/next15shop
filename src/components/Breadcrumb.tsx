@@ -1,5 +1,5 @@
 "use client";
-import NextLink from "next/link";
+import BetterLink from "./BetterLink";
 import { usePathname } from "next/navigation";
 
 const Breadcrumb = () => {
@@ -10,16 +10,16 @@ const Breadcrumb = () => {
 
   return (
     <div className="container-main w-full my-4 flex gap-1 px-2 sm:px-0">
-      <NextLink href={"/"}>Home</NextLink>
+      <BetterLink href={"/"}>Home</BetterLink>
       {paths.length > 0 && <p>&gt;</p>}
       {paths.map((p, index) => (
         <span key={index} className="flex gap-1">
-          <NextLink
+          <BetterLink
             href={`/${paths.slice(0, index + 1).join("/")}`}
             className={`${index === paths.length - 1 && "font-main"}`}
           >
             {p}
-          </NextLink>
+          </BetterLink>
           {index < paths.length - 1 && <p>&gt;</p>}
         </span>
       ))}
