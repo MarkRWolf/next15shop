@@ -1,5 +1,6 @@
 "use client";
 import { Link, useTransitionRouter } from "next-view-transitions";
+import { useRouter } from "next/navigation";
 
 interface BetterLinkProps {
   children: React.ReactNode;
@@ -8,7 +9,7 @@ interface BetterLinkProps {
 }
 
 const BetterLink: React.FC<BetterLinkProps> = ({ children, className, href }) => {
-  const router = useTransitionRouter();
+  const router = useRouter();
 
   const handleNavigation = () => {
     router.push(href);

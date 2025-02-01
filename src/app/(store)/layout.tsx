@@ -32,7 +32,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <MainHeader />
             <Breadcrumb />
             <div className="flex-grow">
-              <PageTransition>{children}</PageTransition>
+              {children}
+              {/*               <PageTransition></PageTransition>
+               */}{" "}
             </div>
             <Footer />
           </main>
