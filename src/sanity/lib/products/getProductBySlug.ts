@@ -7,8 +7,6 @@ export const getProductBySlug = async (slug: string) => {
   const PRODUCT_BY_SLUG_QUERY = defineQuery(`
   *[_type == "product" && slug.current == $slug && !(_id in path("drafts.**"))][0] {
     ...,
-    "names": names[] { ..., "language": lang->name },
-    "descriptions": descriptions[] { ..., "language": lang->name },
     "category": coalesce(categories[0]->title, "")
   }
 `);

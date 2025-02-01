@@ -1,4 +1,3 @@
-export const dynamic = "force-dynamic";
 
 import ProductGrid from "@/components/ProductGrid";
 import { getLocalizedTexts } from "@/sanity/lib/lang/getLocalizedTexts";

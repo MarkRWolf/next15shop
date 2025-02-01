@@ -9,6 +9,7 @@ interface ProductsViewProps {
 }
 
 const ProductsView = async ({ products, categories }: ProductsViewProps) => {
+  
   const productMsg = await getLocalizedTexts("productMsg");
   const categoryTexts = await getLocalizedTexts("categorySelector");
   return (

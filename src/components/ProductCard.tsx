@@ -34,8 +34,6 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
   const productUrl = `/products/${product.category?.toLowerCase()}/${product.slug.current}`;
 
-
-  
   return (
     <BetterLink
       href={productUrl}

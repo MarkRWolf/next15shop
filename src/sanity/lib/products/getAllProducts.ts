@@ -8,8 +8,7 @@ export const getAllProducts = async () => {
 ] | order(lower(name_daDK) asc) {
   ...,
 "category": coalesce(categories[0]->title, ""),
-}
-`
+}`
   );
 
   try {

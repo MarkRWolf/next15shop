@@ -1,13 +1,10 @@
-export const dynamic = "force-dynamic";
-
 import ProductsView from "@/components/ProductsView";
 import SalesSlider from "@/components/saleSlider/SalesSlider";
 import { getAllCategories } from "@/sanity/lib/products/getAllCategories";
 import { getAllProducts } from "@/sanity/lib/products/getAllProducts";
 
 export default async function Home() {
-  const products = await getAllProducts();
-  const categories = await getAllCategories();
+  const [products, categories] = await Promise.all([getAllProducts(), getAllCategories()]);
 
   return (
     <div className="w-full">

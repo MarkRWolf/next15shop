@@ -4,9 +4,9 @@ import SaleSwiper from "./SaleSwiper";
 import { getLocalizedTexts } from "@/sanity/lib/lang/getLocalizedTexts";
 
 const SalesSlider = async () => {
-  const sales: Sale[] = await getActiveSales();
+  const [sales, salesText] = await Promise.all([getActiveSales(), getLocalizedTexts("sale")]);
+
   if (!sales.length) return null;
-  const salesText = await getLocalizedTexts("sale");
 
   return <SaleSwiper sales={sales} salesText={salesText} />;
 };
