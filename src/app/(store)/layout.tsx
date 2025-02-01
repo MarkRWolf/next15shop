@@ -11,6 +11,7 @@ import Footer from "@/components/footer/Footer";
 import Breadcrumb from "@/components/Breadcrumb";
 import MainHeader from "@/components/MainHeader";
 import BreatheOverlay from "@/components/BreatheOverlay";
+import ProgressProvider from "./progressProvider";
 
 export const metadata: Metadata = {
   title: "Shop",
@@ -32,7 +33,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <BreatheOverlay />
             <MainHeader />
             <Breadcrumb />
-            <div className="flex-grow">{children}</div>
+            <div className="flex-grow">
+              <ProgressProvider>{children}</ProgressProvider>
+            </div>
             <Footer />
           </main>
           <SanityLive />

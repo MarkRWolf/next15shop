@@ -11,12 +11,12 @@ interface BetterLinkProps {
 }
 
 const BetterLink: React.FC<BetterLinkProps> = ({ children, className, href, as }) => {
-  const startNavigating = useNaviStore((state) => state.startNavigating);
+  const startNavi = useNaviStore((state) => state.startNavi);
   const router = useRouter();
 
   const handleNavigate = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
-    startNavigating();
+    startNavi();
     setTimeout(() => {
       router.push(href);
     }, 100);
