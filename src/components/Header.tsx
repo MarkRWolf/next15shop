@@ -66,14 +66,9 @@ function Header({ globals, navTexts }: { globals: Language[]; navTexts: Language
             )}
           </ClerkLoaded>
           <div onClick={() => setBurgerOpen(false)}>
-            <a
-              onMouseOver={() => router.prefetch("/basket")}
-              onClick={() => router.push("/basket")}
-              href="/basket"
-              className="relative"
-            >
+            <BetterLink href="/basket" className="relative">
               <PiShoppingCartSimpleDuotone className="w-6 h-6 fill-black" />
-            </a>
+            </BetterLink>
           </div>
           <Image
             src={`https://flagcdn.com/w40/${lang.slice(-2).toLowerCase()}.png`}
