@@ -7,6 +7,8 @@ import useLangStore from "@/store/langStore";
 import useNaviStore from "@/store/naviStore";
 import AddToBasketButton from "./AddToBasketButton";
 import BetterLink from "./BetterLink";
+import { useTransitionRouter } from "next-view-transitions";
+import NextLink from "next/link";
 
 interface ProductCardProps {
   product: CleanedProduct;
@@ -22,6 +24,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const description = product.description;
   const name = product.name;
 
+  const router = useTransitionRouter();
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (!imgHovered) return;
     const img = e.currentTarget.querySelector("img");
@@ -35,8 +39,10 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const productUrl = `/products/${product.category?.toLowerCase()}/${product.slug.current}`;
 
   return (
-    <a
+    <NextLink
       href={productUrl}
+      onMouseOver={() => router.prefetch(productUrl)}
+      onClick={() => router.push(productUrl)}
       className="w-[350px] max-w-[370px] relative group z-[3] bg-white font-main"
     >
       {/* Card */}
@@ -63,7 +69,6 @@ const ProductCard = ({ product }: ProductCardProps) => {
               alt={name ?? "Product Image"}
               width={400}
               height={400}
-              sizes="(max-width: 768px) 100vw, (max-width:1200px) 50vw, 33vw"
               quality={65}
             />
           </div>
@@ -93,7 +98,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           </div>
         </div>
       </div>
-    </a>
+    </NextLink>
   );
 };
 
