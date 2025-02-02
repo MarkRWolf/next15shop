@@ -9,7 +9,7 @@ interface BetterLinkProps {
 }
 
 const BetterLink: React.FC<BetterLinkProps> = ({ children, className, href }) => {
-  const router = useRouter();
+  const router = useTransitionRouter();
 
   const handleNavigation = () => {
     router.push(href);
