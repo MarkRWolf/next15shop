@@ -13,7 +13,7 @@ const BetterLink: React.FC<BetterLinkProps> = ({ children, className, href }) =>
 
   const handleNavigation = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
-    
+
     router.push(href);
   };
 
