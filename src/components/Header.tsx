@@ -18,14 +18,8 @@ function Header({ globals, navTexts }: { globals: Language[]; navTexts: Language
   const { lang, toggleLang } = useLangStore();
   const [burgerOpen, setBurgerOpen] = useState(false);
   const router = useTransitionRouter();
-  const [someState, setSomeState] = useState(0);
 
   const productsText = useText(navTexts, "products", "single");
-
-  const dosmth = () => {
-    setSomeState((prev) => prev + 1);
-    router.push("/");
-  };
 
   return (
     <header className="py-2  fixed inset-0 bg-white z-10 max-h-14 shadow-black/30 shadow-md">
@@ -42,14 +36,14 @@ function Header({ globals, navTexts }: { globals: Language[]; navTexts: Language
         </div>
 
         <div onClick={() => setBurgerOpen(false)}>
-          <NextLink
+          <a
             onMouseOver={() => router.prefetch("/products")}
             onClick={() => router.push("/products")}
             href="/products"
             className="text-lg hover:opacity-80 cursor-pointer"
           >
             {productsText}
-          </NextLink>
+          </a>
         </div>
 
         <div
