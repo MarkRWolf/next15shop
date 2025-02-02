@@ -118,11 +118,29 @@ const CategorySelector = ({ categories, categoryTexts }: CategorySelectorProps) 
                   }}
                 >
                   <BetterLink href={`/`} className="flex w-full items-center justify-between">
-                    Products
+                    Home
                     <Check
                       className={cn(
                         "ml-auto h-4 w-4",
                         value === "xdd" ? "opacity-100" : "opacity-0"
+                      )}
+                    />
+                  </BetterLink>
+                </span>
+              </CommandItem>
+              <CommandItem asChild>
+                <span
+                  onClick={() => {
+                    setValue("basket");
+                    setOpen(false);
+                  }}
+                >
+                  <BetterLink href={`/`} className="flex w-full items-center justify-between">
+                    Basket
+                    <Check
+                      className={cn(
+                        "ml-auto h-4 w-4",
+                        value === "basket" ? "opacity-100" : "opacity-0"
                       )}
                     />
                   </BetterLink>
