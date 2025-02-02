@@ -30,8 +30,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             </>
           )}
           <main className="min-h-screen font-sans flex flex-col justify-between relative pt-14 bg-gray-100">
-            <MainHeader />
-            <Breadcrumb />
             <div className="flex-grow">
               <Suspense fallback={null}>
                 <PageTransition>{children}</PageTransition>

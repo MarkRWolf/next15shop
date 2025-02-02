@@ -7,6 +7,8 @@ import SingleProduct from "@/components/singleProduct/SingleProduct";
 import { getLocalizedTexts } from "@/sanity/lib/lang/getLocalizedTexts";
 import CategorySelector from "@/components/CategorySelector";
 import { getAllCategories } from "@/sanity/lib/products/getAllCategories";
+import MainHeader from "@/components/MainHeader";
+import Breadcrumb from "@/components/Breadcrumb";
 
 const ProductPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;
@@ -22,6 +24,8 @@ const ProductPage = async ({ params }: { params: Promise<{ slug: string }> }) =>
 
   return (
     <>
+      <MainHeader />
+      <Breadcrumb />
       <CategorySelector categories={categories} categoryTexts={categoryTexts} />
       <SingleProduct product={product} />
     </>
