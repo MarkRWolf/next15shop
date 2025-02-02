@@ -11,6 +11,7 @@ import { useState } from "react";
 import { FaBars } from "react-icons/fa6";
 import useText from "@/hooks/useText";
 import { Link, useTransitionRouter } from "next-view-transitions";
+import NextLink from "next/link";
 
 function Header({ globals, navTexts }: { globals: Language[]; navTexts: Language[] }) {
   const { user } = useUser();
@@ -32,7 +33,7 @@ function Header({ globals, navTexts }: { globals: Language[]; navTexts: Language
         <div onClick={() => setBurgerOpen(false)}>
           <a
             onMouseOver={() => router.prefetch("/")}
-            onClick={dosmth}
+            onClick={() => router.push("/")}
             href={"/"}
             className="text-3xl font-main font-extrabold hover:opacity-80 cursor-pointer sm:mx-0"
           >
@@ -41,9 +42,14 @@ function Header({ globals, navTexts }: { globals: Language[]; navTexts: Language
         </div>
 
         <div onClick={() => setBurgerOpen(false)}>
-          <BetterLink href="/products" className="text-lg hover:opacity-80 cursor-pointer">
+          <NextLink
+            onMouseOver={() => router.prefetch("/products")}
+            onClick={() => router.push("/products")}
+            href="/products"
+            className="text-lg hover:opacity-80 cursor-pointer"
+          >
             {productsText}
-          </BetterLink>
+          </NextLink>
         </div>
 
         <div
@@ -63,16 +69,26 @@ function Header({ globals, navTexts }: { globals: Language[]; navTexts: Language
           <ClerkLoaded>
             {user && (
               <div onClick={() => setBurgerOpen(false)}>
-                <BetterLink href="/profile/orders" className="">
+                <NextLink
+                  onMouseOver={() => router.prefetch("/profile/orders")}
+                  onClick={() => router.push("/profile/orders")}
+                  href="/profile/orders"
+                  className=""
+                >
                   <PiUser className="h-6 w-6" />
-                </BetterLink>
+                </NextLink>
               </div>
             )}
           </ClerkLoaded>
           <div onClick={() => setBurgerOpen(false)}>
-            <BetterLink href="/basket" className="relative">
+            <a
+              onMouseOver={() => router.prefetch("/basket")}
+              onClick={() => router.push("/basket")}
+              href="/basket"
+              className="relative"
+            >
               <PiShoppingCartSimpleDuotone className="w-6 h-6 fill-black" />
-            </BetterLink>
+            </a>
           </div>
           <Image
             src={`https://flagcdn.com/w40/${lang.slice(-2).toLowerCase()}.png`}
