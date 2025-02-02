@@ -110,6 +110,24 @@ const CategorySelector = ({ categories, categoryTexts }: CategorySelectorProps) 
                   </BetterLink>
                 </span>
               </CommandItem>
+              <CommandItem asChild>
+                <span
+                  onClick={() => {
+                    setValue("xdd");
+                    setOpen(false);
+                  }}
+                >
+                  <BetterLink href={`/`} className="flex w-full items-center justify-between">
+                    Products
+                    <Check
+                      className={cn(
+                        "ml-auto h-4 w-4",
+                        value === "xdd" ? "opacity-100" : "opacity-0"
+                      )}
+                    />
+                  </BetterLink>
+                </span>
+              </CommandItem>
             </CommandGroup>
           </CommandList>
         </Command>
