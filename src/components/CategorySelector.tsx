@@ -135,7 +135,7 @@ const CategorySelector = ({ categories, categoryTexts }: CategorySelectorProps) 
                     setOpen(false);
                   }}
                 >
-                  <BetterLink href={`/`} className="flex w-full items-center justify-between">
+                  <BetterLink href={`/basket`} className="flex w-full items-center justify-between">
                     Basket
                     <Check
                       className={cn(
