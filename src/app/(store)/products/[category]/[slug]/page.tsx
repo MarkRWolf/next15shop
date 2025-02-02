@@ -1,4 +1,4 @@
-// File: app/products/[slug]/page.tsx
+export const dynamic = "force-dynamic";
 
 import { notFound } from "next/navigation";
 import { Product } from "../../../../../../sanity.types";

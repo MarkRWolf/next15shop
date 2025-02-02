@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import About from "@/components/about/About";
 import { getLocalizedTexts } from "@/sanity/lib/lang/getLocalizedTexts";
 

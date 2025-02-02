@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import ProductsView from "@/components/ProductsView";
 import SalesSlider from "@/components/saleSlider/SalesSlider";
 import { getAllCategories } from "@/sanity/lib/products/getAllCategories";
