@@ -16,14 +16,14 @@ const BetterLink: React.FC<BetterLinkProps> = ({ children, className, href }) =>
   };
 
   return (
-    <Link
+    <a
       href={href}
       className={className}
       onMouseOver={() => router.prefetch(href)}
       onClick={handleNavigation}
     >
       {children}
-    </Link>
+    </a>
   );
 };
 
