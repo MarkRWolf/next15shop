@@ -12,6 +12,7 @@ import Throbber from "@/components/Throbber";
 import { Language } from "../../../sanity.types";
 import { DEFAULT_LANGUAGE } from "@/types/languages";
 import useText from "@/hooks/useText";
+import { useTransitionRouter } from "next-view-transitions";
 interface BasketProps {
   basketText: Language[];
 }
@@ -20,7 +21,7 @@ const Basket = ({ basketText }: BasketProps) => {
   const groupedItems = useBasketStore((state) => state.getGroupedItems());
   const { isSignedIn } = useAuth();
   const { user } = useUser();
-  const router = useRouter();
+  const router = useTransitionRouter();
   const [isClient, setIsClient] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
