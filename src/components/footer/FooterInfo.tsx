@@ -2,7 +2,7 @@
 import { Language } from "../../../sanity.types";
 import useLangStore from "@/store/langStore";
 import { DEFAULT_LANGUAGE } from "@/types/languages";
-import Link from "next/link";
+import BetterLink from "../BetterLink";
 import { useEffect, useState } from "react";
 interface FooterInfoProps {
   globals: Language[];
@@ -34,13 +34,13 @@ const FooterInfo = ({ globals }: FooterInfoProps) => {
   return (
     <div>
       <p>
-        <Link href={"/about"}>{about}</Link>
+        <BetterLink href={"/about"}>{about}</BetterLink>
       </p>
       <p>
-        <Link href={"/privacy"}>{privacy}</Link>
+        <BetterLink href={"/privacy"}>{privacy}</BetterLink>
       </p>
       <p>
-        <Link href={"/terms"}>{terms}</Link>
+        <BetterLink href={"/terms"}>{terms}</BetterLink>
       </p>
     </div>
   );

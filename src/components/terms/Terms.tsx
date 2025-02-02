@@ -2,7 +2,7 @@
 import { Language } from "../../../sanity.types";
 import useLangStore from "@/store/langStore";
 import { DEFAULT_LANGUAGE } from "@/types/languages";
-import Link from "next/link";
+
 interface TermsProps {
   termsText: Language[];
 }
