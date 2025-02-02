@@ -39,10 +39,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const productUrl = `/products/${product.category?.toLowerCase()}/${product.slug.current}`;
 
   return (
-    <NextLink
+    <BetterLink
       href={productUrl}
-      onMouseOver={() => router.prefetch(productUrl)}
-      onClick={() => router.push(productUrl)}
       className="w-[350px] max-w-[370px] relative group z-[3] bg-white font-main"
     >
       {/* Card */}
@@ -98,7 +96,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           </div>
         </div>
       </div>
-    </NextLink>
+    </BetterLink>
   );
 };
 
