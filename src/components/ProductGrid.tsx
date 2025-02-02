@@ -1,10 +1,8 @@
 "use client";
 import { Language, Product } from "../../sanity.types";
-import { AnimatePresence, motion } from "framer-motion";
 import ProductCard from "./ProductCard";
 import { cleanProducts } from "@/utils/cleanProducts";
 import useLangStore from "@/store/langStore";
-import { DEFAULT_LANGUAGE } from "@/types/languages";
 import useText from "@/hooks/useText";
 const ProductGrid = ({ products, productMsg }: { products: Product[]; productMsg: Language[] }) => {
   const { lang } = useLangStore();
@@ -20,11 +18,7 @@ const ProductGrid = ({ products, productMsg }: { products: Product[]; productMsg
       md:grid-cols-3 xl:grid-cols-4 sm:mt-12 lg:mt-20 "
       >
         {cleanedProducts.map((product) => (
-          <AnimatePresence key={product._id}>
-            <motion.div layout key={product._id} exit={{ opacity: 0 }} className="">
-              <ProductCard product={product} />
-            </motion.div>
-          </AnimatePresence>
+          <ProductCard key={product._id} product={product} />
         ))}
       </div>
     </>
