@@ -20,7 +20,10 @@ const Breadcrumb = () => {
         <span key={index} className="flex gap-1">
           <a
             onMouseOver={() => router.prefetch(`/${paths.slice(0, index + 1).join("/")}`)}
-            onClick={() => router.push(`/${paths.slice(0, index + 1).join("/")}`)}
+            onClick={(e) => {
+              e.preventDefault();
+              router.push(`/${paths.slice(0, index + 1).join("/")}`);
+            }}
             href={`/${paths.slice(0, index + 1).join("/")}`}
             className={`${index === paths.length - 1 && "font-main"}`}
           >
