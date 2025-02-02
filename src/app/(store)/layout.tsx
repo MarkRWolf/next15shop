@@ -29,14 +29,16 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               <VisualEditing />
             </>
           )}
-          <main className="min-h-screen font-sans flex flex-col justify-between relative pt-14 bg-gray-100">
-            <div className="flex-grow">
-              <Suspense fallback={null}>
-                <PageTransition>{children}</PageTransition>
-              </Suspense>
-            </div>
-            <Footer />
-          </main>
+          <PageTransition>
+            <main className="min-h-screen font-sans flex flex-col justify-between relative pt-14 bg-gray-100">
+              <MainHeader />
+              <Breadcrumb />
+              <div className="flex-grow">
+                <Suspense fallback={null}>{children}</Suspense>
+              </div>
+              <Footer />
+            </main>
+          </PageTransition>
           <SanityLive />
         </ClerkProvider>
       </body>

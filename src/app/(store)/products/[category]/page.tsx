@@ -5,8 +5,6 @@ import { Product } from "../../../../../sanity.types";
 import { getProductsByCategory } from "@/sanity/lib/products/getProductsByCategory";
 import ProductsView from "@/components/ProductsView";
 import { getAllCategories } from "@/sanity/lib/products/getAllCategories";
-import MainHeader from "@/components/MainHeader";
-import Breadcrumb from "@/components/Breadcrumb";
 
 const ProductPage = async ({ params }: { params: Promise<{ category: string }> }) => {
   const { category } = await params;
@@ -20,15 +18,11 @@ const ProductPage = async ({ params }: { params: Promise<{ category: string }> }
   const products: Product[] = await getProductsByCategory(category);
 
   return (
-    <>
-      <MainHeader />
-      <Breadcrumb />
-      <div className="">
-        <div className="container-main">
-          <ProductsView products={products} categories={categories} />
-        </div>
+    <div className="">
+      <div className="container-main">
+        <ProductsView products={products} categories={categories} />
       </div>
-    </>
+    </div>
   );
 };
 
