@@ -1,5 +1,4 @@
 "use client";
-import styles from "./singleProduct.module.css";
 import NextImage from "next/image";
 import { imageUrl } from "@/lib/imageUrl";
 import AddToBasketButton from "@/components/AddToBasketButton";
@@ -16,7 +15,6 @@ const SingleProduct = ({ product }: { product: Product }) => {
   const isOutOfStock = !product.stock || product.stock <= 0;
   const cleanedProduct = cleanProduct(product, lang);
   const { name, description } = cleanedProduct;
-  
 
   return (
     <div className="px-4 py-8">
