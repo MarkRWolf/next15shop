@@ -10,11 +10,7 @@ import { getAllCategories } from "@/sanity/lib/products/getAllCategories";
 
 const ProductPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;
-  const [product, categoryTexts, categories] = await Promise.all([
-    getProductBySlug(slug),
-    getLocalizedTexts("categorySelector"),
-    getAllCategories(),
-  ]);
+  const product = await getProductBySlug(slug);
 
   if (!product) {
     return notFound();
@@ -22,7 +18,6 @@ const ProductPage = async ({ params }: { params: Promise<{ slug: string }> }) =>
 
   return (
     <>
-      <CategorySelector categories={categories} categoryTexts={categoryTexts} />
       <SingleProduct product={product} />
     </>
   );

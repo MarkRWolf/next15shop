@@ -89,63 +89,6 @@ const CategorySelector = ({ categories, categoryTexts }: CategorySelectorProps) 
                   </span>
                 </CommandItem>
               ))}
-              <CommandItem asChild>
-                <span
-                  onClick={() => {
-                    setValue("yeehaw");
-                    setOpen(false);
-                  }}
-                >
-                  <BetterLink
-                    href={`/products`}
-                    className="flex w-full items-center justify-between"
-                  >
-                    Products
-                    <Check
-                      className={cn(
-                        "ml-auto h-4 w-4",
-                        value === "yeehaw" ? "opacity-100" : "opacity-0"
-                      )}
-                    />
-                  </BetterLink>
-                </span>
-              </CommandItem>
-              <CommandItem asChild>
-                <span
-                  onClick={() => {
-                    setValue("xdd");
-                    setOpen(false);
-                  }}
-                >
-                  <BetterLink href={`/`} className="flex w-full items-center justify-between">
-                    Home
-                    <Check
-                      className={cn(
-                        "ml-auto h-4 w-4",
-                        value === "xdd" ? "opacity-100" : "opacity-0"
-                      )}
-                    />
-                  </BetterLink>
-                </span>
-              </CommandItem>
-              <CommandItem asChild>
-                <span
-                  onClick={() => {
-                    setValue("basket");
-                    setOpen(false);
-                  }}
-                >
-                  <BetterLink href={`/basket`} className="flex w-full items-center justify-between">
-                    Basket
-                    <Check
-                      className={cn(
-                        "ml-auto h-4 w-4",
-                        value === "basket" ? "opacity-100" : "opacity-0"
-                      )}
-                    />
-                  </BetterLink>
-                </span>
-              </CommandItem>
             </CommandGroup>
           </CommandList>
         </Command>

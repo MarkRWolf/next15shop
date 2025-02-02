@@ -84,7 +84,11 @@ const Basket = ({ basketText }: BasketProps) => {
             >
               <div
                 className="flex items-center cursor-pointer flex-1 min-w-0"
-                onClick={() => router.push(`/products/${item.product.slug?.current}`)}
+                onClick={() =>
+                  router.push(
+                    `/products/${item?.product?.category?.toLowerCase()}/${item?.product?.slug.current}`
+                  )
+                }
               >
                 <div className="w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0 mr-4">
                   {item.product.images && (
