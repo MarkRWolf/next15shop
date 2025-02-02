@@ -3,8 +3,8 @@ import Header from "./Header";
 import { getLocalizedTexts } from "@/sanity/lib/lang/getLocalizedTexts";
 
 const MainHeader = async () => {
-  const globalLangs = await getAllGlobals();
-  const navTexts = await getLocalizedTexts("nav");
+  const [globalLangs, navTexts] = await Promise.all([getAllGlobals(), getLocalizedTexts("nav")]);
+
   return <Header globals={globalLangs} navTexts={navTexts}></Header>;
 };
 
