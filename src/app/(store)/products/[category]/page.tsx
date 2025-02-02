@@ -17,8 +17,6 @@ const ProductPage = async ({ params }: { params: Promise<{ category: string }> }
   // Fetch product data on the server side
   const products: Product[] = await getProductsByCategory(category);
 
-  if (!products.length) return notFound();
-
   return (
     <div className="">
       <div className="container-main">

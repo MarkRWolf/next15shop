@@ -10,7 +10,6 @@ const ProductPage = async () => {
   const categories = await getAllCategories();
   const products: Product[] = await getAllProducts();
 
-  if (!products.length) return notFound();
   return (
     <div className="">
       <div className="container-main">
