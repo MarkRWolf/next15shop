@@ -11,6 +11,7 @@ import Footer from "@/components/footer/Footer";
 import Breadcrumb from "@/components/Breadcrumb";
 import MainHeader from "@/components/MainHeader";
 import PageTransition from "./pageTransition";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Shop",
@@ -32,7 +33,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <MainHeader />
             <Breadcrumb />
             <div className="flex-grow">
-              <PageTransition>{children}</PageTransition>
+              <Suspense fallback={null}>
+                <PageTransition>{children}</PageTransition>
+              </Suspense>
             </div>
             <Footer />
           </main>
