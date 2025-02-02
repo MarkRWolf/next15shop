@@ -27,7 +27,10 @@ function Header({ globals, navTexts }: { globals: Language[]; navTexts: Language
         <div onClick={() => setBurgerOpen(false)}>
           <a
             onMouseOver={() => router.prefetch("/")}
-    onClick={(e) => {e.preventDefault(); router.push("/"}}
+            onClick={(e) => {
+              e.preventDefault();
+              router.push("/");
+            }}
             className="text-3xl font-main font-extrabold hover:opacity-80 cursor-pointer sm:mx-0"
           >
             SHOP
@@ -37,7 +40,10 @@ function Header({ globals, navTexts }: { globals: Language[]; navTexts: Language
         <div onClick={() => setBurgerOpen(false)}>
           <a
             onMouseOver={() => router.prefetch("/products")}
-    onClick={(e) => {e.preventDefault(); router.push("/products")} }
+            onClick={(e) => {
+              e.preventDefault();
+              router.push("/products");
+            }}
             className="text-lg hover:opacity-80 cursor-pointer"
           >
             {productsText}
