@@ -23,20 +23,21 @@ function Header({ globals, navTexts }: { globals: Language[]; navTexts: Language
 
   const dosmth = () => {
     setSomeState((prev) => prev + 1);
+    router.push("/");
   };
 
   return (
     <header className="py-2  fixed inset-0 bg-white z-10 max-h-14 shadow-black/30 shadow-md">
       <div className="relative pl-2 pr-10 sm:pl-0 sm:pr-8 xl:max-w-7xl lg:max-w-4xl md:max-w-3xl sm:max-w-xl max-w-lg mx-auto flex justify-between items-center gap-4 z-10">
         <div onClick={() => setBurgerOpen(false)}>
-          <Link
+          <a
             onMouseOver={() => router.prefetch("/")}
             onClick={dosmth}
             href={"/"}
             className="text-3xl font-main font-extrabold hover:opacity-80 cursor-pointer sm:mx-0"
           >
             SHOP
-          </Link>
+          </a>
         </div>
 
         <div onClick={() => setBurgerOpen(false)}>
