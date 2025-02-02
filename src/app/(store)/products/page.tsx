@@ -1,6 +1,5 @@
 export const dynamic = "force-dynamic";
 
-import { notFound } from "next/navigation";
 import { Product } from "../../../../sanity.types";
 import ProductsView from "@/components/ProductsView";
 import { getAllCategories } from "@/sanity/lib/products/getAllCategories";
