@@ -10,9 +10,8 @@ import Search from "./Search";
 import { useState } from "react";
 import { FaBars } from "react-icons/fa6";
 import useText from "@/hooks/useText";
-import { useTransitionRouter } from "next-view-transitions";
+import { Link, useTransitionRouter } from "next-view-transitions";
 import NextLink from "next/link";
-import Link from "next/link";
 
 function Header({ globals, navTexts }: { globals: Language[]; navTexts: Language[] }) {
   const { user } = useUser();
@@ -26,23 +25,23 @@ function Header({ globals, navTexts }: { globals: Language[]; navTexts: Language
     <header className="py-2  fixed inset-0 bg-white z-10 max-h-14 shadow-black/30 shadow-md">
       <div className="relative pl-2 pr-10 sm:pl-0 sm:pr-8 xl:max-w-7xl lg:max-w-4xl md:max-w-3xl sm:max-w-xl max-w-lg mx-auto flex justify-between items-center gap-4 z-10">
         <div onClick={() => setBurgerOpen(false)}>
-          <div
+          <Link
             onMouseOver={() => router.prefetch("/")}
-            onClick={() => router.push("/")}
+            href="/"
             className="text-3xl font-main font-extrabold hover:opacity-80 cursor-pointer sm:mx-0"
           >
             SHOP
-          </div>
+          </Link>
         </div>
 
         <div onClick={() => setBurgerOpen(false)}>
-          <div
+          <Link
             onMouseOver={() => router.prefetch("/products")}
-            onClick={() => router.push("/products")}
+            href="/products"
             className="text-lg hover:opacity-80 cursor-pointer"
           >
             {productsText}
-          </div>
+          </Link>
         </div>
 
         <div
