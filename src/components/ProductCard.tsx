@@ -47,7 +47,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
       >
         {product?.images && (
           <div
-            className="w-full max-h-[340px] lg:max-h-[380px] relative overflow-hidden "
+            className="w-full max-h-[340px] lg:max-h-[380px] relative overflow-hidden"
             onMouseEnter={() => setImgHovered(true)}
             onMouseLeave={() => setImgHovered(false)}
             onMouseMove={handleMouseMove}

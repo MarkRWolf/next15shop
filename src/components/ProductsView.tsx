@@ -9,9 +9,11 @@ interface ProductsViewProps {
 }
 
 const ProductsView = async ({ products, categories }: ProductsViewProps) => {
-  
-  const productMsg = await getLocalizedTexts("productMsg");
-  const categoryTexts = await getLocalizedTexts("categorySelector");
+  const [productMsg, categoryTexts] = await Promise.all([
+    getLocalizedTexts("productMsg"),
+    getLocalizedTexts("categorySelector"),
+  ]);
+
   return (
     <div className="mt-20">
       <CategorySelector categories={categories} categoryTexts={categoryTexts} />

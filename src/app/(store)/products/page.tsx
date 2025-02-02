@@ -5,7 +5,6 @@ import { Product } from "../../../../sanity.types";
 import ProductsView from "@/components/ProductsView";
 import { getAllCategories } from "@/sanity/lib/products/getAllCategories";
 import { getAllProducts } from "@/sanity/lib/products/getAllProducts";
-import { Suspense } from "react";
 
 const ProductPage = async () => {
   const categories = await getAllCategories();
@@ -15,9 +14,7 @@ const ProductPage = async () => {
   return (
     <div className="">
       <div className="container-main">
-        <Suspense fallback={<p>Loading</p>}>
-          <ProductsView products={products} categories={categories} />
-        </Suspense>{" "}
+        <ProductsView products={products} categories={categories} />
       </div>
     </div>
   );

@@ -21,14 +21,7 @@ const ProductGrid = ({ products, productMsg }: { products: Product[]; productMsg
       >
         {cleanedProducts.map((product) => (
           <AnimatePresence key={product._id}>
-            <motion.div
-              layout
-              key={product._id}
-              initial={{ opacity: 0.2 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className=""
-            >
+            <motion.div layout key={product._id} exit={{ opacity: 0 }} className="">
               <ProductCard product={product} />
             </motion.div>
           </AnimatePresence>

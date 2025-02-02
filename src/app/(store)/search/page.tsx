@@ -26,6 +26,6 @@ async function SearchPage({ searchParams }: { searchParams: Promise<{ query: str
       <ProductGrid products={products} productMsg={productMsg} />
     </div>
   );
-}
+  }
 
 export default SearchPage;
