@@ -11,7 +11,6 @@ import Footer from "@/components/footer/Footer";
 import Breadcrumb from "@/components/Breadcrumb";
 import MainHeader from "@/components/MainHeader";
 import PageTransition from "./pageTransition";
-import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Shop",

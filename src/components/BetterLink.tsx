@@ -11,13 +11,14 @@ interface BetterLinkProps {
 const BetterLink: React.FC<BetterLinkProps> = ({ children, className, href }) => {
   const router = useTransitionRouter();
 
-  const handleNavigation = () => {
+  const handleNavigation = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    e.preventDefault();
     router.push(href);
   };
 
   return (
     <a
-      href={href} 
+      href={href}
       className={className}
       onMouseOver={() => router.prefetch(href)}
       onClick={handleNavigation}
