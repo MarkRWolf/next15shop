@@ -12,8 +12,6 @@ const BetterLink: React.FC<BetterLinkProps> = ({ children, className, href }) =>
   const router = useTransitionRouter();
 
   const handleNavigation = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-    e.preventDefault();
-
     router.push(href);
   };
 

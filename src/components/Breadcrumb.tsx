@@ -18,17 +18,12 @@ const Breadcrumb = () => {
       {paths.length > 0 && <p>&gt;</p>}
       {paths.map((p, index) => (
         <span key={index} className="flex gap-1">
-          <a
-            onMouseOver={() => router.prefetch(`/${paths.slice(0, index + 1).join("/")}`)}
-            onClick={(e) => {
-              e.preventDefault();
-              router.push(`/${paths.slice(0, index + 1).join("/")}`);
-            }}
+          <BetterLink
             href={`/${paths.slice(0, index + 1).join("/")}`}
             className={`${index === paths.length - 1 && "font-main"}`}
           >
             {p}
-          </a>
+          </BetterLink>
           {index < paths.length - 1 && <p>&gt;</p>}
         </span>
       ))}
