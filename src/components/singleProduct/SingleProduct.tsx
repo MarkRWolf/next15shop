@@ -16,6 +16,8 @@ const SingleProduct = ({ product }: { product: Product }) => {
   const isOutOfStock = !product.stock || product.stock <= 0;
   const cleanedProduct = cleanProduct(product, lang);
   const { name, description } = cleanedProduct;
+  
+
   return (
     <div className="px-4 py-8">
       <div className="mx-auto max-w-7xl flex gap-8 lg:gap-16">

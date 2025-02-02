@@ -68,7 +68,6 @@ const CategorySelector = ({ categories, categoryTexts }: CategorySelectorProps) 
             <CommandGroup>
               {categories.map((c) => (
                 <CommandItem key={c._id} asChild>
-                  {/* Wrap the entire CommandItem with your custom Link */}
                   <span
                     onClick={() => {
                       setValue((prev) => (prev === c._id ? "" : c._id));
