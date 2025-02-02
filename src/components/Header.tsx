@@ -7,38 +7,40 @@ import BetterLink from "./BetterLink";
 import { Language } from "../../sanity.types";
 import { DEFAULT_LANGUAGE } from "@/types/languages";
 import Search from "./Search";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaBars } from "react-icons/fa6";
 import useText from "@/hooks/useText";
 import { Link, useTransitionRouter } from "next-view-transitions";
 import NextLink from "next/link";
+import { usePathname } from "next/navigation";
 
 function Header({ globals, navTexts }: { globals: Language[]; navTexts: Language[] }) {
+  const router = useTransitionRouter();
+  const path = usePathname();
   const { user } = useUser();
   const { lang, toggleLang } = useLangStore();
   const [burgerOpen, setBurgerOpen] = useState(false);
-  const router = useTransitionRouter();
-
   const productsText = useText(navTexts, "products", "single");
+
+  useEffect(() => {
+    setBurgerOpen(false);
+  }, [path]);
 
   return (
     <header className="py-2  fixed inset-0 bg-white z-10 max-h-14 shadow-black/30 shadow-md">
       <div className="relative pl-2 pr-10 sm:pl-0 sm:pr-8 xl:max-w-7xl lg:max-w-4xl md:max-w-3xl sm:max-w-xl max-w-lg mx-auto flex justify-between items-center gap-4 z-10">
         {/* Logo to home */}
-        <div onClick={() => setBurgerOpen(false)}>
-          <BetterLink
-            href={"/"}
-            className="text-3xl font-main font-extrabold hover:opacity-80 cursor-pointer sm:mx-0"
-          >
-            SHOP
-          </BetterLink>
-        </div>
+
+        <BetterLink
+          href={"/"}
+          className="text-3xl font-main font-extrabold hover:opacity-80 cursor-pointer sm:mx-0"
+        >
+          SHOP
+        </BetterLink>
         {/* hardcoded links, later make dynamic  */}
-        <div onClick={() => setBurgerOpen(false)}>
-          <BetterLink href={"/products"} className="text-lg hover:opacity-80 cursor-pointer">
-            {productsText}
-          </BetterLink>
-        </div>
+        <BetterLink href={"/products"} className="text-lg hover:opacity-80 cursor-pointer">
+          {productsText}
+        </BetterLink>
 
         <div
           onClick={() => setBurgerOpen((prev) => !prev)}
@@ -56,23 +58,19 @@ function Header({ globals, navTexts }: { globals: Language[]; navTexts: Language
           <Search setBurgerOpen={setBurgerOpen} globals={globals} />
           <ClerkLoaded>
             {user && (
-              <div onClick={() => setBurgerOpen(false)}>
-                <NextLink
-                  onMouseOver={() => router.prefetch("/profile/orders")}
-                  onClick={() => router.push("/profile/orders")}
-                  href={"/profile/orders"}
-                  className=""
-                >
-                  <PiUser className="h-6 w-6" />
-                </NextLink>
-              </div>
+              <NextLink
+                onMouseOver={() => router.prefetch("/profile/orders")}
+                onClick={() => router.push("/profile/orders")}
+                href={"/profile/orders"}
+                className=""
+              >
+                <PiUser className="h-6 w-6" />
+              </NextLink>
             )}
           </ClerkLoaded>
-          <div onClick={() => setBurgerOpen(false)}>
-            <BetterLink href={"/basket"} className="relative">
-              <PiShoppingCartSimpleDuotone className="w-6 h-6 fill-black" />
-            </BetterLink>
-          </div>
+          <BetterLink href={"/basket"} className="relative">
+            <PiShoppingCartSimpleDuotone className="w-6 h-6 fill-black" />
+          </BetterLink>
           <Image
             src={`https://flagcdn.com/w40/${lang.slice(-2).toLowerCase()}.png`}
             alt={lang + " flag"}
