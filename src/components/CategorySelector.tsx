@@ -1,6 +1,7 @@
 "use client";
 import { ChevronsUpDown, Check } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 import { useState } from "react";
 import { Category, Language } from "../../sanity.types";
 import { Button } from "./ui/button";
@@ -22,7 +23,7 @@ interface CategorySelectorProps {
 }
 const CategorySelector = ({ categories, categoryTexts }: CategorySelectorProps) => {
   const [open, setOpen] = useState(false);
-  const router = useRouter();
+  const router = useTransitionRouter();
   const path = usePathname().split("/")[2];
 
   const [value, setValue] = useState<string>(
