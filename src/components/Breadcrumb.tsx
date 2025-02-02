@@ -1,7 +1,7 @@
 "use client";
 import BetterLink from "./BetterLink";
 import { usePathname } from "next/navigation";
-import { Link, useTransitionRouter } from "next-view-transitions";
+import { useTransitionRouter } from "next-view-transitions";
 
 const Breadcrumb = () => {
   const router = useTransitionRouter();
@@ -18,12 +18,14 @@ const Breadcrumb = () => {
       {paths.length > 0 && <p>&gt;</p>}
       {paths.map((p, index) => (
         <span key={index} className="flex gap-1">
-          <BetterLink
+          <a
+            onMouseOver={() => router.prefetch(`/${paths.slice(0, index + 1).join("/")}`)}
+            onClick={() => router.push(`/${paths.slice(0, index + 1).join("/")}`)}
             href={`/${paths.slice(0, index + 1).join("/")}`}
             className={`${index === paths.length - 1 && "font-main"}`}
           >
             {p}
-          </BetterLink>
+          </a>
           {index < paths.length - 1 && <p>&gt;</p>}
         </span>
       ))}
