@@ -31,6 +31,7 @@ const CategorySelector = ({ categories, categoryTexts }: CategorySelectorProps) 
 
   const search = useText(categoryTexts, "search", "single");
   const filterBy = useText(categoryTexts, "filterBy", "single");
+  const none = useText(categoryTexts, "none", "single");
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -66,6 +67,16 @@ const CategorySelector = ({ categories, categoryTexts }: CategorySelectorProps) 
           <CommandList>
             <CommandEmpty>No category found.</CommandEmpty>
             <CommandGroup>
+              <CommandItem asChild>
+                <span onClick={() => setValue("")}>
+                  <BetterLink href="/products" className="flex w-full items-center justify-between">
+                    {none}
+                    <Check
+                      className={cn("ml-auto h-4 w-4", value === "" ? "opacity-100" : "opacity-0")}
+                    />
+                  </BetterLink>
+                </span>
+              </CommandItem>
               {categories.map((c) => (
                 <CommandItem key={c._id} asChild>
                   <span

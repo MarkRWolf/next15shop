@@ -10,12 +10,12 @@ import useText from "@/hooks/useText";
 const Search = ({
   globals,
   setBurgerOpen,
+  mobile = false,
 }: {
   globals: Language[];
-  setBurgerOpen: (value: SetStateAction<boolean>) => void;
+  setBurgerOpen?: (value: SetStateAction<boolean>) => void;
+  mobile?: boolean;
 }) => {
-  const { lang, toggleLang } = useLangStore();
-
   const searchRef = useRef<HTMLInputElement>(null);
   const searchBtnRef = useRef<HTMLButtonElement>(null);
   const [searchVal, setSearchVal] = useState("");
@@ -25,8 +25,8 @@ const Search = ({
   return (
     <Form
       action="/search"
-      className={`relative max-w-48 flex-1`}
-      onSubmit={() => setBurgerOpen((prev) => !prev)}
+      className={`${mobile && "py-2 mr-1"} relative max-w-48 flex-1`}
+      onSubmit={() => setBurgerOpen && setBurgerOpen((prev) => !prev)}
       onMouseOver={() => {
         const timer = setTimeout(() => {
           searchRef.current?.focus();

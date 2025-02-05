@@ -33,6 +33,7 @@ export const langType = defineType({
               name: "localizedText",
               title: "Localized Text",
               type: "object",
+              validation: (Rule) => Rule.required(),
               fields: [
                 ...SUPPORTED_LANGUAGES.map((lang) =>
                   defineField({

@@ -39,10 +39,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const productUrl = `/products/${product.category?.toLowerCase()}/${product.slug.current}`;
 
   return (
-    <BetterLink
-      href={productUrl}
-      className="w-[350px] max-w-[370px] relative group z-[3] bg-white font-main"
-    >
+    <BetterLink href={productUrl} className="relative group z-[3] bg-white font-main">
       {/* Card */}
       <div
         className={`relative h-full z-[2] bg-[#f9f9f9] flex flex-col border-b border-r ${
@@ -57,7 +54,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             onMouseMove={handleMouseMove}
           >
             <NextImage
-              className={`w-full object-contain overflow-hidden transition-transform duration-500 ${
+              className={`w-full h-full object-contain overflow-hidden transition-transform duration-500 ${
                 imgHovered ? "scale-150" : "scale-100"
               }`}
               style={{
@@ -72,7 +69,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           </div>
         )}
         <div className="w-full flex-grow self-start px-2 pb-4 flex flex-col justify-between">
-          <h2 className="lg:text-2xl sm:text-xl capitalize">{name}</h2>
+          <h2 className="lg:text-2xl text-xl capitalize">{name}</h2>
           <p className="my-4 h-full">
             {description?.map((block, index) => {
               if (block._type === "block") {

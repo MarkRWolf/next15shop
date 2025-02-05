@@ -18,19 +18,19 @@ const SingleProduct = ({ product }: { product: Product }) => {
 
   return (
     <div className="px-4 py-8">
-      <div className="mx-auto max-w-7xl flex gap-8 lg:gap-16">
+      <div className="container-main flex flex-wrap justify-between gap-8 lg:gap-16">
+        {/* Left / Above */}
         <div
-          className={`relative w-2/5 h-100 flex flex-wrap rounded-lg  ${isOutOfStock && "opacity-50"}`}
+          className={`relative lg:w-[450px] w-full flex flex-wrap justify-between gap-6 rounded-lg`}
         >
-          <div className="w-full h-96 relative border">
+          <div className="lg:w-full w-[75%] flex-grow h-[500px] relative border-gray-300 border">
             {product.images?.length && (
               <NextImage
                 src={imageUrl(product.images[hoveredImg < 0 ? selectedImg : hoveredImg]).url()}
                 alt={name ?? "Product Image"}
                 fill
-                sizes="(max-width: 768px) 100vw, (max-width:1200px) 50vw, 33vw"
                 quality={65}
-                className="object-contain transition-transform duration-300 hover:scale-105"
+                className={`object-contain transition-transform duration-300 hover:scale-105 ${isOutOfStock && "opacity-50"}`}
               />
             )}
             {isOutOfStock && (
@@ -39,26 +39,29 @@ const SingleProduct = ({ product }: { product: Product }) => {
               </div>
             )}
           </div>
-
           {product.images && product.images.length > 1 && (
-            <div className="w-full flex flex-wrap justify-start gap-8 my-4">
-              {product.images.map((img, i) => (
-                <NextImage
-                  className={`max-w-[100px] border p-2 aspect-square object-contain ${i === selectedImg && "border-black scale-110"} ${i === hoveredImg && i !== selectedImg && "border-gray-500 scale-105"}`}
-                  onMouseEnter={() => setHoveredImg(i)}
-                  onMouseLeave={() => setHoveredImg(-1)}
-                  onClick={() => setSelectedImg(i)}
-                  key={i}
-                  src={imageUrl(img).url()}
-                  alt={name ?? "Product Image"}
-                  width={200}
-                  height={200}
-                />
-              ))}
+            <div className=" lg:w-full w-[100px] lg:h-[100px] h-[500px] gap-6 flex lg:flex-nowrap flex-wrap lg:justify-between">
+              {product.images.map(
+                (img, i) =>
+                  i < 4 && (
+                    <NextImage
+                      className={`border h-[100px] w-[100px] object-contain ${i === selectedImg ? "border-black scale-110" : i === hoveredImg && "border-gray-500 scale-105"}`}
+                      onMouseEnter={() => setHoveredImg(i)}
+                      onMouseLeave={() => setHoveredImg(-1)}
+                      onClick={() => setSelectedImg(i)}
+                      key={i}
+                      src={imageUrl(img).url()}
+                      alt={name ?? "Product Image"}
+                      width={200}
+                      height={200}
+                    />
+                  )
+              )}
             </div>
           )}
         </div>
-        <div className="flex flex-grow flex-col justify-between">
+        {/* Right / Below */}
+        <div className="w-2/5 max-w-[50%] flex flex-grow flex-col justify-between self-end">
           <div>
             <h1 className="text-3xl font-bold mb-4">{name}</h1>
             <div className="text-xl font-semibold mb-4">{product.price?.toFixed(2)},-</div>
@@ -66,7 +69,7 @@ const SingleProduct = ({ product }: { product: Product }) => {
               {Array.isArray(description) && <PortableText value={description} />}
             </div>
           </div>
-          <div className="mt-6 mb-20">
+          <div className="mt-6 mb-20 flex flex-col">
             <p className="text-center">{product.stock} stk på lager</p>
             <AddToBasketButton product={cleanedProduct} disabled={isOutOfStock} />
           </div>
