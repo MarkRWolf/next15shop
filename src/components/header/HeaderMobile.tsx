@@ -59,11 +59,7 @@ function HeaderMobile({ globals, navTexts }: { globals: Language[]; navTexts: La
       </div>
 
       <div className="flex items-center gap-3">
-        <div
-          className="relative w-6 h-full mt-0.5"
-          onMouseOver={() => setLangOpen(true)}
-          onMouseLeave={() => setLangOpen(false)}
-        >
+        <div className="relative w-6 h-full mt-0.5" onClick={() => setLangOpen((prev) => !prev)}>
           <Image
             src={`https://flagcdn.com/w40/${lang.slice(-2).toLowerCase()}.png`}
             alt={lang + " flag"}
