@@ -9,18 +9,23 @@ export interface BasketItem {
 
 interface BasketState {
   items: BasketItem[];
+  basketReduced: boolean;
+  setBasketReduced: (value: boolean) => void;
   addItem: (product: CleanedProduct) => void;
   removeItem: (productId: string) => void;
   clearBasket: () => void;
   getTotalPrice: () => number;
   getItemCount: (productId: string) => number;
   getGroupedItems: () => BasketItem[];
+  validateBasket: (products: CleanedProduct[]) => void;
 }
 
 const useBasketStore = create<BasketState>()(
   persist(
     (set, get) => ({
       items: [],
+      basketReduced: false,
+      setBasketReduced: (value: boolean) => set({ basketReduced: value }),
       addItem: (product) =>
         set((state) => {
           const existingItem = state.items.find((item) => item.product._id === product._id);
@@ -55,6 +60,18 @@ const useBasketStore = create<BasketState>()(
         return item ? item.quantity : 0;
       },
       getGroupedItems: () => get().items,
+      validateBasket: (products: CleanedProduct[]) =>
+        set((state) => ({
+          items: state.items.filter((item) => {
+            const dbProduct = products.find((prod) => prod._id === item.product._id);
+            if (!dbProduct || dbProduct.stock === 0) return false;
+            if (item.quantity > dbProduct.stock) {
+              set({ basketReduced: true });
+              item.quantity = dbProduct.stock;
+            }
+            return true;
+          }),
+        })),
     }),
     { name: "basket-store" }
   )

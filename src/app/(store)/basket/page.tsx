@@ -1,13 +1,13 @@
 export const dynamic = "force-dynamic";
 
-import Basket from "@/components/basket/page";
-import { Language } from "../../../../sanity.types";
 import { getLocalizedTexts } from "@/sanity/lib/lang/getLocalizedTexts";
+import { getAllProducts } from "@/sanity/lib/products/getAllProducts";
+import BasketWrapper from "@/components/basket/BasketWrapper";
 
 const BasketPage = async () => {
-  const basketText: Language[] = await getLocalizedTexts("basket");
-
-  return <Basket basketText={basketText} />;
+  const basketText = await getLocalizedTexts("basket");
+  const products = await getAllProducts();
+  return <BasketWrapper basketText={basketText} products={products} />;
 };
 
 export default BasketPage;

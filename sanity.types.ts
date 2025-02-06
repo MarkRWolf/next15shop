@@ -107,7 +107,6 @@ export type Language = {
     localizedText: {
       enGB?: string;
       daDK?: string;
-      deDE?: string;
     };
     _key: string;
   }>;
@@ -119,13 +118,11 @@ export type Sale = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  langSelector?: "enGB" | "daDK" | "deDE";
+  langSelector?: "enGB" | "daDK";
   title_enGB?: string;
   title_daDK: string;
-  title_deDE?: string;
   description_enGB?: string;
   description_daDK: string;
-  description_deDE?: string;
   discountAmount?: number;
   couponCode?: string;
   startDate?: string;
@@ -169,10 +166,9 @@ export type Product = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  langSelector?: "enGB" | "daDK" | "deDE";
+  langSelector?: "enGB" | "daDK";
   name_enGB?: string;
   name_daDK: string;
-  name_deDE?: string;
   description_enGB?: Array<{
     children?: Array<{
       marks?: Array<string>;
@@ -204,36 +200,6 @@ export type Product = {
     _key: string;
   }>;
   description_daDK: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote";
-    listItem?: "bullet";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  } | {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "image";
-    _key: string;
-  }>;
-  description_deDE?: Array<{
     children?: Array<{
       marks?: Array<string>;
       text?: string;
@@ -404,157 +370,6 @@ export type SanityImageMetadata = {
 
 export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Colors | Texts | Language | Sale | Order | Product | Category | Slug | Langs | BlockContent | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
 export declare const internalGroqTypeReferenceTo: unique symbol;
-// Source: ./src/sanity/lib/orders/getMyOrders.tsx
-// Variable: MY_ORDERS_QUERY
-// Query: *[_type == "order" && clerkUserId == $userId] | order(orderDate desc) {        ...,        products[] {            ...,            product->        }    }
-export type MY_ORDERS_QUERYResult = Array<{
-  _id: string;
-  _type: "order";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  orderNumber: string;
-  stripeCheckoutSessionId?: string;
-  stripeCustomerId: string;
-  clerkUserId: string;
-  customerName: string;
-  email: string;
-  stripePaymentIntentId: string;
-  products: Array<{
-    product: {
-      _id: string;
-      _type: "product";
-      _createdAt: string;
-      _updatedAt: string;
-      _rev: string;
-      langSelector?: "daDK" | "deDE" | "enGB";
-      name_enGB?: string;
-      name_daDK: string;
-      name_deDE?: string;
-      description_enGB?: Array<{
-        children?: Array<{
-          marks?: Array<string>;
-          text?: string;
-          _type: "span";
-          _key: string;
-        }>;
-        style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
-        listItem?: "bullet";
-        markDefs?: Array<{
-          href?: string;
-          _type: "link";
-          _key: string;
-        }>;
-        level?: number;
-        _type: "block";
-        _key: string;
-      } | {
-        asset?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-        };
-        hotspot?: SanityImageHotspot;
-        crop?: SanityImageCrop;
-        alt?: string;
-        _type: "image";
-        _key: string;
-      }>;
-      description_daDK: Array<{
-        children?: Array<{
-          marks?: Array<string>;
-          text?: string;
-          _type: "span";
-          _key: string;
-        }>;
-        style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
-        listItem?: "bullet";
-        markDefs?: Array<{
-          href?: string;
-          _type: "link";
-          _key: string;
-        }>;
-        level?: number;
-        _type: "block";
-        _key: string;
-      } | {
-        asset?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-        };
-        hotspot?: SanityImageHotspot;
-        crop?: SanityImageCrop;
-        alt?: string;
-        _type: "image";
-        _key: string;
-      }>;
-      description_deDE?: Array<{
-        children?: Array<{
-          marks?: Array<string>;
-          text?: string;
-          _type: "span";
-          _key: string;
-        }>;
-        style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
-        listItem?: "bullet";
-        markDefs?: Array<{
-          href?: string;
-          _type: "link";
-          _key: string;
-        }>;
-        level?: number;
-        _type: "block";
-        _key: string;
-      } | {
-        asset?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-        };
-        hotspot?: SanityImageHotspot;
-        crop?: SanityImageCrop;
-        alt?: string;
-        _type: "image";
-        _key: string;
-      }>;
-      slug: Slug;
-      images?: Array<{
-        asset?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-        };
-        hotspot?: SanityImageHotspot;
-        crop?: SanityImageCrop;
-        _type: "image";
-        _key: string;
-      }>;
-      price: number;
-      categories: Array<{
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        _key: string;
-        [internalGroqTypeReferenceTo]?: "category";
-      }>;
-      category?: string;
-      stock: number;
-    } | null;
-    quantity?: number;
-    _key: string;
-  }> | null;
-  totalPrice: number;
-  currency: string;
-  discountAmount?: number;
-  status?: "cancelled" | "delivered" | "paid" | "pending" | "shipped";
-  orderDate: string;
-}>;
-
 // Source: ./src/sanity/lib/lang/getAllGlobals.ts
 // Variable: ALL_GLOBALS_QUERY
 // Query: *[_type == "language" && sectionName == "global"] | order(name asc)
@@ -570,7 +385,6 @@ export type ALL_GLOBALS_QUERYResult = Array<{
     localizedText: {
       enGB?: string;
       daDK?: string;
-      deDE?: string;
     };
     _key: string;
   }>;
@@ -591,7 +405,6 @@ export type LOCALIZED_TEXTS_QUERYResult = Array<{
     localizedText: {
       enGB?: string;
       daDK?: string;
-      deDE?: string;
     };
     _key: string;
   }>;
@@ -620,10 +433,9 @@ export type ALL_PRODUCTS_QUERYResult = Array<{
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  langSelector?: "daDK" | "deDE" | "enGB";
+  langSelector?: "daDK" | "enGB";
   name_enGB?: string;
   name_daDK: string;
-  name_deDE?: string;
   description_enGB?: Array<{
     children?: Array<{
       marks?: Array<string>;
@@ -655,36 +467,6 @@ export type ALL_PRODUCTS_QUERYResult = Array<{
     _key: string;
   }>;
   description_daDK: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
-    listItem?: "bullet";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  } | {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "image";
-    _key: string;
-  }>;
-  description_deDE?: Array<{
     children?: Array<{
       marks?: Array<string>;
       text?: string;
@@ -748,10 +530,9 @@ export type ALL_PRODUCTS_QUERY_OLDResult = Array<{
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  langSelector?: "daDK" | "deDE" | "enGB";
+  langSelector?: "daDK" | "enGB";
   name_enGB?: string;
   name_daDK: string;
-  name_deDE?: string;
   description_enGB?: Array<{
     children?: Array<{
       marks?: Array<string>;
@@ -783,36 +564,6 @@ export type ALL_PRODUCTS_QUERY_OLDResult = Array<{
     _key: string;
   }>;
   description_daDK: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
-    listItem?: "bullet";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  } | {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "image";
-    _key: string;
-  }>;
-  description_deDE?: Array<{
     children?: Array<{
       marks?: Array<string>;
       text?: string;
@@ -883,10 +634,9 @@ export type PRODUCT_BY_SLUG_QUERYResult = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  langSelector?: "daDK" | "deDE" | "enGB";
+  langSelector?: "daDK" | "enGB";
   name_enGB?: string;
   name_daDK: string;
-  name_deDE?: string;
   description_enGB?: Array<{
     children?: Array<{
       marks?: Array<string>;
@@ -918,36 +668,6 @@ export type PRODUCT_BY_SLUG_QUERYResult = {
     _key: string;
   }>;
   description_daDK: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
-    listItem?: "bullet";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  } | {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "image";
-    _key: string;
-  }>;
-  description_deDE?: Array<{
     children?: Array<{
       marks?: Array<string>;
       text?: string;
@@ -1011,10 +731,9 @@ export type PRODUCTS_BY_CATEGORY_QUERYResult = Array<{
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  langSelector?: "daDK" | "deDE" | "enGB";
+  langSelector?: "daDK" | "enGB";
   name_enGB?: string;
   name_daDK: string;
-  name_deDE?: string;
   description_enGB?: Array<{
     children?: Array<{
       marks?: Array<string>;
@@ -1046,36 +765,6 @@ export type PRODUCTS_BY_CATEGORY_QUERYResult = Array<{
     _key: string;
   }>;
   description_daDK: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
-    listItem?: "bullet";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  } | {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "image";
-    _key: string;
-  }>;
-  description_deDE?: Array<{
     children?: Array<{
       marks?: Array<string>;
       text?: string;
@@ -1141,10 +830,9 @@ export type PRODUCTS_BY_CATEGORY_QUERY_OLDResult = Array<{
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  langSelector?: "daDK" | "deDE" | "enGB";
+  langSelector?: "daDK" | "enGB";
   name_enGB?: string;
   name_daDK: string;
-  name_deDE?: string;
   description_enGB?: Array<{
     children?: Array<{
       marks?: Array<string>;
@@ -1176,36 +864,6 @@ export type PRODUCTS_BY_CATEGORY_QUERY_OLDResult = Array<{
     _key: string;
   }>;
   description_daDK: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
-    listItem?: "bullet";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  } | {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "image";
-    _key: string;
-  }>;
-  description_deDE?: Array<{
     children?: Array<{
       marks?: Array<string>;
       text?: string;
@@ -1271,10 +929,9 @@ export type PRODUCT_SEARCH_QUERYResult = Array<{
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  langSelector?: "daDK" | "deDE" | "enGB";
+  langSelector?: "daDK" | "enGB";
   name_enGB?: string;
   name_daDK: string;
-  name_deDE?: string;
   description_enGB?: Array<{
     children?: Array<{
       marks?: Array<string>;
@@ -1335,36 +992,6 @@ export type PRODUCT_SEARCH_QUERYResult = Array<{
     _type: "image";
     _key: string;
   }>;
-  description_deDE?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
-    listItem?: "bullet";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  } | {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "image";
-    _key: string;
-  }>;
   slug: Slug;
   images?: Array<{
     asset?: {
@@ -1390,6 +1017,126 @@ export type PRODUCT_SEARCH_QUERYResult = Array<{
   stock: number;
 }>;
 
+// Source: ./src/sanity/lib/orders/getMyOrders.tsx
+// Variable: MY_ORDERS_QUERY
+// Query: *[_type == "order" && clerkUserId == $userId] | order(orderDate desc) {        ...,        products[] {            ...,            product->        }    }
+export type MY_ORDERS_QUERYResult = Array<{
+  _id: string;
+  _type: "order";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  orderNumber: string;
+  stripeCheckoutSessionId?: string;
+  stripeCustomerId: string;
+  clerkUserId: string;
+  customerName: string;
+  email: string;
+  stripePaymentIntentId: string;
+  products: Array<{
+    product: {
+      _id: string;
+      _type: "product";
+      _createdAt: string;
+      _updatedAt: string;
+      _rev: string;
+      langSelector?: "daDK" | "enGB";
+      name_enGB?: string;
+      name_daDK: string;
+      description_enGB?: Array<{
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+        listItem?: "bullet";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      } | {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt?: string;
+        _type: "image";
+        _key: string;
+      }>;
+      description_daDK: Array<{
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+        listItem?: "bullet";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      } | {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt?: string;
+        _type: "image";
+        _key: string;
+      }>;
+      slug: Slug;
+      images?: Array<{
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: "image";
+        _key: string;
+      }>;
+      price: number;
+      categories: Array<{
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        _key: string;
+        [internalGroqTypeReferenceTo]?: "category";
+      }>;
+      category?: string;
+      stock: number;
+    } | null;
+    quantity?: number;
+    _key: string;
+  }> | null;
+  totalPrice: number;
+  currency: string;
+  discountAmount?: number;
+  status?: "cancelled" | "delivered" | "paid" | "pending" | "shipped";
+  orderDate: string;
+}>;
+
 // Source: ./src/sanity/lib/sales/getActiveSaleByCouponCode.ts
 // Variable: ACTIVE_SALE_BY_COUPON_QUERY
 // Query: *[_type == "sale" && isActive == true && couponCode == $couponCode] | order(validFrom desc)[0]
@@ -1399,13 +1146,11 @@ export type ACTIVE_SALE_BY_COUPON_QUERYResult = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  langSelector?: "daDK" | "deDE" | "enGB";
+  langSelector?: "daDK" | "enGB";
   title_enGB?: string;
   title_daDK: string;
-  title_deDE?: string;
   description_enGB?: string;
   description_daDK: string;
-  description_deDE?: string;
   discountAmount?: number;
   couponCode?: string;
   startDate?: string;
@@ -1422,13 +1167,11 @@ export type GET_ACTIVE_SALESResult = Array<{
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  langSelector?: "daDK" | "deDE" | "enGB";
+  langSelector?: "daDK" | "enGB";
   title_enGB?: string;
   title_daDK: string;
-  title_deDE?: string;
   description_enGB?: string;
   description_daDK: string;
-  description_deDE?: string;
   discountAmount?: number;
   couponCode?: string;
   startDate?: string;
@@ -1440,7 +1183,6 @@ export type GET_ACTIVE_SALESResult = Array<{
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "\n    *[_type == \"order\" && clerkUserId == $userId] | order(orderDate desc) {\n        ...,\n        products[] {\n            ...,\n            product->\n        }\n    }\n    ": MY_ORDERS_QUERYResult;
     "*[_type == \"language\" && sectionName == \"global\"] | order(name asc)": ALL_GLOBALS_QUERYResult;
     "*[_type == \"language\" && sectionName == $section] | order(name asc)": LOCALIZED_TEXTS_QUERYResult;
     "*[_type == \"category\"] | order(name asc)": ALL_CATEGORIES_QUERYResult;
@@ -1451,6 +1193,7 @@ declare module "@sanity/client" {
     "\n        *[_type == \"product\" && references(*[_type == \"category\" && slug.current == $category]._id) && !(_id in path(\"drafts.*\"))] | order(name asc) {\n    ...,\n    \"names\": names[] { ..., \"language\": lang->name },\n    \"descriptions\": descriptions[] { ..., \"language\": lang->name },\n    \"category\": coalesce(categories[0]->title, \"\")\n  }": PRODUCTS_BY_CATEGORY_QUERYResult;
     "\n        *[_type == \"product\" && references(*[_type == \"category\" && slug.current == $category]._id) && !(_id in path(\"drafts.*\"))] | order(name asc) {\n  ...,\n  \"names\": names[] { ..., \"language\": lang->name },\n  \"descriptions\": descriptions[] { ..., \"language\": lang->name },\n\"category\": coalesce(categories[0]->title, \"\"),\n}": PRODUCTS_BY_CATEGORY_QUERY_OLDResult;
     "\n    *[_type == \"product\" && name_daDK match $searchParam] | order(name asc)": PRODUCT_SEARCH_QUERYResult;
+    "\n    *[_type == \"order\" && clerkUserId == $userId] | order(orderDate desc) {\n        ...,\n        products[] {\n            ...,\n            product->\n        }\n    }\n    ": MY_ORDERS_QUERYResult;
     "*[_type == \"sale\" && isActive == true && couponCode == $couponCode] | order(validFrom desc)[0]": ACTIVE_SALE_BY_COUPON_QUERYResult;
     "*[_type == \"sale\" && isActive == true && !(_id in path(\"drafts.*\"))] | order(validFrom desc)": GET_ACTIVE_SALESResult;
   }

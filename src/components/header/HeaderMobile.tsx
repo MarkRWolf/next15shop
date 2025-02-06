@@ -11,7 +11,6 @@ import useLangStore from "@/store/langStore";
 import BetterLink from "../BetterLink";
 import NavLink from "./NavLink";
 import Search from "../Search";
-import { FaBars } from "react-icons/fa6";
 
 function HeaderMobile({ globals, navTexts }: { globals: Language[]; navTexts: Language[] }) {
   const path = usePathname();

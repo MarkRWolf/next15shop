@@ -50,6 +50,7 @@ const config: Config = {
           "4": "hsl(var(--chart-4))",
           "5": "hsl(var(--chart-5))",
         },
+        warning: "rgb(223, 145, 0)",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -68,6 +69,7 @@ const config: Config = {
       },
       transitionDuration: {
         700: "700ms",
+        3000: "3000ms",
       },
       animation: {
         border: "border 4s linear infinite",

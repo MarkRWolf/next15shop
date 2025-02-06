@@ -1,20 +1,35 @@
 "use client";
 import NextImage from "next/image";
 import { imageUrl } from "@/lib/imageUrl";
-import AddToBasketButton from "@/components/AddToBasketButton";
+import dynamic from "next/dynamic";
+const AddToBasketButton = dynamic(() => import("@/components/AddToBasketButton"));
 import { PortableText } from "next-sanity";
-import { Product } from "../../../sanity.types";
+import { Language, Product } from "../../../sanity.types";
 import useLangStore from "@/store/langStore";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { cleanProduct } from "@/utils/cleanProduct";
+import useText from "@/hooks/useText";
+import { cleanProducts } from "@/utils/cleanProducts";
+import useBasketStore from "@/store/basketStore";
 
-const SingleProduct = ({ product }: { product: Product }) => {
+interface SingleProductProps {
+  product: Product;
+  products: Product[];
+  globals: Language[];
+}
+
+const SingleProduct = ({ product, products, globals }: SingleProductProps) => {
   const { lang } = useLangStore();
   const [selectedImg, setSelectedImg] = useState(0);
   const [hoveredImg, setHoveredImg] = useState(-1);
   const isOutOfStock = !product.stock || product.stock <= 0;
   const cleanedProduct = cleanProduct(product, lang);
   const { name, description } = cleanedProduct;
+  const onStock = useText(globals, "onStock", "single");
+
+  useEffect(() => {
+    useBasketStore.getState().validateBasket(cleanProducts(products, lang));
+  }, [products, lang]);
 
   return (
     <div className="px-4 py-8">
@@ -35,7 +50,7 @@ const SingleProduct = ({ product }: { product: Product }) => {
             )}
             {isOutOfStock && (
               <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-20">
-                <span className="text-white font-bold text-lg">Out of Stock</span>
+                <span className="text-white font-main font-bold text-lg">Out of Stock</span>
               </div>
             )}
           </div>
@@ -63,14 +78,19 @@ const SingleProduct = ({ product }: { product: Product }) => {
         {/* Right / Below */}
         <div className="w-2/5 max-w-[50%] flex flex-grow flex-col justify-between self-end">
           <div>
-            <h1 className="text-3xl font-bold mb-4">{name}</h1>
-            <div className="text-xl font-semibold mb-4">{product.price?.toFixed(2)},-</div>
+            <h1 className="text-3xl font-main font-bold mb-4">{name}</h1>
+            <div className="text-xl font-main font-semibold mb-4">
+              {product.price?.toFixed(2)},-
+            </div>
             <div className="prose max-w-none mb-6">
               {Array.isArray(description) && <PortableText value={description} />}
             </div>
           </div>
-          <div className="mt-6 mb-20 flex flex-col">
-            <p className="text-center">{product.stock} stk på lager</p>
+          <div className="w-max mt-6 mb-20 flex flex-col gap-2">
+            <p className="text-center">
+              {onStock}
+              {product.stock}
+            </p>
             <AddToBasketButton product={cleanedProduct} disabled={isOutOfStock} />
           </div>
         </div>

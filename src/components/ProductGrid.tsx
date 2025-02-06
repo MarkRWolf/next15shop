@@ -5,11 +5,17 @@ import { cleanProducts } from "@/utils/cleanProducts";
 import useLangStore from "@/store/langStore";
 import useText from "@/hooks/useText";
 import { motion, AnimatePresence } from "framer-motion";
+import { useEffect } from "react";
+import useBasketStore from "@/store/basketStore";
 const ProductGrid = ({ products, productMsg }: { products: Product[]; productMsg: Language[] }) => {
   const { lang } = useLangStore();
 
   const cleanedProducts = cleanProducts(products, lang);
   const msg = useText(productMsg, "msg", "single");
+
+  useEffect(() => {
+    useBasketStore.getState().validateBasket(cleanProducts(products, lang));
+  }, [products, lang]);
 
   return (
     <>

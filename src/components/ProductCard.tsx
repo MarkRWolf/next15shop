@@ -1,30 +1,26 @@
 "use client";
+import dynamic from "next/dynamic";
+const AddToBasketButton = dynamic(() => import("@/components/AddToBasketButton"));
 import { useState } from "react";
 import NextImage from "next/image";
 import { imageUrl } from "@/lib/imageUrl";
 import { CleanedProduct } from "@/utils/cleanProducts";
 import useLangStore from "@/store/langStore";
 import useNaviStore from "@/store/naviStore";
-import AddToBasketButton from "./AddToBasketButton";
 import BetterLink from "./BetterLink";
 import { useTransitionRouter } from "next-view-transitions";
 import NextLink from "next/link";
-
 interface ProductCardProps {
   product: CleanedProduct;
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
-  const { lang } = useLangStore();
-  const startNavi = useNaviStore((state) => state.startNavi);
   const [imgHovered, setImgHovered] = useState(false);
   const [transformOrigin, setTransformOrigin] = useState("50% 50%");
 
   const isOutOfStock = product.stock != null && product.stock < 1;
   const description = product.description;
   const name = product.name;
-
-  const router = useTransitionRouter();
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (!imgHovered) return;

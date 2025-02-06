@@ -1,28 +1,31 @@
 "use client";
-import AddToBasketButton from "@/components/AddToBasketButton";
+import dynamic from "next/dynamic";
+const AddToBasketButton = dynamic(() => import("@/components/AddToBasketButton"));
 import { imageUrl } from "@/lib/imageUrl";
 import useBasketStore from "@/store/basketStore";
 import { SignInButton, useAuth, useUser } from "@clerk/nextjs";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { createCheckoutSession, Metadata } from "../../../actions/createCheckoutSession";
 import useLangStore from "@/store/langStore";
 import Throbber from "@/components/Throbber";
-import { Language } from "../../../sanity.types";
-import { DEFAULT_LANGUAGE } from "@/types/languages";
+import { Language, Product } from "../../../sanity.types";
 import useText from "@/hooks/useText";
 import { useTransitionRouter } from "next-view-transitions";
+import { DEFAULT_LANGUAGE } from "@/types/languages";
+import { cleanProducts } from "@/utils/cleanProducts";
+import { cleanProduct } from "@/utils/cleanProduct";
+
 interface BasketProps {
   basketText: Language[];
+  products: Product[];
 }
-const Basket = ({ basketText }: BasketProps) => {
+const Basket = ({ basketText, products }: BasketProps) => {
   const { lang } = useLangStore();
-  const groupedItems = useBasketStore((state) => state.getGroupedItems());
+  const basketItems = useBasketStore((state) => state.getGroupedItems());
   const { isSignedIn } = useAuth();
   const { user } = useUser();
   const router = useTransitionRouter();
-  const [isClient, setIsClient] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const basket = useText(basketText, "basket", "single");
@@ -34,14 +37,10 @@ const Basket = ({ basketText }: BasketProps) => {
   const signin = useText(basketText, "signin", "single");
 
   useEffect(() => {
-    setIsClient(true);
-  }, []);
+    useBasketStore.getState().validateBasket(cleanProducts(products, lang));
+  }, [products, lang]);
 
-  if (!isClient) {
-    return <Throbber />;
-  }
-
-  if (groupedItems.length === 0)
+  if (basketItems.length === 0)
     return (
       <div className="container mx-auto p-4 flex flex-col items-center justify-center min-h-[50dvh]">
         <h1 className="text-2xl font-bold mb-6 text-gray-800">{basket}</h1>
@@ -61,7 +60,7 @@ const Basket = ({ basketText }: BasketProps) => {
         clerkUserId: user!.id,
       };
 
-      const checkoutUrl = await createCheckoutSession(groupedItems, metadata);
+      const checkoutUrl = await createCheckoutSession(basketItems, metadata);
 
       if (checkoutUrl) {
         window.location.href = checkoutUrl;
@@ -78,44 +77,56 @@ const Basket = ({ basketText }: BasketProps) => {
       <h1 className="text-2xl font-bold mb-4">{basket}</h1>
       <div className="flex flex-col lg:flex-row gap-8">
         <div className="flex-grow">
-          {groupedItems?.map((item) => (
-            <div
-              key={item.product._id}
-              className="mb-4 p-4 border rounded flex items-center justify-between"
-            >
+          {basketItems?.map((item) => {
+            console.log(item);
+            return (
               <div
-                className="flex items-center cursor-pointer flex-1 min-w-0"
-                onClick={() =>
-                  router.push(
-                    `/products/${item?.product?.category?.toLowerCase()}/${item?.product?.slug.current}`
-                  )
-                }
+                key={item.product._id}
+                className="mb-4 p-4 border rounded flex items-center justify-between"
               >
-                <div className="w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0 mr-4">
-                  {item.product.images && (
-                    <Image
-                      src={imageUrl(item.product.images[0]).url()}
-                      alt={item.product[`name_${lang}`] ?? "Product image"}
-                      className="w-full h-full object-cover rounded"
-                      width={96}
-                      height={96}
-                    />
-                  )}
+                <div
+                  className="flex items-center cursor-pointer flex-1 min-w-0"
+                  onClick={() =>
+                    router.push(
+                      `/products/${item?.product?.category?.toLowerCase()}/${item?.product?.slug.current}`
+                    )
+                  }
+                >
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0 mr-4">
+                    {item.product.images && (
+                      <Image
+                        src={imageUrl(item.product.images[0]).url()}
+                        alt={
+                          item.product[`name_${lang}`] ||
+                          item.product[`name_${DEFAULT_LANGUAGE}`] ||
+                          "Product image"
+                        }
+                        className="w-full h-full object-cover rounded"
+                        width={96}
+                        height={96}
+                      />
+                    )}
+                  </div>
+                  <div className="min-w-0">
+                    <h2 className="text-lg sm:text-xl font-semibold truncate">
+                      {item.product[`name_${lang}`] || item.product[`name_${DEFAULT_LANGUAGE}`]}
+                    </h2>
+                    <p className="text-sm sm:text-base">
+                      {((item.product.price ?? 0) * item.quantity).toFixed(2)},-
+                    </p>
+                  </div>
                 </div>
-                <div className="min-w-0">
-                  <h2 className="text-lg sm:text-xl font-semibold truncate">
-                    {item.product[`name_${lang}`]}
-                  </h2>
-                  <p className="text-sm sm:text-base">
-                    {((item.product.price ?? 0) * item.quantity).toFixed(2)},-
-                  </p>
+                <div className="flex items-center ml-4 flex-shrink-0">
+                  <AddToBasketButton
+                    product={cleanProduct(
+                      products.find((prod) => prod._id === item.product._id) || item.product,
+                      lang
+                    )}
+                  />
                 </div>
               </div>
-              <div className="flex items-center ml-4 flex-shrink-0">
-                <AddToBasketButton product={item.product} />
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         <div className=" w-full lg:w-80 lg:sticky lg:top-4 h-fit bg-white p-6 border rounded order-first lg:order-last fixed bottom-0 left-0 lg:left-auto">
@@ -123,7 +134,7 @@ const Basket = ({ basketText }: BasketProps) => {
           <div className="mt-4 space-y-2">
             <p className="flex justify-between">
               <span>{items}</span>
-              <span>{groupedItems.reduce((acc, item) => acc + item.quantity, 0)}</span>
+              <span>{basketItems.reduce((acc, item) => acc + item.quantity, 0)}</span>
             </p>
             <p className="flex justify-between text-2xl font-bold border-t pt-2">
               <span>{total}</span>
