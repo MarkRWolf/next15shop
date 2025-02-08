@@ -10,13 +10,15 @@ import { textType } from "./textType";
 import { langsType } from "./langsType";
 import { productType } from "./productType";
 import { colorsType } from "./colorsType";
+import { productTypeNew } from "./productTypeNew";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
     blockContentType,
     langsType,
     categoryType,
-    productType,
+    /*     productType,
+     */ productTypeNew,
     orderType,
     salesType,
     langType,

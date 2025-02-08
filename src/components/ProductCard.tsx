@@ -4,23 +4,22 @@ const AddToBasketButton = dynamic(() => import("@/components/AddToBasketButton")
 import { useState } from "react";
 import NextImage from "next/image";
 import { imageUrl } from "@/lib/imageUrl";
-import { CleanedProduct } from "@/utils/cleanProducts";
-import useLangStore from "@/store/langStore";
-import useNaviStore from "@/store/naviStore";
 import BetterLink from "./BetterLink";
-import { useTransitionRouter } from "next-view-transitions";
-import NextLink from "next/link";
+import AddToBasket from "./AddToBasket";
+import { Product } from "../../sanity.types";
+import useLangStore from "@/store/langStore";
+import { DEFAULT_LANGUAGE } from "@/types/languages";
+
 interface ProductCardProps {
-  product: CleanedProduct;
+  product: Product;
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
+  const { lang } = useLangStore();
   const [imgHovered, setImgHovered] = useState(false);
   const [transformOrigin, setTransformOrigin] = useState("50% 50%");
-
-  const isOutOfStock = product.stock != null && product.stock < 1;
-  const description = product.description;
-  const name = product.name;
+  const description = product[`description_${lang}`] || product[`description_${DEFAULT_LANGUAGE}`];
+  const name = product[`name_${lang}`] || product[`name_${DEFAULT_LANGUAGE}`];
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (!imgHovered) return;
@@ -38,9 +37,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
     <BetterLink href={productUrl} className="relative group z-[3] bg-white font-main">
       {/* Card */}
       <div
-        className={`relative h-full z-[2] bg-[#f9f9f9] flex flex-col border-b border-r ${
-          product?.stock > 0 ? "border-emerald-400/40" : "border-red-400/40"
-        } justify-stretch shadow shadow-gray-400/40 rounded-md`}
+        className={`relative h-full z-[2] bg-[#f9f9f9] flex flex-col border-b border-r justify-stretch shadow shadow-gray-400/40 rounded-md`}
       >
         {product?.images && (
           <div
@@ -84,10 +81,12 @@ const ProductCard = ({ product }: ProductCardProps) => {
                 e.stopPropagation();
               }}
             >
-              <AddToBasketButton product={product} />
+              {/*               <AddToBasketButton product={product} />
+               */}
             </div>
           </div>
         </div>
+        <AddToBasket product={product} />
       </div>
     </BetterLink>
   );

@@ -3,10 +3,10 @@
 import useBasketStore from "@/store/basketStore";
 import { useEffect, useState } from "react";
 import { motion, useTime, useTransform } from "framer-motion";
-import { CleanedProduct } from "@/utils/cleanProducts";
+import { Product } from "../../sanity.types";
 
 interface AddToBasketButtonProps {
-  product: CleanedProduct;
+  product: Product;
   disabled?: boolean;
   isOutOfStock?: boolean;
 }

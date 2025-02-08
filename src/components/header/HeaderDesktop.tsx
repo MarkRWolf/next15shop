@@ -8,15 +8,16 @@ import { Language } from "../../../sanity.types";
 import useLangStore from "@/store/langStore";
 import BetterLink from "../BetterLink";
 import NavLink from "./NavLink";
-import { LanguageKey, SUPPORTED_LANGUAGES } from "@/types/languages";
+import { SUPPORTED_LANGUAGES } from "@/types/languages";
 import Search from "../Search";
+import NextImage from "next/image";
 
 interface HeaderDesktopProps {
   globals: Language[];
   navTexts: Language[];
 }
 
-function HeaderDesktop({ globals, navTexts }: { globals: Language[]; navTexts: Language[] }) {
+function HeaderDesktop({ globals, navTexts }: HeaderDesktopProps) {
   const { lang, setLang } = useLangStore();
   const { user } = useUser();
   const [langOpen, setLangOpen] = useState(false);
@@ -26,9 +27,16 @@ function HeaderDesktop({ globals, navTexts }: { globals: Language[]; navTexts: L
       <div className="flex items-center gap-6">
         <BetterLink
           href={"/"}
-          className="text-3xl font-main font-extrabold hover:opacity-80 cursor-pointer sm:mx-0"
+          className="flex items-center gap-1 text-sm font-main font-bold hover:opacity-80 cursor-pointer sm:mx-0"
         >
-          SHOP
+          <NextImage
+            src={"/logo.png"}
+            className="h-10 w-10 object-cover"
+            alt="logo"
+            width={96}
+            height={96}
+          />
+          DemoShop
         </BetterLink>
         <div className="flex items-center gap-2">
           {navTexts?.[0]?.content?.map((item) => (

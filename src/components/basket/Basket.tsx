@@ -4,7 +4,7 @@ const AddToBasketButton = dynamic(() => import("@/components/AddToBasketButton")
 import { imageUrl } from "@/lib/imageUrl";
 import useBasketStore from "@/store/basketStore";
 import { SignInButton, useAuth, useUser } from "@clerk/nextjs";
-import Image from "next/image";
+import NextImage from "next/image";
 import { useEffect, useState } from "react";
 import { createCheckoutSession, Metadata } from "../../../actions/createCheckoutSession";
 import useLangStore from "@/store/langStore";
@@ -13,14 +13,13 @@ import { Language, Product } from "../../../sanity.types";
 import useText from "@/hooks/useText";
 import { useTransitionRouter } from "next-view-transitions";
 import { DEFAULT_LANGUAGE } from "@/types/languages";
-import { cleanProducts } from "@/utils/cleanProducts";
-import { cleanProduct } from "@/utils/cleanProduct";
 
 interface BasketProps {
   basketText: Language[];
+  ordersText: Language[];
   products: Product[];
 }
-const Basket = ({ basketText, products }: BasketProps) => {
+const Basket = ({ basketText, ordersText, products }: BasketProps) => {
   const { lang } = useLangStore();
   const basketItems = useBasketStore((state) => state.getGroupedItems());
   const { isSignedIn } = useAuth();
@@ -35,9 +34,11 @@ const Basket = ({ basketText, products }: BasketProps) => {
   const checkout = useText(basketText, "checkout", "single");
   const empty = useText(basketText, "empty", "single");
   const signin = useText(basketText, "signin", "single");
+  const size = useText(basketText, "size", "single");
+  const quantity = useText(ordersText, "quantity", "single");
 
   useEffect(() => {
-    useBasketStore.getState().validateBasket(cleanProducts(products, lang));
+    useBasketStore.getState().validateBasket(products);
   }, [products, lang]);
 
   if (basketItems.length === 0)
@@ -81,7 +82,7 @@ const Basket = ({ basketText, products }: BasketProps) => {
             console.log(item);
             return (
               <div
-                key={item.product._id}
+                key={item.size + item.product._id}
                 className="mb-4 p-4 border rounded flex items-center justify-between"
               >
                 <div
@@ -94,14 +95,14 @@ const Basket = ({ basketText, products }: BasketProps) => {
                 >
                   <div className="w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0 mr-4">
                     {item.product.images && (
-                      <Image
+                      <NextImage
                         src={imageUrl(item.product.images[0]).url()}
                         alt={
                           item.product[`name_${lang}`] ||
                           item.product[`name_${DEFAULT_LANGUAGE}`] ||
                           "Product image"
                         }
-                        className="w-full h-full object-cover rounded"
+                        className="w-full h-full object-contain rounded"
                         width={96}
                         height={96}
                       />
@@ -111,18 +112,24 @@ const Basket = ({ basketText, products }: BasketProps) => {
                     <h2 className="text-lg sm:text-xl font-semibold truncate">
                       {item.product[`name_${lang}`] || item.product[`name_${DEFAULT_LANGUAGE}`]}
                     </h2>
+                    <p>
+                      {size} {item.size}
+                    </p>
+                    <p className="">
+                      {quantity} {item.quantity ?? "N/A"}
+                    </p>
                     <p className="text-sm sm:text-base">
                       {((item.product.price ?? 0) * item.quantity).toFixed(2)},-
                     </p>
                   </div>
                 </div>
                 <div className="flex items-center ml-4 flex-shrink-0">
-                  <AddToBasketButton
+                  {/*                   <AddToBasketButton
                     product={cleanProduct(
                       products.find((prod) => prod._id === item.product._id) || item.product,
                       lang
                     )}
-                  />
+                  /> */}
                 </div>
               </div>
             );

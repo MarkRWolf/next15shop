@@ -15,7 +15,7 @@ const ProductsView = async ({ products, categories }: ProductsViewProps) => {
   ]);
 
   return (
-    <div className="mt-20">
+    <div className="mt-20 container-main px-2 xs:px-0">
       <CategorySelector categories={categories} categoryTexts={categoryTexts} />
       {productMsg && <p className="text-center text-lg mt-4">{}</p>}
       <div className="mt-12">

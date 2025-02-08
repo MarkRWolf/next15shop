@@ -11,8 +11,14 @@ import useLangStore from "@/store/langStore";
 import BetterLink from "../BetterLink";
 import NavLink from "./NavLink";
 import Search from "../Search";
+import NextImage from "next/image";
 
-function HeaderMobile({ globals, navTexts }: { globals: Language[]; navTexts: Language[] }) {
+interface HeaderMobileProps {
+  globals: Language[];
+  navTexts: Language[];
+}
+
+function HeaderMobile({ globals, navTexts }: HeaderMobileProps) {
   const path = usePathname();
   const { lang, setLang } = useLangStore();
   const { user } = useUser();
@@ -36,7 +42,8 @@ function HeaderMobile({ globals, navTexts }: { globals: Language[]; navTexts: La
           <Search mobile={true} globals={globals} />
         </div>
       </div>
-      {/* rest */}
+
+      {/* Left */}
       <div className="flex items-center gap-2">
         <label>
           <div className="w-9 h-10 cursor-pointer flex flex-col items-center justify-center">
@@ -54,11 +61,19 @@ function HeaderMobile({ globals, navTexts }: { globals: Language[]; navTexts: La
           href={"/"}
           className="text-3xl font-main font-extrabold hover:opacity-80 cursor-pointer sm:mx-0"
         >
-          SHOP
+          <NextImage
+            src={"/logo.png"}
+            className="h-10 w-10 object-cover"
+            alt="logo"
+            width={96}
+            height={96}
+          />
         </BetterLink>
       </div>
 
-      <div className="flex items-center gap-3">
+      {/* Right */}
+      <div className="flex items-center gap-3 pr-2 sm:pr-0">
+        {/* Lang */}
         <div className="relative w-6 h-full mt-0.5" onClick={() => setLangOpen((prev) => !prev)}>
           <Image
             src={`https://flagcdn.com/w40/${lang.slice(-2).toLowerCase()}.png`}
@@ -92,6 +107,8 @@ function HeaderMobile({ globals, navTexts }: { globals: Language[]; navTexts: La
             )}
           </div>
         </div>
+
+        {/* Profile if logged in */}
         <ClerkLoaded>
           {user && (
             <BetterLink href={"/profile/orders"} className="">
@@ -99,9 +116,13 @@ function HeaderMobile({ globals, navTexts }: { globals: Language[]; navTexts: La
             </BetterLink>
           )}
         </ClerkLoaded>
+
+        {/* Basket */}
         <BetterLink href={"/basket"} className="relative">
           <HiOutlineShoppingBag className="w-6 h-6" />
         </BetterLink>
+
+        {/* pfp clerk modal || sign in */}
         <ClerkLoaded>{user ? <UserButton /> : <SignInButton mode="modal" />}</ClerkLoaded>
       </div>
     </div>

@@ -1,47 +1,24 @@
 "use client";
 
 import Image from "next/image";
-import { Language, Order, MY_ORDERS_QUERYResult } from "../../../sanity.types";
+import { Language, MY_ORDERS_QUERYResult } from "../../../sanity.types";
 import { imageUrl } from "@/lib/imageUrl";
 import { formatCurrency } from "@/lib/formatCurrency";
 import { DEFAULT_LANGUAGE } from "@/types/languages";
-import useLangStore from "@/store/langStore";
-import { useEffect, useState } from "react";
-import Throbber from "../Throbber";
+import useText from "@/hooks/useText";
 
 interface OrdersProps {
   orders: MY_ORDERS_QUERYResult;
   ordersText: Language[];
 }
 function Orders({ orders, ordersText }: OrdersProps) {
-  const { lang } = useLangStore();
-  const ordersContent = ordersText[0]?.content || [];
-
-  const getLocalizedText = (key: string) => {
-    const item = ordersContent?.find((g) => g.key === key);
-    const localizedText = item?.localizedText?.[lang];
-    return localizedText && localizedText.length > 0
-      ? localizedText
-      : item?.localizedText?.[DEFAULT_LANGUAGE];
-  };
-
-  const ordersHeader = getLocalizedText("orders");
-  const number = getLocalizedText("number");
-  const date = getLocalizedText("date");
-  const amount = getLocalizedText("amount");
-  const items = getLocalizedText("items");
-  const quantity = getLocalizedText("quantity");
-  const none = getLocalizedText("none");
-
-  /* Hydration Issue (Not an issue in build/prod) */
-  const [isClient, setIsClient] = useState(false);
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  if (!isClient) {
-    return <Throbber />;
-  }
+  const ordersHeader = useText(ordersText, "orders", "single");
+  const number = useText(ordersText, "number", "single");
+  const date = useText(ordersText, "date", "single");
+  const amount = useText(ordersText, "amount", "single");
+  const items = useText(ordersText, "items", "single");
+  const quantity = useText(ordersText, "quantity", "single");
+  const none = useText(ordersText, "none", "single");
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 p-4">

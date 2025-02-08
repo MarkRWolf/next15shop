@@ -20,6 +20,7 @@ interface CategorySelectorProps {
   categories: Category[];
   categoryTexts: Language[];
 }
+
 const CategorySelector = ({ categories, categoryTexts }: CategorySelectorProps) => {
   const [open, setOpen] = useState(false);
   const router = useRouter();

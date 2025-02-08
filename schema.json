@@ -1597,7 +1597,28 @@
         },
         "optional": true
       },
-      "stock": {
+      "stockS": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "number"
+        },
+        "optional": false
+      },
+      "stockM": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "number"
+        },
+        "optional": false
+      },
+      "stockL": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "number"
+        },
+        "optional": false
+      },
+      "stockXL": {
         "type": "objectAttribute",
         "value": {
           "type": "number"

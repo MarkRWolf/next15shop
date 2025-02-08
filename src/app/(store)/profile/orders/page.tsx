@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic";
 
-import Orders from "@/components/orders/Orders";
+import OrdersWrapper from "@/components/orders/OrdersWrapper";
 import { getLocalizedTexts } from "@/sanity/lib/lang/getLocalizedTexts";
 import { getMyOrders } from "@/sanity/lib/orders/getMyOrders";
 import { auth } from "@clerk/nextjs/server";
@@ -16,7 +16,7 @@ const OrdersPage = async () => {
   const orders = await getMyOrders(userId);
   const ordersText = await getLocalizedTexts("orders");
 
-  return <Orders orders={orders} ordersText={ordersText}></Orders>;
+  return <OrdersWrapper orders={orders} ordersText={ordersText}></OrdersWrapper>;
 };
 
 export default OrdersPage;

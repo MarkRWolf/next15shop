@@ -1,4 +1,4 @@
-import { Product } from "../../sanity.types";
+/* import { Product } from "../../sanity.types";
 import { LanguageKey, DEFAULT_LANGUAGE } from "@/types/languages";
 
 type LocalizedField<T extends string> = `${T}_${LanguageKey}`;
@@ -20,3 +20,4 @@ export const cleanProduct = (product: Product, lang: LanguageKey): CleanedProduc
     description: product[descriptionKey] ?? product[defaultDescriptionKey],
   };
 };
+ */

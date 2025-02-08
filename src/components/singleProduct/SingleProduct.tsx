@@ -7,10 +7,9 @@ import { PortableText } from "next-sanity";
 import { Language, Product } from "../../../sanity.types";
 import useLangStore from "@/store/langStore";
 import { useEffect, useState } from "react";
-import { cleanProduct } from "@/utils/cleanProduct";
 import useText from "@/hooks/useText";
-import { cleanProducts } from "@/utils/cleanProducts";
 import useBasketStore from "@/store/basketStore";
+import { DEFAULT_LANGUAGE } from "@/types/languages";
 
 interface SingleProductProps {
   product: Product;
@@ -22,13 +21,12 @@ const SingleProduct = ({ product, products, globals }: SingleProductProps) => {
   const { lang } = useLangStore();
   const [selectedImg, setSelectedImg] = useState(0);
   const [hoveredImg, setHoveredImg] = useState(-1);
-  const isOutOfStock = !product.stock || product.stock <= 0;
-  const cleanedProduct = cleanProduct(product, lang);
-  const { name, description } = cleanedProduct;
+  const description = product[`description_${lang}`] || product[`description_${DEFAULT_LANGUAGE}`];
+  const name = product[`name_${lang}`] || product[`name_${DEFAULT_LANGUAGE}`];
   const onStock = useText(globals, "onStock", "single");
 
   useEffect(() => {
-    useBasketStore.getState().validateBasket(cleanProducts(products, lang));
+    useBasketStore.getState().validateBasket(products);
   }, [products, lang]);
 
   return (
@@ -48,11 +46,11 @@ const SingleProduct = ({ product, products, globals }: SingleProductProps) => {
                 className={`object-contain transition-transform duration-300 hover:scale-105 ${isOutOfStock && "opacity-50"}`}
               />
             )}
-            {isOutOfStock && (
+            {/*             {isOutOfStock && (
               <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-20">
                 <span className="text-white font-main font-bold text-lg">Out of Stock</span>
               </div>
-            )}
+            )} */}
           </div>
           {product.images && product.images.length > 1 && (
             <div className=" lg:w-full w-[100px] lg:h-[100px] h-[500px] gap-6 flex lg:flex-nowrap flex-wrap lg:justify-between">
@@ -85,13 +83,6 @@ const SingleProduct = ({ product, products, globals }: SingleProductProps) => {
             <div className="prose max-w-none mb-6">
               {Array.isArray(description) && <PortableText value={description} />}
             </div>
-          </div>
-          <div className="w-max mt-6 mb-20 flex flex-col gap-2">
-            <p className="text-center">
-              {onStock}
-              {product.stock}
-            </p>
-            <AddToBasketButton product={cleanedProduct} disabled={isOutOfStock} />
           </div>
         </div>
       </div>

@@ -1,10 +1,8 @@
 "use client";
-import { DEFAULT_LANGUAGE } from "@/types/languages";
 import Form from "next/form";
 import { SetStateAction, useRef, useState } from "react";
 import { PiMagnifyingGlass } from "react-icons/pi";
 import { Language } from "../../sanity.types";
-import useLangStore from "@/store/langStore";
 import useText from "@/hooks/useText";
 
 const Search = ({

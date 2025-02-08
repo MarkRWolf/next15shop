@@ -3,7 +3,7 @@ import { Language } from "../../../sanity.types";
 import useLangStore from "@/store/langStore";
 import { DEFAULT_LANGUAGE } from "@/types/languages";
 import BetterLink from "../BetterLink";
-import { useEffect, useState } from "react";
+
 interface FooterInfoProps {
   globals: Language[];
 }
@@ -11,13 +11,6 @@ interface FooterInfoProps {
 const FooterInfo = ({ globals }: FooterInfoProps) => {
   const { lang } = useLangStore();
   const globalsContent = globals[0]?.content || [];
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  if (!isClient) return null;
 
   const getLocalizedText = (key: string) => {
     const contentItem = globalsContent?.find((g) => g.key === key);

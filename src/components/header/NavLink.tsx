@@ -1,7 +1,7 @@
 import useText from "@/hooks/useText";
 import BetterLink from "../BetterLink";
 import { Language } from "../../../sanity.types";
-import { LanguageKey, SUPPORTED_LANGUAGES } from "@/types/languages";
+import { SUPPORTED_LANGUAGES } from "@/types/languages";
 interface NavProps {
   navTexts: Language[];
   item: {

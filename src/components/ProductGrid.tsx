@@ -1,20 +1,18 @@
 "use client";
 import { Language, Product } from "../../sanity.types";
 import ProductCard from "./ProductCard";
-import { cleanProducts } from "@/utils/cleanProducts";
 import useLangStore from "@/store/langStore";
 import useText from "@/hooks/useText";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect } from "react";
 import useBasketStore from "@/store/basketStore";
+
 const ProductGrid = ({ products, productMsg }: { products: Product[]; productMsg: Language[] }) => {
   const { lang } = useLangStore();
-
-  const cleanedProducts = cleanProducts(products, lang);
   const msg = useText(productMsg, "msg", "single");
 
   useEffect(() => {
-    useBasketStore.getState().validateBasket(cleanProducts(products, lang));
+    useBasketStore.getState().validateBasket(products);
   }, [products, lang]);
 
   return (
@@ -26,7 +24,7 @@ const ProductGrid = ({ products, productMsg }: { products: Product[]; productMsg
         className="grid w-full mt-8 gap-y-4 sm:gap-x-8 grid-cols-1 sm:grid-cols-2 
       md:grid-cols-3 xl:grid-cols-4 sm:mt-12 lg:mt-20 "
       >
-        {cleanedProducts.map((product) => (
+        {products.map((product) => (
           <AnimatePresence key={product._id}>
             <motion.div
               layout

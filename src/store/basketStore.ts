@@ -1,9 +1,11 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { CleanedProduct } from "@/utils/cleanProducts";
+import { ProductSize } from "@/types/productSizes";
+import { Product } from "../../sanity.types";
 
 export interface BasketItem {
-  product: CleanedProduct;
+  product: Product;
+  size: ProductSize;
   quantity: number;
 }
 
@@ -11,13 +13,13 @@ interface BasketState {
   items: BasketItem[];
   basketReduced: boolean;
   setBasketReduced: (value: boolean) => void;
-  addItem: (product: CleanedProduct) => void;
-  removeItem: (productId: string) => void;
+  addItem: (product: Product, size: ProductSize) => void;
+  removeItem: (productId: string, size: ProductSize) => void;
   clearBasket: () => void;
   getTotalPrice: () => number;
-  getItemCount: (productId: string) => number;
+  getItemCount: (productId: string, size: ProductSize) => number;
   getGroupedItems: () => BasketItem[];
-  validateBasket: (products: CleanedProduct[]) => void;
+  validateBasket: (products: Product[]) => void;
 }
 
 const useBasketStore = create<BasketState>()(
@@ -26,23 +28,27 @@ const useBasketStore = create<BasketState>()(
       items: [],
       basketReduced: false,
       setBasketReduced: (value: boolean) => set({ basketReduced: value }),
-      addItem: (product) =>
+      addItem: (product, size) =>
         set((state) => {
-          const existingItem = state.items.find((item) => item.product._id === product._id);
+          const existingItem = state.items.find(
+            (item) => item.product._id === product._id && item.size === size
+          );
           if (existingItem) {
             return {
               items: state.items.map((item) =>
-                item.product._id === product._id ? { ...item, quantity: item.quantity + 1 } : item
+                item.product._id === product._id && item.size === size
+                  ? { ...item, quantity: item.quantity + 1 }
+                  : item
               ),
             };
           } else {
-            return { items: [...state.items, { product, quantity: 1 }] };
+            return { items: [...state.items, { product, size, quantity: 1 }] };
           }
         }),
-      removeItem: (productId) =>
+      removeItem: (productId, size) =>
         set((state) => ({
           items: state.items.reduce<BasketItem[]>((acc, item) => {
-            if (item.product._id === productId) {
+            if (item.product._id === productId && item.size === size) {
               if (item.quantity > 1) {
                 acc.push({ ...item, quantity: item.quantity - 1 });
               }
@@ -55,19 +61,26 @@ const useBasketStore = create<BasketState>()(
       clearBasket: () => set({ items: [] }),
       getTotalPrice: () =>
         get().items.reduce((acc, item) => acc + (item.product.price ?? 0) * item.quantity, 0),
-      getItemCount: (productId) => {
-        const item = get().items.find((item) => item.product._id === productId);
+      getItemCount: (productId, size) => {
+        const item = get().items.find(
+          (item) => item.product._id === productId && item.size === size
+        );
         return item ? item.quantity : 0;
       },
       getGroupedItems: () => get().items,
-      validateBasket: (products: CleanedProduct[]) =>
+      validateBasket: (products: Product[]) =>
         set((state) => ({
           items: state.items.filter((item) => {
-            const dbProduct = products.find((prod) => prod._id === item.product._id);
-            if (!dbProduct || dbProduct.stock === 0) return false;
-            if (item.quantity > dbProduct.stock) {
+            const dbProduct: Product | undefined = products.find(
+              (prod) => prod._id === item.product._id
+            );
+            if (!dbProduct) return false;
+            const availableStock = dbProduct[`stock${item.size}`];
+
+            if (availableStock < 1) return false;
+            if (item.quantity > availableStock) {
               set({ basketReduced: true });
-              item.quantity = dbProduct.stock;
+              item.quantity = availableStock;
             }
             return true;
           }),
