@@ -1,8 +1,6 @@
 "use client";
 import NextImage from "next/image";
 import { imageUrl } from "@/lib/imageUrl";
-import dynamic from "next/dynamic";
-const AddToBasketButton = dynamic(() => import("@/components/AddToBasketButton"));
 import { PortableText } from "next-sanity";
 import { Language, Product } from "../../../sanity.types";
 import useLangStore from "@/store/langStore";
@@ -23,7 +21,7 @@ const SingleProduct = ({ product, products, globals }: SingleProductProps) => {
   const [hoveredImg, setHoveredImg] = useState(-1);
   const description = product[`description_${lang}`] || product[`description_${DEFAULT_LANGUAGE}`];
   const name = product[`name_${lang}`] || product[`name_${DEFAULT_LANGUAGE}`];
-  const onStock = useText(globals, "onStock", "single");
+  const onStockMsg = useText(globals, "onStock", "single");
 
   useEffect(() => {
     useBasketStore.getState().validateBasket(products);
@@ -43,14 +41,9 @@ const SingleProduct = ({ product, products, globals }: SingleProductProps) => {
                 alt={name ?? "Product Image"}
                 fill
                 quality={65}
-                className={`object-contain transition-transform duration-300 hover:scale-105 ${isOutOfStock && "opacity-50"}`}
+                className={`object-contain transition-transform duration-300 hover:scale-105`}
               />
             )}
-            {/*             {isOutOfStock && (
-              <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-20">
-                <span className="text-white font-main font-bold text-lg">Out of Stock</span>
-              </div>
-            )} */}
           </div>
           {product.images && product.images.length > 1 && (
             <div className=" lg:w-full w-[100px] lg:h-[100px] h-[500px] gap-6 flex lg:flex-nowrap flex-wrap lg:justify-between">

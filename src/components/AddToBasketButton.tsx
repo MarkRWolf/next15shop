@@ -1,4 +1,4 @@
-"use client";
+/* "use client";
 
 import useBasketStore from "@/store/basketStore";
 import { useEffect, useState } from "react";
@@ -79,3 +79,4 @@ const AddToBasketButton = ({ product }: AddToBasketButtonProps) => {
 };
 
 export default AddToBasketButton;
+ */

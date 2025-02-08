@@ -1,6 +1,4 @@
 "use client";
-import dynamic from "next/dynamic";
-const AddToBasketButton = dynamic(() => import("@/components/AddToBasketButton"));
 import { useState } from "react";
 import NextImage from "next/image";
 import { imageUrl } from "@/lib/imageUrl";
@@ -75,15 +73,6 @@ const ProductCard = ({ product }: ProductCardProps) => {
           </p>
           <div className="relative z-[3] w-full flex items-center justify-between">
             <p className="md:text-xl sm:text-xl relative z-50">{product.price?.toFixed(2)},-</p>
-            <div
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-              }}
-            >
-              {/*               <AddToBasketButton product={product} />
-               */}
-            </div>
           </div>
         </div>
         <AddToBasket product={product} />

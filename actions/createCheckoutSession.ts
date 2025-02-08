@@ -3,6 +3,7 @@
 import { imageUrl } from "@/lib/imageUrl";
 import stripe from "@/lib/stripe";
 import { BasketItem } from "@/store/basketStore";
+import { DEFAULT_LANGUAGE, LanguageKey } from "@/types/languages";
 import { auth } from "@clerk/nextjs/server";
 
 export type Metadata = {
@@ -14,10 +15,15 @@ export type Metadata = {
 
 export type GroupedBasketItem = {
   product: BasketItem["product"];
+  size: BasketItem["size"];
   quantity: number;
 };
 
-export const createCheckoutSession = async (items: GroupedBasketItem[], metadata: Metadata) => {
+export const createCheckoutSession = async (
+  items: GroupedBasketItem[],
+  lang: LanguageKey = DEFAULT_LANGUAGE,
+  metadata: Metadata
+) => {
   try {
     const { userId } = await auth();
 
@@ -33,10 +39,8 @@ export const createCheckoutSession = async (items: GroupedBasketItem[], metadata
       limit: 1,
     });
 
-    let customerId: string | undefined;
-    if (customers.data.length > 0) {
-      customerId = customers.data[0].id;
-    }
+    const customerId: string | undefined =
+      customers.data.length > 0 ? customers.data[0].id : undefined;
 
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
@@ -52,7 +56,8 @@ export const createCheckoutSession = async (items: GroupedBasketItem[], metadata
           currency: "dkk",
           unit_amount: Math.round(item.product.price! * 100),
           product_data: {
-            name: item.product.name ?? "Unknown product",
+            name: item.product[`name_${lang}`] ?? "Unknown product",
+            size: item.size,
             description: `Product ID: ${item.product._id}`,
             metadata: {
               id: item.product._id,

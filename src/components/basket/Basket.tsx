@@ -1,18 +1,15 @@
 "use client";
-import dynamic from "next/dynamic";
-const AddToBasketButton = dynamic(() => import("@/components/AddToBasketButton"));
-import { imageUrl } from "@/lib/imageUrl";
-import useBasketStore from "@/store/basketStore";
-import { SignInButton, useAuth, useUser } from "@clerk/nextjs";
 import NextImage from "next/image";
 import { useEffect, useState } from "react";
+import { SignInButton, useAuth, useUser } from "@clerk/nextjs";
 import { createCheckoutSession, Metadata } from "../../../actions/createCheckoutSession";
-import useLangStore from "@/store/langStore";
-import Throbber from "@/components/Throbber";
-import { Language, Product } from "../../../sanity.types";
-import useText from "@/hooks/useText";
-import { useTransitionRouter } from "next-view-transitions";
 import { DEFAULT_LANGUAGE } from "@/types/languages";
+import { Language, Product } from "../../../sanity.types";
+import { useTransitionRouter } from "next-view-transitions";
+import { imageUrl } from "@/lib/imageUrl";
+import useBasketStore from "@/store/basketStore";
+import useLangStore from "@/store/langStore";
+import useText from "@/hooks/useText";
 
 interface BasketProps {
   basketText: Language[];
@@ -20,11 +17,12 @@ interface BasketProps {
   products: Product[];
 }
 const Basket = ({ basketText, ordersText, products }: BasketProps) => {
-  const { lang } = useLangStore();
-  const basketItems = useBasketStore((state) => state.getGroupedItems());
-  const { isSignedIn } = useAuth();
-  const { user } = useUser();
   const router = useTransitionRouter();
+  const basketItems = useBasketStore((state) => state.getGroupedItems());
+  const { removeItem, addItem } = useBasketStore();
+  const { isSignedIn } = useAuth();
+  const { lang } = useLangStore();
+  const { user } = useUser();
   const [isLoading, setIsLoading] = useState(false);
 
   const basket = useText(basketText, "basket", "single");
@@ -61,7 +59,7 @@ const Basket = ({ basketText, ordersText, products }: BasketProps) => {
         clerkUserId: user!.id,
       };
 
-      const checkoutUrl = await createCheckoutSession(basketItems, metadata);
+      const checkoutUrl = await createCheckoutSession(basketItems, lang, metadata);
 
       if (checkoutUrl) {
         window.location.href = checkoutUrl;
@@ -74,7 +72,7 @@ const Basket = ({ basketText, ordersText, products }: BasketProps) => {
   };
 
   return (
-    <div className="container mx-auto p-4 max-w-6xl">
+    <div className="container mx-auto px-4 max-w-6xl">
       <h1 className="text-2xl font-bold mb-4">{basket}</h1>
       <div className="flex flex-col lg:flex-row gap-8">
         <div className="flex-grow">
@@ -112,24 +110,34 @@ const Basket = ({ basketText, ordersText, products }: BasketProps) => {
                     <h2 className="text-lg sm:text-xl font-semibold truncate">
                       {item.product[`name_${lang}`] || item.product[`name_${DEFAULT_LANGUAGE}`]}
                     </h2>
-                    <p>
-                      {size} {item.size}
-                    </p>
-                    <p className="">
-                      {quantity} {item.quantity ?? "N/A"}
-                    </p>
+                    {item.quantity ?? "N/A"}x {item.size}
                     <p className="text-sm sm:text-base">
                       {((item.product.price ?? 0) * item.quantity).toFixed(2)},-
                     </p>
+                    <div
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                      }}
+                      className="w-24 flex justify-between select-none"
+                    >
+                      <span
+                        className="grow text-white text-xl border border-stone-950/80 bg-stone-950/80 flex justify-center items-center"
+                        onClick={() => removeItem(item.product._id, item.size)}
+                      >
+                        -
+                      </span>
+                      <span className="grow  border-t border-b border-stone-950/80 flex justify-center items-center">
+                        {item.quantity}
+                      </span>
+                      <span
+                        className="grow text-white text-xl border border-stone-950/80 bg-stone-950/80 flex justify-center items-center"
+                        onClick={() => addItem(item.product, item.size)}
+                      >
+                        +
+                      </span>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-center ml-4 flex-shrink-0">
-                  {/*                   <AddToBasketButton
-                    product={cleanProduct(
-                      products.find((prod) => prod._id === item.product._id) || item.product,
-                      lang
-                    )}
-                  /> */}
                 </div>
               </div>
             );
