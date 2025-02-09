@@ -27,7 +27,6 @@ export async function POST(req: NextRequest) {
 
   try {
     event = stripe.webhooks.constructEvent(body, sig, webhookSecret);
-    console.log("Event constructed", event);
   } catch (e) {
     console.error("Error verifying webhook signature", e);
     return NextResponse.json({ error: "Invalid webhook" }, { status: 400 });
@@ -102,12 +101,12 @@ async function decreaseProductStock(productId: string, quantity: number, size: P
       productId,
     }
   );
-  console.log("hit", product[`stock${size}`]);
-  if (product !== undefined) {
-    const stockSize: number = product[`stock${size}`];
-    const newStock = Math.max(stockSize - quantity, 0);
 
-    await backendClient.patch(productId).set({ stockSize: newStock }).commit();
-    console.log("Stock updated", newStock);
+  if (product !== undefined) {
+    const newStock = Math.max(product[`stock${size}`] - quantity, 0);
+    const updatedStock = await backendClient
+      .patch(productId)
+      .set({ [`stock${size}`]: newStock })
+      .commit();
   }
 }
