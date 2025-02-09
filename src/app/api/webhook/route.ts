@@ -8,7 +8,8 @@ import { Product } from "../../../../sanity.types";
 import { ProductSize } from "@/types/productSizes";
 
 export async function POST(req: NextRequest) {
-  const body = await req.text();
+  const body = await req.arrayBuffer();
+  const buf = Buffer.from(body);
   const headersList = await headers();
   const sig = headersList.get("stripe-signature");
 
@@ -26,7 +27,7 @@ export async function POST(req: NextRequest) {
   let event: Stripe.Event;
 
   try {
-    event = stripe.webhooks.constructEvent(body, sig, webhookSecret);
+    event = stripe.webhooks.constructEvent(buf, sig, webhookSecret);
   } catch (e) {
     console.error("Error verifying webhook signature", e);
     return NextResponse.json({ error: "Invalid webhook" }, { status: 400 });
