@@ -106,8 +106,8 @@ function Orders({ orders, ordersText }: OrdersProps) {
                             <p className="font-medium text-sm sm:text-base">
                               {product.product?.[`name_${DEFAULT_LANGUAGE}`] ?? "Unknown product"}
                             </p>
-                            <p className="text-sm text-gray-600">
-                              {quantity} {product.quantity ?? "N/A"}
+                            <p>
+                              {product.quantity ?? "N/A"}x {product.size}
                             </p>
                           </div>
                         </div>

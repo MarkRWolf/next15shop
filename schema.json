@@ -817,6 +817,13 @@
                   "type": "number"
                 },
                 "optional": true
+              },
+              "size": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string"
+                },
+                "optional": true
               }
             },
             "rest": {

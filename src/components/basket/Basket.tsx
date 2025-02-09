@@ -110,7 +110,9 @@ const Basket = ({ basketText, ordersText, products }: BasketProps) => {
                     <h2 className="text-lg sm:text-xl font-semibold truncate">
                       {item.product[`name_${lang}`] || item.product[`name_${DEFAULT_LANGUAGE}`]}
                     </h2>
-                    {item.quantity ?? "N/A"}x {item.size}
+                    <p>
+                      {item.quantity ?? "N/A"}x {item.size}
+                    </p>
                     <p className="text-sm sm:text-base">
                       {((item.product.price ?? 0) * item.quantity).toFixed(2)},-
                     </p>
