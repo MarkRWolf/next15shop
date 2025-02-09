@@ -68,6 +68,11 @@ export const orderType = defineType({
               title: "Quantity purchased",
               type: "number",
             }),
+            defineField({
+              name: "size",
+              title: "Size",
+              type: "string",
+            }),
           ],
           preview: {
             select: {

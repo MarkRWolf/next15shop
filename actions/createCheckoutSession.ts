@@ -57,10 +57,10 @@ export const createCheckoutSession = async (
           unit_amount: Math.round(item.product.price! * 100),
           product_data: {
             name: item.product[`name_${lang}`] ?? "Unknown product",
-            size: item.size,
             description: `Product ID: ${item.product._id}`,
             metadata: {
               id: item.product._id,
+              size: item.size,
             },
             images: item.product.images ? [imageUrl(item.product.images[0]).url()] : undefined,
           },

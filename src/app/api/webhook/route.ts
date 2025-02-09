@@ -4,12 +4,14 @@ import { headers } from "next/headers";
 import stripe from "@/lib/stripe";
 import Stripe from "stripe";
 import { Metadata } from "../../../../actions/createCheckoutSession";
+import { Product } from "../../../../sanity.types";
+import { ProductSize } from "@/types/productSizes";
 
 export async function POST(req: NextRequest) {
   const body = await req.text();
   const headersList = await headers();
   const sig = headersList.get("stripe-signature");
-  console.log("hit");
+
   if (!sig) {
     return NextResponse.json({ error: "No signature" }, { status: 400 });
   }
@@ -60,6 +62,7 @@ async function createOrderInSanity(session: Stripe.Checkout.Session) {
       _type: "reference",
       _ref: (item.price?.product as Stripe.Product).metadata.id,
     },
+    size: (item.price?.product as Stripe.Product).metadata.size as ProductSize,
     quantity: item.quantity || 0,
   }));
 
@@ -84,19 +87,24 @@ async function createOrderInSanity(session: Stripe.Checkout.Session) {
     sanityProducts.map(async (item) => {
       const productId = item.product._ref;
       const quantityPurchased = item.quantity || 0;
-      await decreaseProductStock(productId, quantityPurchased);
+      await decreaseProductStock(productId, quantityPurchased, item.size);
     })
   );
 
   return order;
 }
 
-async function decreaseProductStock(productId: string, quantity: number) {
-  const product = await backendClient.fetch(`*[_type == "product" && _id == $productId][0]`, {
-    productId,
-  });
-  if (product && product.stock !== undefined) {
-    const newStock = Math.max(product.stock - quantity, 0); // Ensure stock doesn’t go negative
-    await backendClient.patch(productId).set({ stock: newStock }).commit();
+async function decreaseProductStock(productId: string, quantity: number, size: ProductSize) {
+  const product: Product = await backendClient.fetch(
+    `*[_type == "product" && _id == $productId][0]`,
+    {
+      productId,
+    }
+  );
+  if (product && product[`stock${size}`] !== undefined) {
+    const stockSize: number = product[`stock${size}`];
+    const newStock = Math.max(stockSize - quantity, 0);
+
+    await backendClient.patch(productId).set({ stockSize: newStock }).commit();
   }
 }
