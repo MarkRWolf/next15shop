@@ -25,34 +25,39 @@ const AddToBasket = ({ product }: AddToBasketProps) => {
         <HiOutlineShoppingBag className="w-6 h-6" />
       </div>
       <div className="basis-5/6 flex flex-wrap ">
-        {...PRODUCT_SIZES.map((size, index) => (
-          <button
-            key={size}
-            onMouseEnter={() => setSizeHovered(size)}
-            onMouseLeave={() => setSizeHovered(null)}
-            onClick={() => (product[`stock${size}`] > 0 ? addItem(product, size) : null)}
-            disabled={getItemCount(product._id, size) >= (product[`stock${size}`] ?? 0)}
-            className={`w-[20%] grow border-r ${
-              product[`stock${size}`] < 1
-                ? "bg-rose-700/40"
-                : sizeHovered === size
-                  ? "bg-stone-300/80"
-                  : "bg-stone-300/30"
-            } border-stone-300 flex flex-col justify-center items-center`}
-          >
-            <p className="leading-none">{size}</p>
-            <p className="text-xs leading-none">
-              <span className="text-[10px] ">
-                {items.find((item) => item.product._id === product._id && item.size === size)
-                  ?.quantity
-                  ? items.find((item) => item.product._id === product._id && item.size === size)
-                      ?.quantity + "/"
-                  : ""}
-              </span>
-              {product[`stock${size}`]}
-            </p>
-          </button>
-        ))}
+        {...PRODUCT_SIZES.map((size, index) => {
+          const itemInCart = items.find(
+            (item) => item.product._id === product._id && item.size === size
+          );
+          return (
+            <button
+              key={size}
+              onMouseEnter={() => setSizeHovered(size)}
+              onMouseLeave={() => setSizeHovered(null)}
+              onClick={() => (product[`stock${size}`] > 0 ? addItem(product, size) : null)}
+              disabled={getItemCount(product._id, size) >= (product[`stock${size}`] ?? 0)}
+              className={`w-[20%] grow border-r ${
+                product[`stock${size}`] < 1
+                  ? "bg-rose-700/40"
+                  : sizeHovered === size
+                    ? "bg-stone-300/80"
+                    : "bg-stone-300/30"
+              } border-stone-300 flex flex-col justify-center items-center`}
+            >
+              <p className="leading-none">{size}</p>
+              <p className="text-xs leading-none">
+                <span className="text-[10px] ">
+                  {itemInCart?.quantity ? itemInCart?.quantity + "/" : ""}
+                </span>
+                <span
+                  className={`${itemInCart?.quantity === product[`stock${size}`] && "text-red-500"}`}
+                >
+                  {product[`stock${size}`]}
+                </span>
+              </p>
+            </button>
+          );
+        })}
       </div>
     </div>
   );
