@@ -38,7 +38,7 @@ const AddToBasket = ({ product }: AddToBasketProps) => {
                 : sizeHovered === size
                   ? "bg-stone-300/80"
                   : "bg-stone-300/30"
-            } border-stone-300 flex flex-col justify-center items-center cursor-pointer`}
+            } border-stone-300 flex flex-col justify-center items-center`}
           >
             <p className="leading-none">{size}</p>
             <p className="text-xs leading-none">
