@@ -40,24 +40,26 @@ const ProductCard = ({ product }: ProductCardProps) => {
       >
         {product?.images && (
           <div
-            className="w-full max-h-[340px] lg:max-h-[380px] relative overflow-hidden"
+            className="w-full max-h-[340px] lg:max-h-[380px] relative overflow-hidden select-none"
             onMouseEnter={() => setImgHovered(true)}
             onMouseLeave={() => setImgHovered(false)}
             onMouseMove={handleMouseMove}
           >
-            <NextImage
-              className={`w-full h-full object-contain overflow-hidden transition-transform duration-500 ${
-                imgHovered ? "scale-150" : "scale-100"
-              }`}
-              style={{
-                transformOrigin: transformOrigin,
-              }}
-              src={imageUrl(product.images[0]).url()}
-              alt={name ?? "Product Image"}
-              width={400}
-              height={400}
-              quality={65}
-            />
+            <BetterLink href={productUrl}>
+              <NextImage
+                className={`w-full h-full object-contain overflow-hidden transition-transform duration-500 ${
+                  imgHovered ? "scale-150" : "scale-100"
+                }`}
+                style={{
+                  transformOrigin: transformOrigin,
+                }}
+                src={imageUrl(product.images[0]).url()}
+                alt={name ?? "Product Image"}
+                width={400}
+                height={400}
+                quality={65}
+              />
+            </BetterLink>
           </div>
         )}
         <div
