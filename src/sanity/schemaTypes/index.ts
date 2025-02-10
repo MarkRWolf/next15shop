@@ -7,7 +7,6 @@ import { orderType } from "./orderType";
 import { salesType } from "./salesType";
 import { langType } from "./langType";
 import { textType } from "./textType";
-import { langsType } from "./langsType";
 import { colorsType } from "./colorsType";
 import { productType } from "./productType";
 
