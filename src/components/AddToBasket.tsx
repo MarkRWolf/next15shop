@@ -10,7 +10,7 @@ interface AddToBasketProps {
 }
 
 const AddToBasket = ({ product }: AddToBasketProps) => {
-  const { items, addItem, getItemCount } = useBasketStore();
+  const { items, addItem, removeItem, getItemCount } = useBasketStore();
   const [sizeHovered, setSizeHovered] = useState<ProductSize | null>(null);
 
   return (
@@ -29,21 +29,37 @@ const AddToBasket = ({ product }: AddToBasketProps) => {
           const itemInCart = items.find(
             (item) => item.product._id === product._id && item.size === size
           );
+          const outOfStock = product[`stock${size}`] < 1;
           return (
             <button
               key={size}
               onMouseEnter={() => setSizeHovered(size)}
               onMouseLeave={() => setSizeHovered(null)}
-              onClick={() => (product[`stock${size}`] > 0 ? addItem(product, size) : null)}
-              disabled={getItemCount(product._id, size) >= (product[`stock${size}`] ?? 0)}
-              className={`w-[20%] grow border-r ${
-                product[`stock${size}`] < 1
-                  ? "bg-rose-700/40"
-                  : sizeHovered === size
-                    ? "bg-stone-300/80"
-                    : "bg-stone-300/30"
-              } border-stone-300 flex flex-col justify-center items-center`}
+              disabled={outOfStock}
+              className={`w-[20%] btn relative grow border-r ${
+                outOfStock ? "bg-rose-700/40" : "bg-stone-300/30"
+              } border-stone-300 flex flex-col justify-center items-center select-none`}
             >
+              <div
+                className={`absolute ${sizeHovered === size ? "flex" : "hidden"} text-xl w-full h-full bg-stone-200/90 text-stone-500`}
+              >
+                <span
+                  className="grow border-r lg:hover:bg-stone-300/90 hover:bg-stone-200/90 border-stone-600/35 flex justify-center items-center"
+                  onClick={() => itemInCart && removeItem(product._id, size)}
+                >
+                  -
+                </span>
+                <span
+                  className={`grow hover:bg-stone-300/90 flex justify-center items-center ${itemInCart?.quantity === product[`stock${size}`] && "text-red-500"}`}
+                  onClick={() =>
+                    getItemCount(product._id, size) < (product[`stock${size}`] ?? 0)
+                      ? addItem(product, size)
+                      : null
+                  }
+                >
+                  +
+                </span>
+              </div>
               <p className="leading-none">{size}</p>
               <p className="text-xs leading-none">
                 <span className="text-[10px] ">
