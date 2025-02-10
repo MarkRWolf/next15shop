@@ -3,7 +3,8 @@ import { useState } from "react";
 import NextImage from "next/image";
 import { imageUrl } from "@/lib/imageUrl";
 import BetterLink from "./BetterLink";
-import AddToBasket from "./AddToBasket";
+import dynamic from "next/dynamic";
+const AddToBasket = dynamic(() => import("./AddToBasket"), { ssr: false });
 import { Product } from "../../sanity.types";
 import useLangStore from "@/store/langStore";
 import { DEFAULT_LANGUAGE } from "@/types/languages";
@@ -32,10 +33,10 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const productUrl = `/products/${product.category?.toLowerCase()}/${product.slug.current}`;
 
   return (
-    <BetterLink href={productUrl} className="relative group z-[3] bg-white font-main">
+    <div className="relative h-full group z-[3] bg-white font-main">
       {/* Card */}
       <div
-        className={`relative h-full z-[2] bg-[#f9f9f9] flex flex-col border-b border-r justify-stretch shadow shadow-gray-400/40 rounded-md`}
+        className={`relative h-full  z-[2] bg-[#f9f9f9] flex flex-col border-b border-r justify-stretch shadow shadow-gray-400/40 rounded-md`}
       >
         {product?.images && (
           <div
@@ -59,7 +60,13 @@ const ProductCard = ({ product }: ProductCardProps) => {
             />
           </div>
         )}
-        <div className="w-full flex-grow self-start px-2 pb-4 flex flex-col justify-between">
+        <div
+          onClick={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
+          }}
+          className="w-full flex-grow self-start px-2 pb-4 flex flex-col justify-between cursor-default"
+        >
           <h2 className="lg:text-2xl text-xl capitalize">{name}</h2>
           <p className="my-4 h-full">
             {description?.map((block, index) => {
@@ -77,7 +84,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
         </div>
         <AddToBasket product={product} />
       </div>
-    </BetterLink>
+    </div>
   );
 };
 

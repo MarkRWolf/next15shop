@@ -8,7 +8,9 @@ import { useEffect, useState } from "react";
 import useText from "@/hooks/useText";
 import useBasketStore from "@/store/basketStore";
 import { DEFAULT_LANGUAGE } from "@/types/languages";
-import AddToBasket from "../AddToBasket";
+
+import dynamic from "next/dynamic";
+const AddToBasket = dynamic(() => import("../AddToBasket"), { ssr: false });
 
 interface SingleProductProps {
   product: Product;

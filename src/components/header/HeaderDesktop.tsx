@@ -11,6 +11,7 @@ import NavLink from "./NavLink";
 import { SUPPORTED_LANGUAGES } from "@/types/languages";
 import Search from "../Search";
 import NextImage from "next/image";
+import useText from "@/hooks/useText";
 
 interface HeaderDesktopProps {
   globals: Language[];
@@ -21,7 +22,8 @@ function HeaderDesktop({ globals, navTexts }: HeaderDesktopProps) {
   const { lang, setLang } = useLangStore();
   const { user } = useUser();
   const [langOpen, setLangOpen] = useState(false);
-
+  const signIn = useText(globals, "signIn", "single");
+  
   return (
     <div className="hidden lg:flex relative container-main justify-between items-center gap-4 z-10">
       <div className="flex items-center gap-6">
@@ -95,7 +97,9 @@ function HeaderDesktop({ globals, navTexts }: HeaderDesktopProps) {
         <BetterLink href={"/basket"} className="relative">
           <HiOutlineShoppingBag className="w-6 h-6" />
         </BetterLink>
-        <ClerkLoaded>{user ? <UserButton /> : <SignInButton mode="modal" />}</ClerkLoaded>
+        <ClerkLoaded>
+          {user ? <UserButton /> : <SignInButton mode="modal">{signIn}</SignInButton>}
+        </ClerkLoaded>
       </div>
     </div>
   );

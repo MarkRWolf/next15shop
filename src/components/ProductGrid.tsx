@@ -17,11 +17,14 @@ const ProductGrid = ({ products, productMsg }: { products: Product[]; productMsg
 
   return (
     <>
+      {/* Msg if any */}
       {msg && (
         <div className="w-full font-main text-center bg-warning text-white py-4 md:py-2 px-4">
           {msg}
         </div>
       )}
+
+      {/* Product Grid */}
       <div
         className="grid w-full mt-8 gap-y-4 sm:gap-x-8 grid-cols-1 sm:grid-cols-2 
       md:grid-cols-3 xl:grid-cols-4 sm:mt-12 lg:mt-20 "

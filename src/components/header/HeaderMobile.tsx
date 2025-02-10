@@ -12,6 +12,7 @@ import BetterLink from "../BetterLink";
 import NavLink from "./NavLink";
 import Search from "../Search";
 import NextImage from "next/image";
+import useText from "@/hooks/useText";
 
 interface HeaderMobileProps {
   globals: Language[];
@@ -24,6 +25,7 @@ function HeaderMobile({ globals, navTexts }: HeaderMobileProps) {
   const { user } = useUser();
   const [langOpen, setLangOpen] = useState(false);
   const [burgerOpen, setBurgerOpen] = useState(false);
+  const signIn = useText(globals, "signIn", "single");
 
   useEffect(() => {
     setBurgerOpen(false);
@@ -47,14 +49,16 @@ function HeaderMobile({ globals, navTexts }: HeaderMobileProps) {
       <div className="flex items-center gap-2">
         <label>
           <div className="w-9 h-10 cursor-pointer flex flex-col items-center justify-center">
-            <input
-              className="hidden peer"
-              type="checkbox"
-              onClick={() => setBurgerOpen((prev) => !prev)}
-            />
-            <div className="w-[50%] h-[2px] bg-black rounded-sm transition-all duration-300 origin-left translate-y-[0.45rem] peer-checked:rotate-[-45deg]"></div>
-            <div className="w-[50%] h-[2px] bg-black rounded-md transition-all duration-300 origin-center peer-checked:hidden"></div>
-            <div className="w-[50%] h-[2px] bg-black rounded-md transition-all duration-300 origin-left -translate-y-[0.45rem] peer-checked:rotate-[45deg]"></div>
+            <span onClick={() => setBurgerOpen((prev) => !prev)} />
+            <div
+              className={`w-[50%] h-[2px] bg-black rounded-sm transition-all duration-300 origin-left translate-y-[0.45rem] ${burgerOpen && `rotate-[-45deg]`}`}
+            ></div>
+            <div
+              className={`w-[50%] h-[2px] bg-black rounded-md transition-all duration-300 origin-center ${burgerOpen && `hidden`}`}
+            ></div>
+            <div
+              className={`w-[50%] h-[2px] bg-black rounded-md transition-all duration-300 origin-left -translate-y-[0.45rem] ${burgerOpen && `rotate-[45deg]`}`}
+            ></div>
           </div>
         </label>
         <BetterLink
@@ -123,7 +127,9 @@ function HeaderMobile({ globals, navTexts }: HeaderMobileProps) {
         </BetterLink>
 
         {/* pfp clerk modal || sign in */}
-        <ClerkLoaded>{user ? <UserButton /> : <SignInButton mode="modal" />}</ClerkLoaded>
+        <ClerkLoaded>
+          {user ? <UserButton /> : <SignInButton mode="modal">{signIn}</SignInButton>}
+        </ClerkLoaded>
       </div>
     </div>
   );

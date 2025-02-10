@@ -37,7 +37,13 @@ const useBasketStore = create<BasketState>()(
             return {
               items: state.items.map((item) =>
                 item.product._id === product._id && item.size === size
-                  ? { ...item, quantity: item.quantity + 1 }
+                  ? {
+                      ...item,
+                      quantity:
+                        item.quantity + 1 <= item.product[`stock${size}`]
+                          ? item.quantity + 1
+                          : item.quantity,
+                    }
                   : item
               ),
             };
