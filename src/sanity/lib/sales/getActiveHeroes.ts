@@ -1,14 +1,14 @@
 import { defineQuery } from "next-sanity";
 import { sanityFetch } from "../live";
 
-export const getActiveSales = async () => {
-  const GET_ACTIVE_SALES = defineQuery(
-    `*[_type == "sale" && isActive == true && !(_id in path("drafts.*"))] | order(validFrom desc)`
+export const getActiveHeroes = async () => {
+  const GET_ACTIVE_HEROES = defineQuery(
+    `*[_type == "hero" && isActive == true && !(_id in path("drafts.*"))] | order(name_daDK desc)`
   );
 
   try {
     const data = await sanityFetch({
-      query: GET_ACTIVE_SALES,
+      query: GET_ACTIVE_HEROES,
     });
 
     return data?.data || [];

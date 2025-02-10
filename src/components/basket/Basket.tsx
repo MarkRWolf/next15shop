@@ -72,7 +72,7 @@ const Basket = ({ basketText, ordersText, products }: BasketProps) => {
   };
 
   return (
-    <div className="container mx-auto px-4 max-w-6xl">
+    <div className="container-main">
       <h1 className="text-2xl font-bold mb-4">{basket}</h1>
       <div className="flex flex-col lg:flex-row gap-8">
         <div className="flex-grow">

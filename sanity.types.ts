@@ -68,6 +68,34 @@ export type Geopoint = {
   alt?: number;
 };
 
+export type Hero = {
+  _id: string;
+  _type: "hero";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  langSelector?: "enGB" | "daDK";
+  title_enGB?: string;
+  title_daDK: string;
+  description_enGB?: string;
+  description_daDK: string;
+  btnText_enGB?: string;
+  btnText_daDK: string;
+  image: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  btnLink: string;
+  isActive?: boolean;
+};
+
 export type Colors = {
   _id: string;
   _type: "colors";
@@ -123,6 +151,17 @@ export type Sale = {
   title_daDK: string;
   description_enGB?: string;
   description_daDK: string;
+  image: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
   discountAmount?: number;
   couponCode?: string;
   startDate?: string;
@@ -275,15 +314,6 @@ export type Slug = {
   source?: string;
 };
 
-export type Langs = {
-  _id: string;
-  _type: "langs";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  name: string;
-};
-
 export type BlockContent = Array<{
   children?: Array<{
     marks?: Array<string>;
@@ -372,8 +402,48 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Colors | Texts | Language | Sale | Order | Product | Category | Slug | Langs | BlockContent | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Hero | Colors | Texts | Language | Sale | Order | Product | Category | Slug | BlockContent | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
 export declare const internalGroqTypeReferenceTo: unique symbol;
+// Source: ./src/sanity/lib/lang/getAllGlobals.ts
+// Variable: ALL_GLOBALS_QUERY
+// Query: *[_type == "language" && sectionName == "global"] | order(name asc)
+export type ALL_GLOBALS_QUERYResult = Array<{
+  _id: string;
+  _type: "language";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  sectionName: string;
+  content?: Array<{
+    key: string;
+    localizedText: {
+      enGB?: string;
+      daDK?: string;
+    };
+    _key: string;
+  }>;
+}>;
+
+// Source: ./src/sanity/lib/lang/getLocalizedTexts.ts
+// Variable: LOCALIZED_TEXTS_QUERY
+// Query: *[_type == "language" && sectionName == $section] | order(name asc)
+export type LOCALIZED_TEXTS_QUERYResult = Array<{
+  _id: string;
+  _type: "language";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  sectionName: string;
+  content?: Array<{
+    key: string;
+    localizedText: {
+      enGB?: string;
+      daDK?: string;
+    };
+    _key: string;
+  }>;
+}>;
+
 // Source: ./src/sanity/lib/orders/getMyOrders.tsx
 // Variable: MY_ORDERS_QUERY
 // Query: *[_type == "order" && clerkUserId == $userId] | order(orderDate desc) {        ...,        products[] {            ...,            product->        }    }
@@ -1123,44 +1193,35 @@ export type PRODUCT_SEARCH_QUERYResult = Array<{
   stockXL: number;
 }>;
 
-// Source: ./src/sanity/lib/lang/getAllGlobals.ts
-// Variable: ALL_GLOBALS_QUERY
-// Query: *[_type == "language" && sectionName == "global"] | order(name asc)
-export type ALL_GLOBALS_QUERYResult = Array<{
+// Source: ./src/sanity/lib/sales/getActiveHeroes.ts
+// Variable: GET_ACTIVE_HEROES
+// Query: *[_type == "hero" && isActive == true && !(_id in path("drafts.*"))] | order(name_daDK desc)
+export type GET_ACTIVE_HEROESResult = Array<{
   _id: string;
-  _type: "language";
+  _type: "hero";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  sectionName: string;
-  content?: Array<{
-    key: string;
-    localizedText: {
-      enGB?: string;
-      daDK?: string;
+  langSelector?: "daDK" | "enGB";
+  title_enGB?: string;
+  title_daDK: string;
+  description_enGB?: string;
+  description_daDK: string;
+  btnText_enGB?: string;
+  btnText_daDK: string;
+  image: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
-    _key: string;
-  }>;
-}>;
-
-// Source: ./src/sanity/lib/lang/getLocalizedTexts.ts
-// Variable: LOCALIZED_TEXTS_QUERY
-// Query: *[_type == "language" && sectionName == $section] | order(name asc)
-export type LOCALIZED_TEXTS_QUERYResult = Array<{
-  _id: string;
-  _type: "language";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  sectionName: string;
-  content?: Array<{
-    key: string;
-    localizedText: {
-      enGB?: string;
-      daDK?: string;
-    };
-    _key: string;
-  }>;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  btnLink: string;
+  isActive?: boolean;
 }>;
 
 // Source: ./src/sanity/lib/sales/getActiveSaleByCouponCode.ts
@@ -1177,6 +1238,17 @@ export type ACTIVE_SALE_BY_COUPON_QUERYResult = {
   title_daDK: string;
   description_enGB?: string;
   description_daDK: string;
+  image: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
   discountAmount?: number;
   couponCode?: string;
   startDate?: string;
@@ -1198,6 +1270,17 @@ export type GET_ACTIVE_SALESResult = Array<{
   title_daDK: string;
   description_enGB?: string;
   description_daDK: string;
+  image: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
   discountAmount?: number;
   couponCode?: string;
   startDate?: string;
@@ -1209,6 +1292,8 @@ export type GET_ACTIVE_SALESResult = Array<{
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
+    "*[_type == \"language\" && sectionName == \"global\"] | order(name asc)": ALL_GLOBALS_QUERYResult;
+    "*[_type == \"language\" && sectionName == $section] | order(name asc)": LOCALIZED_TEXTS_QUERYResult;
     "\n    *[_type == \"order\" && clerkUserId == $userId] | order(orderDate desc) {\n        ...,\n        products[] {\n            ...,\n            product->\n        }\n    }\n    ": MY_ORDERS_QUERYResult;
     "*[_type == \"category\"] | order(name asc)": ALL_CATEGORIES_QUERYResult;
     "*[_type == \"product\" && !(_id in path(\"drafts.*\"))] | order(lower(name_daDK) asc) {\n    ...,\n  \"category\": coalesce(categories[0]->title, \"\"),\n  }": ALL_PRODUCTS_QUERYResult;
@@ -1218,8 +1303,7 @@ declare module "@sanity/client" {
     "\n        *[_type == \"product\" && references(*[_type == \"category\" && slug.current == $category]._id) && !(_id in path(\"drafts.*\"))] | order(name asc) {\n    ...,\n    \"names\": names[] { ..., \"language\": lang->name },\n    \"descriptions\": descriptions[] { ..., \"language\": lang->name },\n    \"category\": coalesce(categories[0]->title, \"\")\n  }": PRODUCTS_BY_CATEGORY_QUERYResult;
     "\n        *[_type == \"product\" && references(*[_type == \"category\" && slug.current == $category]._id) && !(_id in path(\"drafts.*\"))] | order(name asc) {\n  ...,\n  \"names\": names[] { ..., \"language\": lang->name },\n  \"descriptions\": descriptions[] { ..., \"language\": lang->name },\n\"category\": coalesce(categories[0]->title, \"\"),\n}": PRODUCTS_BY_CATEGORY_QUERY_OLDResult;
     "\n    *[_type == \"product\" && name_daDK match $searchParam] | order(name asc)": PRODUCT_SEARCH_QUERYResult;
-    "*[_type == \"language\" && sectionName == \"global\"] | order(name asc)": ALL_GLOBALS_QUERYResult;
-    "*[_type == \"language\" && sectionName == $section] | order(name asc)": LOCALIZED_TEXTS_QUERYResult;
+    "*[_type == \"hero\" && isActive == true && !(_id in path(\"drafts.*\"))] | order(name_daDK desc)": GET_ACTIVE_HEROESResult;
     "*[_type == \"sale\" && isActive == true && couponCode == $couponCode] | order(validFrom desc)[0]": ACTIVE_SALE_BY_COUPON_QUERYResult;
     "*[_type == \"sale\" && isActive == true && !(_id in path(\"drafts.*\"))] | order(validFrom desc)": GET_ACTIVE_SALESResult;
   }

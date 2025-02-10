@@ -37,7 +37,6 @@ const ProductGrid = ({ products, productMsg }: { products: Product[]; productMsg
               initial={{ opacity: 0.2 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className=" max-w-[350px] mx-auto"
             >
               <ProductCard product={product} />
             </motion.div>

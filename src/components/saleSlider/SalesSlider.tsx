@@ -1,14 +1,20 @@
 import { getActiveSales } from "@/sanity/lib/sales/getActiveSales";
-import { Sale } from "../../../sanity.types";
 import SaleSwiper from "./SaleSwiper";
 import { getLocalizedTexts } from "@/sanity/lib/lang/getLocalizedTexts";
+import { getActiveHeroes } from "@/sanity/lib/sales/getActiveHeroes";
 
 const SalesSlider = async () => {
-  const [sales, salesText] = await Promise.all([getActiveSales(), getLocalizedTexts("sale")]);
+  const [sales, heroes, salesText] = await Promise.all([
+    getActiveSales(),
+    getActiveHeroes(),
+    getLocalizedTexts("sale"),
+  ]);
 
-  if (!sales.length) return null;
-
-  return <SaleSwiper sales={sales} salesText={salesText} />;
+  return (
+    <div className={`w-full h-[75vh]`}>
+      <SaleSwiper sales={sales} heroes={heroes} salesText={salesText} />
+    </div>
+  );
 };
 
 export default SalesSlider;

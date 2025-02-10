@@ -8,7 +8,7 @@ const MainHeader = async () => {
   const [globals, navTexts] = await Promise.all([getAllGlobals(), getLocalizedTexts("nav")]);
 
   return (
-    <header className="py-2 fixed inset-0 bg-white z-10 h-14 shadow-black/30 shadow-md font-main">
+    <header className="py-2 fixed font-main inset-0 bg-white/90 z-10 h-14 shadow-black/30 shadow-md">
       <HeaderMobile globals={globals} navTexts={navTexts} />
       <HeaderDesktop globals={globals} navTexts={navTexts} />
       <BasketMessageWrapper globals={globals} />

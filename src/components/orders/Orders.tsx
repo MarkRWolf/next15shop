@@ -41,9 +41,7 @@ function Orders({ orders, ordersText }: OrdersProps) {
                   <div className="flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center mb-4">
                     <div>
                       <p className="text-sm text-gray-600 mb-1 font-bold">{number}</p>
-                      <p className="font-mono text-sm text-green-600 break-all">
-                        {order.orderNumber}
-                      </p>
+                      <p className=" text-sm text-green-600 break-all">{order.orderNumber}</p>
                     </div>
                     <div className="sm:text-right">
                       <p className="text-sm text-gray-600 mb-1">{date}</p>

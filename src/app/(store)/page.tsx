@@ -10,7 +10,8 @@ export default async function Home() {
 
   return (
     <div className="w-full">
-      <SalesSlider />
+        <SalesSlider />
+
       <div className="container-main">
         <ProductsView products={products} categories={categories} />
       </div>
