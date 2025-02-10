@@ -49,7 +49,7 @@ const SingleProduct = ({ product, products, globals }: SingleProductProps) => {
             )}
           </div>
           {product.images && product.images.length > 1 && (
-            <div className=" lg:w-full w-[100px] lg:h-[100px] h-[500px] gap-6 flex lg:flex-nowrap flex-wrap lg:justify-between">
+            <div className="w-[100px] grow max-w-full lg:h-[100px] md:h-[500px] gap-6 flex lg:flex-nowrap sm:flex-wrap flex-nowrap justify-between">
               {product.images.map(
                 (img, i) =>
                   i < 4 && (
@@ -70,14 +70,14 @@ const SingleProduct = ({ product, products, globals }: SingleProductProps) => {
           )}
         </div>
         {/* Right / Below */}
-        <div className="w-2/5 max-w-[50%] flex flex-grow flex-col justify-between self-center">
+        <div className="lg:w-2/5 lg:max-w-[50%] flex flex-grow flex-col justify-between self-center">
           <div>
             <h1 className="text-3xl font-main font-bold mb-4">{name}</h1>
-            <div className="text-xl w-full font-main font-semibold mb-4 flex flex-wrap items-center gap-10">
+            <div className="text-xl w-full font-main font-semibold mb-4">
               {product.price?.toFixed(2)},-
             </div>
             <AddToBasket product={product} />
-            <div className="prose max-w-none my-6">
+            <div className="prose max-w-[80%] my-6">
               {Array.isArray(description) && <PortableText value={description} />}
             </div>
           </div>

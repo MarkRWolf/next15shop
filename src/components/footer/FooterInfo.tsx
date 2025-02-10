@@ -25,7 +25,7 @@ const FooterInfo = ({ globals }: FooterInfoProps) => {
   const about = getLocalizedText("about");
 
   return (
-    <div>
+    <div className="flex flex-col gap-1">
       <p>
         <BetterLink href={"/about"}>{about}</BetterLink>
       </p>

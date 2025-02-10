@@ -19,7 +19,7 @@ const AddToBasket = ({ product }: AddToBasketProps) => {
         e.stopPropagation();
         e.preventDefault();
       }}
-      className="grow h-[41px] max-h-[41px] border-t border-b border-stone-400 flex items-stretch"
+      className="grow max-w-[400px] h-[41px] max-h-[41px] border-t border-b border-stone-400 flex items-stretch"
     >
       <div className="basis-1/6 p-1 flex justify-center items-center bg-black text-white cursor-default">
         <HiOutlineShoppingBag className="w-6 h-6" />
