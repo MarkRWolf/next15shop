@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import useText from "@/hooks/useText";
 import useBasketStore from "@/store/basketStore";
 import { DEFAULT_LANGUAGE } from "@/types/languages";
+import AddToBasket from "../AddToBasket";
 
 interface SingleProductProps {
   product: Product;
@@ -67,13 +68,14 @@ const SingleProduct = ({ product, products, globals }: SingleProductProps) => {
           )}
         </div>
         {/* Right / Below */}
-        <div className="w-2/5 max-w-[50%] flex flex-grow flex-col justify-between self-end">
+        <div className="w-2/5 max-w-[50%] flex flex-grow flex-col justify-between self-center">
           <div>
             <h1 className="text-3xl font-main font-bold mb-4">{name}</h1>
-            <div className="text-xl font-main font-semibold mb-4">
+            <div className="text-xl w-full font-main font-semibold mb-4 flex flex-wrap items-center gap-10">
               {product.price?.toFixed(2)},-
             </div>
-            <div className="prose max-w-none mb-6">
+            <AddToBasket product={product} />
+            <div className="prose max-w-none my-6">
               {Array.isArray(description) && <PortableText value={description} />}
             </div>
           </div>

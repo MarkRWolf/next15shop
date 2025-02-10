@@ -6,12 +6,14 @@ import { imageUrl } from "@/lib/imageUrl";
 import { formatCurrency } from "@/lib/formatCurrency";
 import { DEFAULT_LANGUAGE } from "@/types/languages";
 import useText from "@/hooks/useText";
+import useLangStore from "@/store/langStore";
 
 interface OrdersProps {
   orders: MY_ORDERS_QUERYResult;
   ordersText: Language[];
 }
 function Orders({ orders, ordersText }: OrdersProps) {
+  const { lang } = useLangStore();
   const ordersHeader = useText(ordersText, "orders", "single");
   const number = useText(ordersText, "number", "single");
   const date = useText(ordersText, "date", "single");
@@ -96,7 +98,11 @@ function Orders({ orders, ordersText }: OrdersProps) {
                             <div className="relative h-14 w-14 sm:h-16 flex-shrink-0 rounded-md overflow-hidden">
                               <Image
                                 src={imageUrl(product.product.images[0]).url()}
-                                alt={product.product?.[`name_${DEFAULT_LANGUAGE}`] ?? ""}
+                                alt={
+                                  product.product?.[`name_${lang}`] ??
+                                  product.product?.[`name_${DEFAULT_LANGUAGE}`] ??
+                                  ""
+                                }
                                 className="object-cover"
                                 fill
                               />
@@ -104,7 +110,9 @@ function Orders({ orders, ordersText }: OrdersProps) {
                           )}
                           <div>
                             <p className="font-medium text-sm sm:text-base">
-                              {product.product?.[`name_${DEFAULT_LANGUAGE}`] ?? "Unknown product"}
+                              {product.product?.[`name_${lang}`] ??
+                                product.product?.[`name_${DEFAULT_LANGUAGE}`] ??
+                                "Unknown product"}
                             </p>
                             <p>
                               {product.quantity ?? "N/A"}x {product.size}

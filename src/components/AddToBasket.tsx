@@ -3,6 +3,7 @@ import useBasketStore from "@/store/basketStore";
 import { PRODUCT_SIZES, ProductSize } from "@/types/productSizes";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { Product } from "../../sanity.types";
+import { useState } from "react";
 
 interface AddToBasketProps {
   product: Product;
@@ -10,14 +11,14 @@ interface AddToBasketProps {
 
 const AddToBasket = ({ product }: AddToBasketProps) => {
   const { items, addItem } = useBasketStore();
-
+  const [sizeHovered, setSizeHovered] = useState<ProductSize | null>(null);
   return (
     <div
       onClick={(e) => {
         e.stopPropagation();
         e.preventDefault();
       }}
-      className="border-t border-b border-stone-400 flex items-stretch"
+      className="grow border-t border-b border-stone-400 flex items-stretch"
     >
       <div className="basis-1/6 p-1 flex justify-center items-center bg-black text-white cursor-default">
         <HiOutlineShoppingBag className="w-6 h-6" />
@@ -26,10 +27,16 @@ const AddToBasket = ({ product }: AddToBasketProps) => {
         {...PRODUCT_SIZES.map((size, index) => (
           <div
             key={size}
+            onMouseEnter={() => setSizeHovered(size)}
+            onMouseLeave={() => setSizeHovered(null)}
             onClick={() => (product[`stock${size}`] > 0 ? addItem(product, size) : null)}
             className={`w-[20%] grow border-r ${
-              product[`stock${size}`] < 1 ? "bg-rose-700/40" : "bg-stone-300/20"
-            } border-stone-300 flex flex-col justify-center items-center`}
+              product[`stock${size}`] < 1
+                ? "bg-rose-700/40"
+                : sizeHovered === size
+                  ? "bg-stone-300/80"
+                  : "bg-stone-300/30"
+            } border-stone-300 flex flex-col justify-center items-center cursor-pointer`}
           >
             <p>{size}</p>
             <p className="text-xs">

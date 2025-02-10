@@ -1,12 +1,26 @@
 import { SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE } from "@/types/languages";
 import { TrolleyIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
+import { PRODUCT_SIZES } from "@/types/productSizes";
 
 export const productType = defineType({
   name: "product",
   title: "Product",
   type: "document",
   icon: TrolleyIcon,
+  initialValue: {
+    langSelector: DEFAULT_LANGUAGE,
+    ...PRODUCT_SIZES.reduce((acc, size) => ({ ...acc, [`stock${size}`]: 0 }), {}),
+  },
+  fieldsets: [
+    {
+      name: "stockGroup",
+      title: "Stock Information",
+      options: {
+        columns: PRODUCT_SIZES.length,
+      },
+    },
+  ],
   fields: [
     defineField({
       name: "langSelector",
@@ -19,12 +33,11 @@ export const productType = defineType({
         })),
         layout: "radio",
       },
-      initialValue: DEFAULT_LANGUAGE,
     }),
     ...SUPPORTED_LANGUAGES.map((lang) =>
       defineField({
         name: `name_${lang.code}`,
-        title: `Name -${lang.label}`,
+        title: `Name - ${lang.label}`,
         type: "string",
         hidden: ({ parent }) => parent?.langSelector !== lang.code,
         validation: (Rule) =>
@@ -36,7 +49,7 @@ export const productType = defineType({
     ...SUPPORTED_LANGUAGES.map((lang) =>
       defineField({
         name: `description_${lang.code}`,
-        title: `Description -${lang.label}`,
+        title: `Description - ${lang.label}`,
         type: "blockContent",
         hidden: ({ parent }) => parent?.langSelector !== lang.code,
         validation: (Rule) =>
@@ -89,12 +102,15 @@ export const productType = defineType({
       readOnly: true,
       hidden: true,
     }),
-    defineField({
-      name: "stock",
-      title: "Stock",
-      type: "number",
-      validation: (Rule) => Rule.required().min(0),
-    }),
+    ...PRODUCT_SIZES.map((size) =>
+      defineField({
+        name: `stock${size}`,
+        title: `Stock ${size}`,
+        type: "number",
+        fieldset: "stockGroup",
+        validation: (Rule) => Rule.required().min(0).error(`Min 0.`),
+      })
+    ),
   ],
   preview: {
     select: {
