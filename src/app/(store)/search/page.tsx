@@ -1,12 +1,9 @@
-
 import ProductGrid from "@/components/ProductGrid";
-import { getLocalizedTexts } from "@/sanity/lib/lang/getLocalizedTexts";
 import { searchProducts } from "@/sanity/lib/products/searchProducts";
 
 async function SearchPage({ searchParams }: { searchParams: Promise<{ query: string }> }) {
   const { query } = await searchParams;
   const products = await searchProducts(query);
-  const productMsg = await getLocalizedTexts("productMsg");
 
   if (!products.length) {
     return (
@@ -23,9 +20,9 @@ async function SearchPage({ searchParams }: { searchParams: Promise<{ query: str
   return (
     <div className="">
       <h1 className="text-3xl font-bold mb-6 text-center"></h1>
-      <ProductGrid products={products} productMsg={productMsg} />
+      <ProductGrid products={products} />
     </div>
   );
-  }
+}
 
 export default SearchPage;

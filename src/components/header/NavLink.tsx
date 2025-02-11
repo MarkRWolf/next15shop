@@ -21,7 +21,7 @@ const NavLink = ({ navTexts, item, mobile = false, activePath }: NavProps) => {
     <>
       <BetterLink
         href={`/${item.key}`}
-        className={`py-2 border-b border-slate-400 flex justify-between cursor pointer ${activePath === item.key ? "text-primary" : "text-slate-900"}`}
+        className={`py-2 border-b border-slate-400 flex justify-between cursor pointer ${activePath === item.key ? "font-semibold" : "font-normal"}`}
       >
         {text}
         <p className="text-xl pr-2">&gt;</p>
