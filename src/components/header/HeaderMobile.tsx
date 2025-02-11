@@ -38,7 +38,7 @@ function HeaderMobile({ globals, navTexts }: HeaderMobileProps) {
       {/* Hidden nav slide in */}
       <div
         className={`fixed top-14 left-0 w-full h-full ${burgerOpen ? "bg-white/40" : "bg-white/0 pointer-events-none"}  transition-colors duration-300`}
-        onClick={() => setBurgerOpen(false)}
+        onClick={() => burgerRef.current?.click()}
       >
         <div
           className={`${burgerOpen ? "translate-x-0" : "-translate-x-[100%]"} bg-gradient-to-br from-white/85 to-white/40 transition-translate delay-300 duration-300 ease-out min-w-[200px] max-w-max h-screen`}
