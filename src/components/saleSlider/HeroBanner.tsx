@@ -22,15 +22,16 @@ const HeroBanner = ({ hero }: { hero: Hero }) => {
           alt={title ?? "Product Image"}
           width={1920}
           height={1080}
-          quality={65}
         />
       )}
-      <div className="absolute inset-0 top-[20%] w-full h-full container-main flex flex-col drop-shadow-[3px_3px_3px_rgba(0,0,0,0.8)]">
-        <h2 className="text-3xl sm:text-5xl font-extrabold text-left mb-4">{title}</h2>
-        <p className="text-left text-xl sm:text-3xl font-semibold mb-6">{description}</p>
+      <div className="absolute inset-0 top-[15%] mx-auto w-full h-[70%] container-main flex flex-col lg:justify-start justify-center gap-2 drop-shadow-[1px_1px_1px_rgba(0,0,0,0.8)]">
+        <span className="lg:text-left text-center">
+          <h2 className="text-3xl sm:text-5xl font-extrabold mb-4">{title}</h2>
+          <p className="text-xl sm:text-3xl font-semibold mb-6">{description}</p>
+        </span>
         <BetterLink
           href={hero.btnLink}
-          className="w-max text-xl px-4 py-2 border-2 rounded-sm border-stone-200 hover:bg-stone-200/40"
+          className="w-max lg:mx-0 mx-auto text-xl px-4 py-2 border-2 rounded-sm border-stone-200 hover:bg-stone-200/40"
         >
           {btnText}
         </BetterLink>

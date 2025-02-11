@@ -28,15 +28,19 @@ const SaleBanner = ({ sale, salesText }: { sale: Sale; salesText: Language[] }) 
           quality={65}
         />
       )}
-      <div className="absolute inset-0 top-[20%] mx-auto w-full h-full container-main flex flex-col gap-2 drop-shadow-[3px_3px_3px_rgba(0,0,0,1)]">
-        <h2 className="text-3xl sm:text-5xl font-extrabold text-left">{title}</h2>
-        <p className="text-left text-xl sm:text-3xl font-semibold ">{description}</p>
-        <div className="font-semibold">
-          <span className="text-xl ">
+      <div className="absolute inset-0 top-[15%] mx-auto w-full h-[70%] container-main flex flex-col lg:justify-start justify-between lg:gap-20 gap-2 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.8)]">
+        <span>
+          <h2 className="text-3xl sm:text-5xl font-extrabold lg:text-left text-center">{title}</h2>
+          <p className="lg:text-left text-center text-xl sm:text-3xl font-semibold ">
+            {description}
+          </p>
+        </span>
+        <div className="font-semibold lg:text-left text-center">
+          <span className="text-2xl">
             <p>{useCode}</p>
-            <p className="text-red-600 text-2xl font-extrabold">{sale.couponCode}</p>
+            <p className="text-red-600 text-3xl font-extrabold">{sale.couponCode}</p>
           </span>
-          <span className="text-xl">
+          <span className="text-2xl">
             {forText} {sale.discountAmount}% {off}
           </span>
         </div>

@@ -12,21 +12,28 @@ interface NavProps {
     _key: string;
   };
   mobile?: boolean;
+  activePath: string;
 }
-const NavLink = ({ navTexts, item, mobile = false }: NavProps) => {
+const NavLink = ({ navTexts, item, mobile = false, activePath }: NavProps) => {
   const text = useText(navTexts, item.key, "single");
+
   return mobile ? (
     <>
       <BetterLink
         href={`/${item.key}`}
-        className="py-2 border-b border-slate-400 flex justify-between cursor pointer"
+        className={`py-2 border-b border-slate-400 flex justify-between cursor pointer ${activePath === item.key ? "text-primary" : "text-slate-900"}`}
       >
         {text}
         <p className="text-xl pr-2">&gt;</p>
       </BetterLink>
     </>
   ) : (
-    <BetterLink href={`/${item.key}`}>{text}</BetterLink>
+    <BetterLink
+      href={`/${item.key}`}
+      className={`${activePath === item.key ? "font-semibold" : "font-normal"}`}
+    >
+      {text}
+    </BetterLink>
   );
 };
 

@@ -36,18 +36,18 @@ const ProductCard = ({ product }: ProductCardProps) => {
     <div className="relative h-full group z-[3] bg-white font-main">
       {/* Card */}
       <div
-        className={`relative h-full  z-[2] bg-[#f9f9f9] flex flex-col border-b border-r justify-stretch shadow shadow-gray-400/40 rounded-md`}
+        className={`relative h-full  z-[2] bg-[#f9f9f9] flex flex-col border-b border-r justify-between shadow shadow-gray-400/40 rounded-md`}
       >
         {product?.images && (
           <div
-            className="w-full max-h-[340px] lg:max-h-[380px] relative overflow-hidden select-none"
+            className="w-full py-4 relative overflow-hidden select-none"
             onMouseEnter={() => setImgHovered(true)}
             onMouseLeave={() => setImgHovered(false)}
             onMouseMove={handleMouseMove}
           >
             <BetterLink href={productUrl}>
               <NextImage
-                className={`w-full h-full object-contain overflow-hidden transition-transform duration-500 ${
+                className={`h-60 object-contain overflow-hidden transition-transform duration-500 ${
                   imgHovered ? "scale-150" : "scale-100"
                 }`}
                 style={{
@@ -67,20 +67,20 @@ const ProductCard = ({ product }: ProductCardProps) => {
             e.stopPropagation();
             e.preventDefault();
           }}
-          className="w-full flex-grow self-start px-2 pb-4 flex flex-col justify-between cursor-default"
+          className="w-full grow px-2 pb-4 self-end cursor-default"
         >
-          <h2 className="lg:text-2xl text-xl capitalize">{name}</h2>
-          <p className="my-4 h-full">
-            {description?.map((block, index) => {
-              if (block._type === "block") {
-                const text = block.children?.map((child) => child.text).join("") || "";
-                const words = text.split(" ");
-                return words.length > 9 ? words.slice(0, 9).join(" ") + "..." : text;
-              }
-              return `No description${index}`;
-            })}
-          </p>
-          <div className="relative z-[3] w-full flex items-center justify-between">
+          <div className="flex flex-col justify-between h-full">
+            <h2 className="lg:text-2xl text-xl capitalize">{name}</h2>
+            <p className="my-4 grow">
+              {description?.map((block, index) => {
+                if (block._type === "block") {
+                  const text = block.children?.map((child) => child.text).join("") || "";
+                  const words = text.split(" ");
+                  return words.length > 9 ? words.slice(0, 9).join(" ") + "..." : text;
+                }
+                return `No description${index}`;
+              })}
+            </p>
             <p className="md:text-xl sm:text-xl relative z-50">{product.price?.toFixed(2)},-</p>
           </div>
         </div>

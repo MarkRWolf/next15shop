@@ -9,8 +9,8 @@ export default async function Home() {
   const [products, categories] = await Promise.all([getAllProducts(), getAllCategories()]);
 
   return (
-    <div className="w-full">
-        <SalesSlider />
+    <div className="w-full -mt-14 flex flex-col gap-12">
+      <SalesSlider />
 
       <div className="container-main">
         <ProductsView products={products} categories={categories} />

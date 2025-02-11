@@ -4,14 +4,13 @@ import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { PiUser } from "react-icons/pi";
 import { useState } from "react";
 import Image from "next/image";
-import { Language } from "../../../sanity.types";
+import { Language } from "../../../../sanity.types";
 import useLangStore from "@/store/langStore";
-import BetterLink from "../BetterLink";
-import NavLink from "./NavLink";
+import BetterLink from "../../BetterLink";
 import { SUPPORTED_LANGUAGES } from "@/types/languages";
-import Search from "../Search";
-import NextImage from "next/image";
+import Search from "../../Search";
 import useText from "@/hooks/useText";
+import HeaderDesktopNav from "./HeaderDesktopNav";
 
 interface HeaderDesktopProps {
   globals: Language[];
@@ -23,31 +22,11 @@ function HeaderDesktop({ globals, navTexts }: HeaderDesktopProps) {
   const { user } = useUser();
   const [langOpen, setLangOpen] = useState(false);
   const signIn = useText(globals, "signIn", "single");
-  
-  return (
-    <div className="hidden lg:flex relative container-main justify-between items-center gap-4 z-10">
-      <div className="flex items-center gap-6">
-        <BetterLink
-          href={"/"}
-          className="flex items-center gap-1 text-sm font-main font-bold hover:opacity-80 cursor-pointer sm:mx-0"
-        >
-          <NextImage
-            src={"/logo.png"}
-            className="h-10 w-10 object-cover"
-            alt="logo"
-            width={96}
-            height={96}
-          />
-          DemoShop
-        </BetterLink>
-        <div className="flex items-center gap-2">
-          {navTexts?.[0]?.content?.map((item) => (
-            <NavLink key={item.key} navTexts={navTexts} item={item} />
-          ))}
-        </div>
-      </div>
 
-      <div className="flex items-center gap-3">
+  return (
+    <div className="hidden h-full lg:flex relative container-main justify-between items-center gap-4 z-10">
+      <HeaderDesktopNav navTexts={navTexts} />
+      <div className="flex items-center gap-4">
         <Search globals={globals} />
 
         <div

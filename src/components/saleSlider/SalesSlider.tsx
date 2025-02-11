@@ -11,7 +11,7 @@ const SalesSlider = async () => {
   ]);
 
   return (
-    <div className={`w-full h-[75vh]`}>
+    <div className={`w-full h-[80vh]`}>
       <SaleSwiper sales={sales} heroes={heroes} salesText={salesText} />
     </div>
   );

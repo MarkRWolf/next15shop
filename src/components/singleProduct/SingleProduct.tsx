@@ -37,19 +37,19 @@ const SingleProduct = ({ product, products, globals }: SingleProductProps) => {
         <div
           className={`relative lg:w-[450px] w-full flex flex-wrap justify-between gap-6 rounded-lg`}
         >
-          <div className="lg:w-full w-[75%] flex-grow h-[500px] relative border-gray-300 border">
+          <div className="lg:w-full w-[75%] flex-grow h-[500px] relative">
             {product.images?.length && (
               <NextImage
                 src={imageUrl(product.images[hoveredImg < 0 ? selectedImg : hoveredImg]).url()}
                 alt={name ?? "Product Image"}
                 fill
                 quality={65}
-                className={`object-contain transition-transform duration-300 hover:scale-105`}
+                className={`object-contain transition-transform duration-300 hover:scale-105 border-gray-300 border`}
               />
             )}
           </div>
           {product.images && product.images.length > 1 && (
-            <div className="w-[100px] grow max-w-full lg:h-[100px] md:h-[500px] gap-6 flex lg:flex-nowrap sm:flex-wrap flex-nowrap justify-between">
+            <div className="lg:w-full sm:w-1/5 w-full grid grid-cols-4 sm:grid-rows-4 sm:grid-cols-1 lg:grid-cols-4 lg:grid-rows-1 gap-6">
               {product.images.map(
                 (img, i) =>
                   i < 4 && (

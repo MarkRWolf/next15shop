@@ -1,15 +1,17 @@
 "use client";
 
 import dynamic from "next/dynamic";
-const SaleBanner = dynamic(() => import("./SaleBanner"), { ssr: false });
 import { Hero, Language, Sale } from "../../../sanity.types";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "swiper/css/autoplay";
 import SalePagination from "./SalePagination";
 import HeroBanner from "./HeroBanner";
+
+const SaleBanner = dynamic(() => import("./SaleBanner"), { ssr: false });
 
 interface SaleSwiperProps {
   sales: Sale[];
@@ -19,12 +21,11 @@ interface SaleSwiperProps {
 
 const SaleSwiper = ({ sales, heroes, salesText }: SaleSwiperProps) => {
   return (
-    <div className="relative w-full h-full">
+    <div className="relative w-full h-full select-none">
       <Swiper
-        slidesPerView={1}
-        spaceBetween={0}
-        loop={true}
-        autoplay={{ delay: 3000, disableOnInteraction: false }}
+        modules={[Autoplay]}
+        speed={1000}
+        autoplay={{ delay: 5000, disableOnInteraction: false }}
         className="w-full h-full"
       >
         {sales.map((sale) => (
@@ -32,12 +33,12 @@ const SaleSwiper = ({ sales, heroes, salesText }: SaleSwiperProps) => {
             <SaleBanner sale={sale} salesText={salesText} />
           </SwiperSlide>
         ))}
-        {heroes.map((sale) => (
-          <SwiperSlide key={sale._id}>
-            <HeroBanner hero={sale} />
+        {heroes.map((hero) => (
+          <SwiperSlide key={hero._id}>
+            <HeroBanner hero={hero} />
           </SwiperSlide>
         ))}
-        <SalePagination sales={sales} />
+        <SalePagination sales={sales} heroes={heroes} />
       </Swiper>
     </div>
   );

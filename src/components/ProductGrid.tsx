@@ -1,49 +1,37 @@
 "use client";
-import { Language, Product } from "../../sanity.types";
+import { Product } from "../../sanity.types";
 import ProductCard from "./ProductCard";
 import useLangStore from "@/store/langStore";
-import useText from "@/hooks/useText";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect } from "react";
 import useBasketStore from "@/store/basketStore";
 
-const ProductGrid = ({ products, productMsg }: { products: Product[]; productMsg: Language[] }) => {
+const ProductGrid = ({ products }: { products: Product[] }) => {
   const { lang } = useLangStore();
-  const msg = useText(productMsg, "msg", "single");
 
   useEffect(() => {
     useBasketStore.getState().validateBasket(products);
   }, [products, lang]);
 
   return (
-    <>
-      {/* Msg if any */}
-      {msg && (
-        <div className="w-full font-main text-center bg-warning text-white py-4 md:py-2 px-4">
-          {msg}
-        </div>
-      )}
-
-      {/* Product Grid */}
-      <div
-        className="grid w-full mt-8 gap-y-4 sm:gap-x-8 grid-cols-1 sm:grid-cols-2 
-      md:grid-cols-3 xl:grid-cols-4 sm:mt-12 lg:mt-20 "
-      >
-        {products.map((product) => (
-          <AnimatePresence key={product._id}>
-            <motion.div
-              layout
-              key={product._id}
-              initial={{ opacity: 0.2 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            >
-              <ProductCard product={product} />
-            </motion.div>
-          </AnimatePresence>
-        ))}
-      </div>
-    </>
+    <div
+      className="grid w-full gap-y-4 sm:gap-x-8 grid-cols-1 sm:grid-cols-2 
+      md:grid-cols-3 xl:grid-cols-4 "
+    >
+      {products.map((product) => (
+        <AnimatePresence key={product._id}>
+          <motion.div
+            layout
+            key={product._id}
+            initial={{ opacity: 0.2 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <ProductCard product={product} />
+          </motion.div>
+        </AnimatePresence>
+      ))}
+    </div>
   );
 };
 

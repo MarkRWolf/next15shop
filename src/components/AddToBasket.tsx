@@ -19,9 +19,9 @@ const AddToBasket = ({ product }: AddToBasketProps) => {
         e.stopPropagation();
         e.preventDefault();
       }}
-      className="grow max-w-[400px] h-[41px] max-h-[41px] border-t border-b border-stone-400 flex items-stretch"
+      className="grow max-w-[400px] h-[41px] max-h-[41px] border-b border-stone-400 flex items-stretch"
     >
-      <div className="basis-1/6 p-1 flex justify-center items-center bg-black text-white cursor-default">
+      <div className="basis-1/6 p-1 flex justify-center items-center bg-stone-800 text-white cursor-default">
         <HiOutlineShoppingBag className="w-6 h-6" />
       </div>
       <div className="basis-5/6 flex flex-wrap ">
@@ -36,10 +36,21 @@ const AddToBasket = ({ product }: AddToBasketProps) => {
               onMouseEnter={() => setSizeHovered(size)}
               onMouseLeave={() => setSizeHovered(null)}
               disabled={outOfStock}
-              className={`w-[20%] btn relative grow border-r ${
+              className={`w-[20%] btn relative grow border-l border-t ${
                 outOfStock ? "bg-rose-700/40" : "bg-stone-300/30"
-              } border-stone-300 flex flex-col justify-center items-center select-none`}
+              } border-l-stone-300 border-t-stone-400 flex flex-col justify-center items-center select-none`}
             >
+              <p className="leading-none">{size}</p>
+              <p className="text-xs leading-none">
+                <span className="text-[10px] ">
+                  {itemInCart?.quantity ? itemInCart?.quantity + "/" : ""}
+                </span>
+                <span
+                  className={`${itemInCart?.quantity === product[`stock${size}`] && "text-red-500"}`}
+                >
+                  {product[`stock${size}`]}
+                </span>
+              </p>
               <div
                 className={`absolute ${sizeHovered === size ? "flex" : "hidden"} text-xl w-full h-full bg-stone-200/90 text-stone-500`}
               >
@@ -60,17 +71,6 @@ const AddToBasket = ({ product }: AddToBasketProps) => {
                   +
                 </span>
               </div>
-              <p className="leading-none">{size}</p>
-              <p className="text-xs leading-none">
-                <span className="text-[10px] ">
-                  {itemInCart?.quantity ? itemInCart?.quantity + "/" : ""}
-                </span>
-                <span
-                  className={`${itemInCart?.quantity === product[`stock${size}`] && "text-red-500"}`}
-                >
-                  {product[`stock${size}`]}
-                </span>
-              </p>
             </button>
           );
         })}

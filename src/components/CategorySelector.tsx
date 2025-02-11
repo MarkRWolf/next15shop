@@ -41,7 +41,7 @@ const CategorySelector = ({ categories, categoryTexts }: CategorySelectorProps) 
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="min-w-44 flex justify-between border-gray-400/60"
+          className="min-w-44 max-w-max flex justify-between border-gray-400/60"
         >
           {value ? categories.find((cat) => cat._id === value)?.title : filterBy}
           <ChevronsUpDown className="h-4 w-4 shrink-0" />
@@ -68,9 +68,12 @@ const CategorySelector = ({ categories, categoryTexts }: CategorySelectorProps) 
           <CommandList>
             <CommandEmpty>No category found.</CommandEmpty>
             <CommandGroup>
-              <CommandItem asChild>
+              <CommandItem asChild className="p-0">
                 <span onClick={() => setValue("")}>
-                  <BetterLink href="/products" className="flex w-full items-center justify-between">
+                  <BetterLink
+                    href="/products"
+                    className="flex w-full items-center justify-between py-1.5 px-2 hover:bg-gray-700/50"
+                  >
                     {none}
                     <Check
                       className={cn("ml-auto h-4 w-4", value === "" ? "opacity-100" : "opacity-0")}
@@ -79,16 +82,17 @@ const CategorySelector = ({ categories, categoryTexts }: CategorySelectorProps) 
                 </span>
               </CommandItem>
               {categories.map((c) => (
-                <CommandItem key={c._id} asChild>
+                <CommandItem key={c._id} className="p-0" asChild>
                   <span
                     onClick={() => {
                       setValue((prev) => (prev === c._id ? "" : c._id));
                       setOpen(false);
                     }}
+                    className="w-full h-full"
                   >
                     <BetterLink
                       href={`/products/${c.slug?.current}`}
-                      className="flex w-full items-center justify-between"
+                      className="flex w-full h-full items-center justify-between py-1.5 px-2 hover:bg-gray-700/5"
                     >
                       {c.title}
                       <Check
