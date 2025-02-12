@@ -40,11 +40,12 @@ const AddToBasket = ({ product }: AddToBasketProps) => {
         >
           <FaX className="w-5 h-4" />
         </div>
+        {/* Shopping Bag Icon */}
         <span className="w-6 h-6">
           <HiOutlineShoppingBag
             className="w-full h-full transition-all duration-150"
             style={{
-              display: sizeHovered ? "none" : "block",
+              display: sizeHovered ? (isMobile ? "none" : "block") : "block",
               transform: shaking && sizeHovered ? "rotate(10deg)" : "rotate(0deg)",
             }}
           />
