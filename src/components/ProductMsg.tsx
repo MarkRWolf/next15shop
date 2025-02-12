@@ -2,8 +2,8 @@
 import useText from "@/hooks/useText";
 import { Language } from "../../sanity.types";
 
-const ProductMsg = ({ productMsg }: { productMsg: Language[] }) => {
-  const msg = useText(productMsg, "msg", "single");
+const ProductMsg = ({ productText }: { productText: Language[] }) => {
+  const msg = useText(productText, "msg", "single");
 
   return (
     msg && (

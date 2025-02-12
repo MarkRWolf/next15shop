@@ -13,6 +13,7 @@ import NavLink from "./NavLink";
 import Search from "../Search";
 import NextImage from "next/image";
 import useText from "@/hooks/useText";
+import useBasketStore from "@/store/basketStore";
 
 interface HeaderMobileProps {
   globals: Language[];
@@ -22,12 +23,14 @@ interface HeaderMobileProps {
 function HeaderMobile({ globals, navTexts }: HeaderMobileProps) {
   const pathname = usePathname();
   const { lang, setLang } = useLangStore();
+  const { items, shaking } = useBasketStore();
   const { user } = useUser();
   const [langOpen, setLangOpen] = useState(false);
   const [burgerOpen, setBurgerOpen] = useState(false);
   const signIn = useText(globals, "signIn", "single");
   const activePath = pathname.split("/")[1] || "home";
   const burgerRef = useRef<HTMLInputElement>(null);
+  const uniqueItems = items.length;
 
   useEffect(() => {
     if (burgerOpen) burgerRef.current?.click();
@@ -136,7 +139,18 @@ function HeaderMobile({ globals, navTexts }: HeaderMobileProps) {
 
         {/* Basket */}
         <BetterLink href={"/basket"} className="relative">
-          <HiOutlineShoppingBag className="w-6 h-6" />
+          {/* Number if items in cart */}
+          {uniqueItems > 0 && (
+            <div className="absolute top-full left-0 w-full flex items-center pt-[1px] justify-center leading-none text-xs">
+              {uniqueItems}
+            </div>
+          )}
+          <HiOutlineShoppingBag
+            className="w-6 h-6 transition-all duration-150"
+            style={{
+              transform: shaking ? "rotate(10deg)" : "rotate(0deg)",
+            }}
+          />
         </BetterLink>
 
         {/* pfp clerk modal || sign in */}

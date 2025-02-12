@@ -12,6 +12,8 @@ export interface BasketItem {
 interface BasketState {
   items: BasketItem[];
   basketReduced: boolean;
+  shaking: boolean;
+  shake: () => void;
   setBasketReduced: (value: boolean) => void;
   addItem: (product: Product, size: ProductSize) => void;
   removeItem: (productId: string, size: ProductSize) => void;
@@ -28,6 +30,11 @@ const useBasketStore = create<BasketState>()(
       items: [],
       basketReduced: false,
       setBasketReduced: (value: boolean) => set({ basketReduced: value }),
+      shaking: false,
+      shake: () => {
+        set({ shaking: true });
+        setTimeout(() => set({ shaking: false }), 150);
+      },
       addItem: (product, size) =>
         set((state) => {
           const existingItem = state.items.find(

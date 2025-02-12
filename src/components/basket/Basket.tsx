@@ -77,7 +77,7 @@ const Basket = ({ basketText, ordersText, products }: BasketProps) => {
       <div className="flex flex-col lg:flex-row gap-8">
         <div className="flex-grow">
           {basketItems?.map((item) => {
-            console.log(item);
+            const dbProduct = products.find((product) => product._id === item.product._id);
             return (
               <div
                 key={item.size + item.product._id}
@@ -129,8 +129,16 @@ const Basket = ({ basketText, ordersText, products }: BasketProps) => {
                       >
                         -
                       </span>
-                      <span className="grow  border-t border-b border-stone-950/80 flex justify-center items-center">
-                        {item.quantity}
+                      <span className="grow border-t border-b border-stone-950/80 flex justify-center items-center">
+                        <span className="text-[10px] leading-none  flex items-center">
+                          <p className="text-xs">{item.quantity}</p>
+                          <p>/</p>
+                          <p
+                            className={`mt-0.5 ${item?.quantity === dbProduct![`stock${item.size}`] && "text-red-500"}`}
+                          >
+                            {dbProduct![`stock${item.size}`]}
+                          </p>
+                        </span>
                       </span>
                       <span
                         className="grow text-white text-xl border border-stone-950/80 bg-stone-950/80 flex justify-center items-center"

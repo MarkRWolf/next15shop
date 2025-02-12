@@ -17,7 +17,7 @@ const SaleBanner = ({ sale, salesText }: { sale: Sale; salesText: Language[] }) 
   const description = sale[`description_${lang}`] ?? sale[`description_${DEFAULT_LANGUAGE}`];
 
   return (
-    <div className="relative w-full h-full bg-black text-gray-200 font-main">
+    <div className="relative w-full h-full  text-gray-200 font-main">
       {sale.image && (
         <NextImage
           className={`object-cover w-full h-full`}

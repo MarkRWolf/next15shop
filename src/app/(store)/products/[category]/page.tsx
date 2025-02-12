@@ -1,6 +1,5 @@
 export const dynamic = "force-dynamic";
 
-import { notFound } from "next/navigation";
 import { Product } from "../../../../../sanity.types";
 import { getProductsByCategory } from "@/sanity/lib/products/getProductsByCategory";
 import ProductsView from "@/components/ProductsView";
@@ -11,16 +10,15 @@ const ProductPage = async ({ params }: { params: Promise<{ category: string }> }
 
   const categories = await getAllCategories();
   const categoryExists = categories?.find((c) => c.title?.toLowerCase() === category.toLowerCase());
-  if (!categoryExists) {
-    notFound();
-  }
-  // Fetch product data on the server side
+  if (!categoryExists) return <h2 className="text-4xl text-center">404</h2>;
+
+  // Continue if category exists
   const products: Product[] = await getProductsByCategory(category);
 
   return (
     <div className="">
-      <div className="container-main">
-        <ProductsView products={products} categories={categories} />
+      <div className="">
+        <ProductsView products={products} categories={categories} category={categoryExists.title} />
       </div>
     </div>
   );

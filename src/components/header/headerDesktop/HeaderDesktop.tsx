@@ -11,6 +11,7 @@ import { SUPPORTED_LANGUAGES } from "@/types/languages";
 import Search from "../../Search";
 import useText from "@/hooks/useText";
 import HeaderDesktopNav from "./HeaderDesktopNav";
+import useBasketStore from "@/store/basketStore";
 
 interface HeaderDesktopProps {
   globals: Language[];
@@ -19,13 +20,17 @@ interface HeaderDesktopProps {
 
 function HeaderDesktop({ globals, navTexts }: HeaderDesktopProps) {
   const { lang, setLang } = useLangStore();
+  const { items, shaking } = useBasketStore();
   const { user } = useUser();
   const [langOpen, setLangOpen] = useState(false);
   const signIn = useText(globals, "signIn", "single");
+  const uniqueItems = items.length;
 
   return (
     <div className="hidden h-full lg:flex relative container-main justify-between items-center gap-4 z-10">
       <HeaderDesktopNav navTexts={navTexts} />
+
+      {/* Right */}
       <div className="flex items-center gap-4">
         <Search globals={globals} />
 
@@ -66,6 +71,7 @@ function HeaderDesktop({ globals, navTexts }: HeaderDesktopProps) {
             )}
           </div>
         </div>
+        {/* Profile page if logged in */}
         <ClerkLoaded>
           {user && (
             <BetterLink href={"/profile/orders"} className="">
@@ -73,9 +79,24 @@ function HeaderDesktop({ globals, navTexts }: HeaderDesktopProps) {
             </BetterLink>
           )}
         </ClerkLoaded>
+
+        {/* Basket */}
         <BetterLink href={"/basket"} className="relative">
-          <HiOutlineShoppingBag className="w-6 h-6" />
+          {/* Number if items in cart */}
+          {uniqueItems > 0 && (
+            <div className="absolute top-full left-0 w-full flex items-center pt-[1px] justify-center leading-none text-xs">
+              {uniqueItems}
+            </div>
+          )}
+          <HiOutlineShoppingBag
+            className="w-6 h-6 transition-all duration-150"
+            style={{
+              transform: shaking ? "rotate(10deg)" : "rotate(0deg)",
+            }}
+          />
         </BetterLink>
+
+        {/* Sign in or user button */}
         <ClerkLoaded>
           {user ? <UserButton /> : <SignInButton mode="modal">{signIn}</SignInButton>}
         </ClerkLoaded>

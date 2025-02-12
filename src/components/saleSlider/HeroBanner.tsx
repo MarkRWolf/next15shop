@@ -14,7 +14,7 @@ const HeroBanner = ({ hero }: { hero: Hero }) => {
   const btnText = hero[`btnText_${lang}`] ?? hero[`btnText_${DEFAULT_LANGUAGE}`];
 
   return (
-    <div className="relative w-full h-full bg-black text-gray-200 font-main">
+    <div className="relative w-full h-full bg-stone-400 text-gray-200 font-main">
       {hero.image && (
         <NextImage
           className={`object-cover w-full h-full`}

@@ -10,7 +10,7 @@ const ProductPage = async () => {
   const products: Product[] = await getAllProducts();
 
   return (
-    <div className="container-main">
+    <div className="">
       <ProductsView products={products} categories={categories} />
     </div>
   );

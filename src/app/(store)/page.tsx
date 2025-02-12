@@ -12,7 +12,7 @@ export default async function Home() {
     <div className="w-full -mt-14 flex flex-col gap-12">
       <SalesSlider />
 
-      <div className="container-main">
+      <div className="">
         <ProductsView products={products} categories={categories} />
       </div>
     </div>
