@@ -11,7 +11,7 @@ const SalePagination = ({ sales, heroes }: { sales: Sale[]; heroes: Hero[] }) =>
       {allSlides.map((sale, index) => (
         <div
           key={sale._id}
-          className="flex justify-center items-center p-1 "
+          className="flex justify-center items-center p-1 cursor-pointer"
           onClick={() => swiper.slideTo(index, 500, true)}
         >
           {index + 1}
