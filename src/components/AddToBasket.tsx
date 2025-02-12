@@ -27,7 +27,7 @@ const AddToBasket = ({ product }: AddToBasketProps) => {
         e.stopPropagation();
         e.preventDefault();
       }}
-      className="grow max-w-[400px] h-[41px] max-h-[41px] border-b border-stone-400 flex items-stretch"
+      className="grow max-w-[360px] h-[41px] max-h-[41px] border-b border-stone-400 flex items-stretch"
     >
       {/* Left Icon */}
       <div className="relative basis-1/6 p-1 flex justify-center items-center bg-stone-800 text-white cursor-default">

@@ -33,7 +33,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const productUrl = `/products/${product.category?.toLowerCase()}/${product.slug.current}`;
 
   return (
-    <div className="relative h-full group z-[3] bg-white font-main">
+    <div className="relative max-w-[360px] h-full group z-[3] bg-white font-main">
       {/* Card */}
       <div
         className={`relative h-full  z-[2] bg-[#f9f9f9] flex flex-col border-b border-r justify-between shadow shadow-gray-400/40 rounded-md`}
