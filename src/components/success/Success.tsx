@@ -23,33 +23,23 @@ const Success = ({ orderNumber, texts }: { orderNumber: string; texts: Language[
   }, [orderNumber, clearBasket]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
-      <div className="bg-white p-12 rounded-xl shadow-lg max-w-2xl w-full mx-4">
-        <div className="h-16 w-16 bg-green-100 rounded-full flex items-center justify-center">
-          <svg
-            className="h-8 w-8 text-green-600"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-          </svg>
-        </div>
+    <div className="bg-gray-50">
+      <div className="bg-white p-12 sm:mt-0 mt-12 rounded-xl shadow-lg text-center">
         <h1 className="text-4xl font-bold mb-6 text-center">{thanks}</h1>
-        <div className="border-t border-b border-gray-200 py-6 mb-6">
-          <p className="text-lg text-gray-700 mb-4">{processing}</p>
-          <div className="space-y-2">
+        <div className="border-t border-b border-gray-200 py-6 mb-6 text-gray-700">
+          <p className="text-lg mb-4">{processing}</p>
+          <div className="space-y-2 flex justify-center">
             {orderNumber && (
-              <p className="text-gray-600 flex items-center space-x-5">
+              <p className="flex items-center space-x-5">
                 <span>{number}:</span>
-                <span className=" text-sm text-green-600">{orderNumber}</span>
+                <span className=" text-sm font-semibold">{orderNumber}</span>
               </p>
             )}
           </div>
         </div>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button asChild className="bg-green-600 hover:bg-green-700">
+          <Button asChild className="bg-black/90 hover:bg-black/85">
             <BetterLink href="/profile/orders">{view}</BetterLink>
           </Button>
           <Button asChild variant="outline">

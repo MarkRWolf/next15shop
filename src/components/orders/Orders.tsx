@@ -41,7 +41,7 @@ function Orders({ orders, ordersText }: OrdersProps) {
                   <div className="flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center mb-4">
                     <div>
                       <p className="text-sm text-gray-600 mb-1 font-bold">{number}</p>
-                      <p className=" text-sm text-green-600 break-all">{order.orderNumber}</p>
+                      <p className=" text-sm  break-all">{order.orderNumber}</p>
                     </div>
                     <div className="sm:text-right">
                       <p className="text-sm text-gray-600 mb-1">{date}</p>
@@ -55,7 +55,7 @@ function Orders({ orders, ordersText }: OrdersProps) {
                     <div className="flex items-center">
                       <span className="tex-tsm mr-2">Status:</span>
                       <span
-                        className={`px-3 py-1 rounded-full text-sm ${order.status === "paid" ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"}`}
+                        className={`px-4 py-1.5 rounded-full text-sm ${order.status === "paid" ? "bg-black/90 text-white/95" : "bg-gray-100 text-gray-800"}`}
                       >
                         {order.status}
                       </span>

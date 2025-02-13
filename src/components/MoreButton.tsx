@@ -28,7 +28,7 @@ const MoreButton = ({
     <button
       onMouseOver={() => router.prefetch(url)}
       onClick={() => router.push(url)}
-      className={`w-max mx-auto px-12 py-4 bg-black rounded-md text-gray-200`}
+      className={`w-max mx-auto px-12 py-4 bg-black/90 hover:bg-black/85 rounded-md text-gray-200`}
     >
       {text}
     </button>

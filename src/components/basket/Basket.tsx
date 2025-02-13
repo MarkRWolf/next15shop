@@ -124,7 +124,7 @@ const Basket = ({ basketText, ordersText, products }: BasketProps) => {
                       className="w-24 flex justify-between select-none"
                     >
                       <span
-                        className="grow text-white text-xl border border-stone-950/80 bg-stone-950/80 flex justify-center items-center"
+                        className="grow text-white text-xl border border-stone-950/80 bg-black/90 hover:bg-black/85 flex justify-center items-center"
                         onClick={() => removeItem(item.product._id, item.size)}
                       >
                         -
@@ -141,7 +141,7 @@ const Basket = ({ basketText, ordersText, products }: BasketProps) => {
                         </span>
                       </span>
                       <span
-                        className="grow text-white text-xl border border-stone-950/80 bg-stone-950/80 flex justify-center items-center"
+                        className="grow text-white text-xl border border-stone-950/80 bg-black/90 hover:bg-black/85 flex justify-center items-center"
                         onClick={() => addItem(item.product, item.size)}
                       >
                         +
@@ -171,13 +171,13 @@ const Basket = ({ basketText, ordersText, products }: BasketProps) => {
             <button
               onClick={handleCheckout}
               disabled={isLoading}
-              className="mt-4 w-full bg-green-700 text-white px-4 py-2 rounded hover:bg-green-800 disabled:bg-gray-400"
+              className="mt-4 w-full bg-black/90 hover:bg-black/85 text-white px-4 py-2 rounded disabled:bg-gray-400"
             >
               {isLoading ? "Processing..." : checkout}
             </button>
           ) : (
             <SignInButton mode="modal">
-              <button className="mt-4 w-full bg-green-700 text-white px-4 py-2 rounded hover:bg-green-800">
+              <button className="mt-4 w-full bg-black/90 hover:bg-black/85 text-white px-4 py-2 rounded">
                 {signin}
               </button>
             </SignInButton>
