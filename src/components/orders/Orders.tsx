@@ -50,7 +50,6 @@ function Orders({ orders, ordersText }: OrdersProps) {
                       </p>
                     </div>
                   </div>
-
                   <div className="flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center">
                     <div className="flex items-center">
                       <span className="tex-tsm mr-2">Status:</span>
