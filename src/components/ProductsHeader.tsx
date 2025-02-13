@@ -25,7 +25,7 @@ const ProductsHeader = ({ productsText, category }: ProductsHeaderProps) => {
 
   return (
     <div className={`w-full relative`}>
-      <NextImage src="/texture.jpg" alt="bg-texture" fill={true} objectFit="cover" />
+      <NextImage src="/texture.jpg" alt="bg-texture" fill={true} className="cover" />
       <span className="relative z-1 py-16 flex flex-col gap-4 bg-stone-200/85">
         <h1 className="font-main text-3xl md:text-4xl text-center">{title}</h1>
         <p className={`font-main text-center lg:w-[60%] w-[85%] sm:text-base text-sm mx-auto`}>

@@ -13,13 +13,14 @@ interface ProductsViewProps {
   range?: number;
 }
 
-const ProductsView = async ({ category, range = 4 }: ProductsViewProps) => {
+const ProductsView = async ({ category, range = 8 }: ProductsViewProps) => {
   const [products, categories, productText, categoryTexts] = await Promise.all([
     category ? getProductsByCategory(category, range) : getProductsInRange(range),
     getAllCategories(),
     getLocalizedTexts("product"),
     getLocalizedTexts("categorySelector"),
   ]);
+
   return (
     <div className="flex flex-col gap-8 mt-6">
       <ProductsHeader productsText={productText} category={category} />
@@ -27,7 +28,7 @@ const ProductsView = async ({ category, range = 4 }: ProductsViewProps) => {
         <CategorySelector categories={categories} categoryTexts={categoryTexts} />
         <ProductMsg productText={productText} />
         <ProductGrid products={products} />
-        <MoreButton category={category} range={range} />
+        <MoreButton category={category} productText={productText} range={range} />
       </div>
     </div>
   );
