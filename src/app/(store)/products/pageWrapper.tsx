@@ -9,7 +9,7 @@ const PageWrapper = () => {
 
   return (
     <>
-      <ProductsView products={products} categories={categories} />
+      <ProductsView />
     </>
   );
 };

@@ -13,7 +13,7 @@ export default async function Home() {
       <SalesSlider />
 
       <div className="">
-        <ProductsView products={products} categories={categories} />
+        <ProductsView />
       </div>
     </div>
   );
