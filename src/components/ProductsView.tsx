@@ -1,22 +1,25 @@
 import { getLocalizedTexts } from "@/sanity/lib/lang/getLocalizedTexts";
-import { Category, Product } from "../../sanity.types";
 import CategorySelector from "./CategorySelector";
 import ProductGrid from "./ProductGrid";
 import ProductMsg from "./ProductMsg";
 import ProductsHeader from "./ProductsHeader";
+import { getProductsInRange } from "@/sanity/lib/products/getProductsInRange";
+import { getAllCategories } from "@/sanity/lib/products/getAllCategories";
+import { getProductsByCategory } from "@/sanity/lib/products/getProductsByCategory";
+import MoreButton from "./MoreButton";
 
 interface ProductsViewProps {
-  products: Product[];
-  categories: Category[];
   category?: string;
+  range?: number;
 }
 
-const ProductsView = async ({ products, categories, category }: ProductsViewProps) => {
-  const [productText, categoryTexts] = await Promise.all([
+const ProductsView = async ({ category, range = 4 }: ProductsViewProps) => {
+  const [products, categories, productText, categoryTexts] = await Promise.all([
+    category ? getProductsByCategory(category, range) : getProductsInRange(range),
+    getAllCategories(),
     getLocalizedTexts("product"),
     getLocalizedTexts("categorySelector"),
   ]);
-
   return (
     <div className="flex flex-col gap-8 mt-6">
       <ProductsHeader productsText={productText} category={category} />
@@ -24,6 +27,7 @@ const ProductsView = async ({ products, categories, category }: ProductsViewProp
         <CategorySelector categories={categories} categoryTexts={categoryTexts} />
         <ProductMsg productText={productText} />
         <ProductGrid products={products} />
+        <MoreButton category={category} range={range} />
       </div>
     </div>
   );

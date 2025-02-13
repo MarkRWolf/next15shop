@@ -1,17 +1,13 @@
-export const dynamic = "force-dynamic";
-
-import { Product } from "../../../../sanity.types";
-import { getAllCategories } from "@/sanity/lib/products/getAllCategories";
-import { getAllProducts } from "@/sanity/lib/products/getAllProducts";
 import ProductsView from "@/components/ProductsView";
 
-const ProductPage = async () => {
-  const categories = await getAllCategories();
-  const products: Product[] = await getAllProducts();
+export const dynamic = "force-dynamic";
 
+const ProductPage = async ({ searchParams }: { searchParams: Promise<{ range?: string }> }) => {
+  const { range } = await searchParams;
+  const rangeInt = parseInt(range || "4", 10);
   return (
     <div className="">
-      <ProductsView products={products} categories={categories} />
+      <ProductsView range={rangeInt} />
     </div>
   );
 };
