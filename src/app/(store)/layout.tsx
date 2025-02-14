@@ -12,6 +12,7 @@ import Breadcrumb from "@/components/Breadcrumb";
 import MainHeader from "@/components/MainHeader";
 import PageTransition from "./pageTransition";
 import { Suspense } from "react";
+import { getProductsCount } from "@/sanity/lib/products/getProductsCount";
 
 export const metadata: Metadata = {
   title: "Shop",
@@ -33,9 +34,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <main className="min-h-screen font-main flex flex-col justify-between relative pt-14 bg-stone-400/20">
               <MainHeader />
               <Breadcrumb />
-              <div className="flex-grow">
-                <Suspense fallback={null}>{children}</Suspense>
-              </div>
+              <div className="flex-grow">{children}</div>
               <Footer />
             </main>
           </PageTransition>

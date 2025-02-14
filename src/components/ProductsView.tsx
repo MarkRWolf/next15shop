@@ -7,6 +7,8 @@ import { getProductsInRange } from "@/sanity/lib/products/getProductsInRange";
 import { getAllCategories } from "@/sanity/lib/products/getAllCategories";
 import { getProductsByCategory } from "@/sanity/lib/products/getProductsByCategory";
 import MoreButton from "./MoreButton";
+import { getProductsCount } from "@/sanity/lib/products/getProductsCount";
+import { getProductsByCategoryCount } from "@/sanity/lib/products/getProductsByCategoryCount";
 
 interface ProductsViewProps {
   category?: string;
@@ -14,10 +16,11 @@ interface ProductsViewProps {
 }
 
 const ProductsView = async ({ category, range = 8 }: ProductsViewProps) => {
-  const [products, categories, productText, categoryTexts] = await Promise.all([
+  const [products, productsCount, productText, categories, categoryTexts] = await Promise.all([
     category ? getProductsByCategory(category, range) : getProductsInRange(range),
-    getAllCategories(),
+    category ? getProductsByCategoryCount(category) : getProductsCount(),
     getLocalizedTexts("product"),
+    getAllCategories(),
     getLocalizedTexts("categorySelector"),
   ]);
 
@@ -28,7 +31,12 @@ const ProductsView = async ({ category, range = 8 }: ProductsViewProps) => {
         <CategorySelector categories={categories} categoryTexts={categoryTexts} />
         <ProductMsg productText={productText} />
         <ProductGrid products={products} />
-        <MoreButton category={category} productText={productText} range={range} />
+        <MoreButton
+          category={category}
+          productsCount={productsCount}
+          productText={productText}
+          range={range}
+        />
       </div>
     </div>
   );

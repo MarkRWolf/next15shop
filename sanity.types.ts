@@ -791,7 +791,7 @@ export type PRODUCT_BY_SLUG_QUERYResult = {
 
 // Source: ./src/sanity/lib/products/getProductsByCategory.ts
 // Variable: PRODUCTS_BY_CATEGORY_QUERY
-// Query: *[_type == "product" && references(*[_type == "category" && slug.current == $category]._id) && !(_id in path("drafts.*"))] | order(name asc) [0...$range] {    ...,    "category": coalesce(categories[0]->title, ""),  }
+// Query: *[_type == "product" && references(*[_type == "category" && slug.current == $cat]._id) && !(_id in path("drafts.*"))] | order(name asc) [0...$range] {    ...,    "category": coalesce(categories[0]->title, ""),  }
 export type PRODUCTS_BY_CATEGORY_QUERYResult = Array<{
   _id: string;
   _type: "product";
@@ -888,6 +888,16 @@ export type PRODUCTS_BY_CATEGORY_QUERYResult = Array<{
   stockL: number;
   stockXL: number;
 }>;
+
+// Source: ./src/sanity/lib/products/getProductsByCategoryCount.ts
+// Variable: PRODUCTS_BY_CATEGORY_COUNT_QUERY
+// Query: count(*[_type == "product" && references(*[_type == "category" && slug.current == $cat]._id) && !(_id in path("drafts.*"))])
+export type PRODUCTS_BY_CATEGORY_COUNT_QUERYResult = number;
+
+// Source: ./src/sanity/lib/products/getProductsCount.ts
+// Variable: PRODUCTS_COUNT_QUERY
+// Query: count(*[_type == "product" && !(_id in path("drafts.*"))])
+export type PRODUCTS_COUNT_QUERYResult = number;
 
 // Source: ./src/sanity/lib/products/getProductsInRange.ts
 // Variable: PRODUCTS_IN_RANGE_QUERY
@@ -1297,7 +1307,9 @@ declare module "@sanity/client" {
     "*[_type == \"product\" && !(_id in path(\"drafts.*\"))] | order(lower(name_daDK) asc) {\n    ...,\n  \"category\": coalesce(categories[0]->title, \"\"),\n  }": ALL_PRODUCTS_QUERYResult;
     "*[\n        _type == \"product\" &&\n        !(_id in path(\"drafts.*\"))\n    ] | order(lower(names[0].value) asc) {\n        \"slug\": slug.current\n    }": ALL_SLUGS_QUERYResult;
     "\n  *[_type == \"product\" && slug.current == $slug && !(_id in path(\"drafts.**\"))][0] {\n    ...,\n    \"category\": coalesce(categories[0]->title, \"\")\n  }\n": PRODUCT_BY_SLUG_QUERYResult;
-    "\n        *[_type == \"product\" && references(*[_type == \"category\" && slug.current == $category]._id) && !(_id in path(\"drafts.*\"))] | order(name asc) [0...$range] {\n    ...,\n    \"category\": coalesce(categories[0]->title, \"\"),\n  }": PRODUCTS_BY_CATEGORY_QUERYResult;
+    "\n        *[_type == \"product\" && references(*[_type == \"category\" && slug.current == $cat]._id) && !(_id in path(\"drafts.*\"))] | order(name asc) [0...$range] {\n    ...,\n    \"category\": coalesce(categories[0]->title, \"\"),\n  }": PRODUCTS_BY_CATEGORY_QUERYResult;
+    "count(*[_type == \"product\" && references(*[_type == \"category\" && slug.current == $cat]._id) && !(_id in path(\"drafts.*\"))])": PRODUCTS_BY_CATEGORY_COUNT_QUERYResult;
+    "count(*[_type == \"product\" && !(_id in path(\"drafts.*\"))])": PRODUCTS_COUNT_QUERYResult;
     "*[_type == \"product\" && !(_id in path(\"drafts.*\"))] | order(lower(name_daDK) asc) [0...$range] {\n    ...,\n    \"category\": coalesce(categories[0]->title, \"\"),\n  }": PRODUCTS_IN_RANGE_QUERYResult;
     "\n        *[_type == \"product\" && references(*[_type == \"category\" && slug.current == $category]._id) && !(_id in path(\"drafts.*\"))] | order(name asc) {\n  ...,\n  \"names\": names[] { ..., \"language\": lang->name },\n  \"descriptions\": descriptions[] { ..., \"language\": lang->name },\n\"category\": coalesce(categories[0]->title, \"\"),\n}": PRODUCTS_BY_CATEGORY_QUERY_OLDResult;
     "\n    *[_type == \"product\" && name_daDK match $searchParam] | order(name asc)": PRODUCT_SEARCH_QUERYResult;

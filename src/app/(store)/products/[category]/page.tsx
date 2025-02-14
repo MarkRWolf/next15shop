@@ -1,7 +1,5 @@
 export const dynamic = "force-dynamic";
 
-import { Category, Product } from "../../../../../sanity.types";
-import { getProductsByCategory } from "@/sanity/lib/products/getProductsByCategory";
 import ProductsView from "@/components/ProductsView";
 import { getAllCategories } from "@/sanity/lib/products/getAllCategories";
 
@@ -12,9 +10,9 @@ const ProductPage = async ({
   params: Promise<{ category: string }>;
   searchParams: Promise<{ range: string }>;
 }) => {
+  const { category } = await params;
   const { range } = await searchParams;
   const rangeInt = parseInt(range || "4", 10);
-  const { category } = await params;
 
   const categories = await getAllCategories();
   const dbCategory = categories?.find((c) => c.title?.toLowerCase() === category.toLowerCase());
