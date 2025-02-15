@@ -23,7 +23,7 @@ interface HeaderMobileProps {
 function HeaderMobile({ globals, navTexts }: HeaderMobileProps) {
   const pathname = usePathname();
   const { lang, setLang } = useLangStore();
-  const { items, shaking } = useBasketStore();
+  const { items, shaking, basketOpen, setBasketOpen } = useBasketStore();
   const { user } = useUser();
   const [langOpen, setLangOpen] = useState(false);
   const [burgerOpen, setBurgerOpen] = useState(false);
@@ -138,20 +138,20 @@ function HeaderMobile({ globals, navTexts }: HeaderMobileProps) {
         </ClerkLoaded>
 
         {/* Basket */}
-        <BetterLink href={"/basket"} className="relative">
-          {/* Number if items in cart */}
-          {uniqueItems > 0 && (
-            <div className="absolute top-full left-0 w-full flex items-center pt-[1px] justify-center leading-none text-xs">
-              {uniqueItems}
-            </div>
-          )}
+        <span onClick={() => setBasketOpen(!basketOpen)} className="relative">
           <HiOutlineShoppingBag
             className="w-6 h-6 transition-all duration-150"
             style={{
               transform: shaking ? "rotate(10deg)" : "rotate(0deg)",
             }}
           />
-        </BetterLink>
+          {/* Number if items in cart */}
+          {uniqueItems > 0 && (
+            <div className="absolute top-full left-0 w-full flex items-center pt-[1px] justify-center leading-none text-xs">
+              {uniqueItems}
+            </div>
+          )}
+        </span>
 
         {/* pfp clerk modal || sign in */}
         <ClerkLoaded>
