@@ -73,7 +73,14 @@ const Basket = ({ basketText, ordersText, products }: BasketProps) => {
       onDragEnd={(e, info) => info.offset.x > 100 && setBasketOpen(false)}
       animate={{ x: basketOpen ? -350 : 0 }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      className="fixed top-0 pt-14 left-full h-[100dvh] w-[350px]"
+      style={{
+        position: "fixed",
+        top: "0",
+        left: "100%",
+        paddingTop: "3.5rem",
+        height: "100dvh",
+        width: "350px",
+      }}
     >
       <div className="w-full h-full px-4 flex flex-col gap-6 bg-gradient-to-bl from-white/95 to-white/90 shadow-[inset_0_3px_0_rgba(128,128,128,0.4)]">
         <h2 className="text-3xl text-center py-6 mb-6 border-b border-black/80">{basket}</h2>
