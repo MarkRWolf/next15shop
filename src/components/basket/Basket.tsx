@@ -11,21 +11,23 @@ import useBasketStore from "@/store/basketStore";
 import useLangStore from "@/store/langStore";
 import useText from "@/hooks/useText";
 import QuantityControls from "./QuantityControls";
+import { motion } from "framer-motion";
 
 interface BasketProps {
   basketText: Language[];
   ordersText: Language[];
   products: Product[];
 }
+
 const Basket = ({ basketText, ordersText, products }: BasketProps) => {
   const router = useTransitionRouter();
   const basketItems = useBasketStore((state) => state.getGroupedItems());
-  const { basketOpen, getTotalPrice } = useBasketStore();
+  const { basketOpen, setBasketOpen, getTotalPrice } = useBasketStore();
   const { isSignedIn } = useAuth();
   const { lang } = useLangStore();
   const { user } = useUser();
-  const [isLoading, setIsLoading] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const basket = useText(basketText, "basket", "single");
   const summary = useText(basketText, "summary", "single");
@@ -41,10 +43,11 @@ const Basket = ({ basketText, ordersText, products }: BasketProps) => {
     useBasketStore.getState().validateBasket(products);
   }, [products, lang]);
 
+  useEffect(() => {});
+
   const handleCheckout = async () => {
     if (!isSignedIn) return;
     setIsLoading(true);
-
     try {
       const metadata: Metadata = {
         orderNumber: crypto.randomUUID(),
@@ -52,9 +55,7 @@ const Basket = ({ basketText, ordersText, products }: BasketProps) => {
         customerEmail: user?.emailAddresses[0].emailAddress ?? "Unknown",
         clerkUserId: user!.id,
       };
-
       const checkoutUrl = await createCheckoutSession(basketItems, lang, metadata);
-
       if (checkoutUrl) {
         window.location.href = checkoutUrl;
       }
@@ -66,17 +67,22 @@ const Basket = ({ basketText, ordersText, products }: BasketProps) => {
   };
 
   return (
-    <div
-      className={`fixed top-0 h-screen pt-14 left-full w-[350px] ${basketOpen ? "-translate-x-full" : "translate-x-0"} transition-translate duration-300 ease-out`}
+    <motion.div
+      drag="x"
+      dragConstraints={{ left: -350, right: 0 }}
+      onDragEnd={(e, info) => info.offset.x > 100 && setBasketOpen(false)}
+      animate={{ x: basketOpen ? -350 : 0 }}
+      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      className="fixed top-0 pt-14 left-full h-[100dvh] w-[350px]"
     >
-      <div className="w-full h-full px-4 flex flex-col gap-6 shadow-[inset_0_3px_0_rgba(128,128,128,0.4)] bg-gradient-to-bl from-white/95 to-white/90">
+      <div className="w-full h-full px-4 flex flex-col gap-6 bg-gradient-to-bl from-white/95 to-white/90 shadow-[inset_0_3px_0_rgba(128,128,128,0.4)]">
         <h2 className="text-3xl text-center py-6 mb-6 border-b border-black/80">{basket}</h2>
         <div
           className="flex flex-col gap-8 overflow-scroll no-scrollbar"
-          style={{ paddingBottom: `${bottomRef.current?.offsetHeight}px`, marginBottom: "16px" }}
+          style={{ paddingBottom: bottomRef.current?.offsetHeight ?? 0, marginBottom: "16px" }}
         >
           {basketItems.length ? (
-            basketItems?.map((item) => {
+            basketItems.map((item) => {
               const dbProduct = products.find((product) => product._id === item.product._id)!;
               return (
                 <div
@@ -99,7 +105,7 @@ const Basket = ({ basketText, ordersText, products }: BasketProps) => {
                       )
                     }
                   />
-                  <div className="flex flex-col items-end  justify-between">
+                  <div className="flex flex-col items-end justify-between">
                     <h3 className="text-lg sm:text-xl font-semibold truncate">
                       {item.size}{" "}
                       {item.product[`name_${lang}`] || item.product[`name_${DEFAULT_LANGUAGE}`]}
@@ -117,8 +123,6 @@ const Basket = ({ basketText, ordersText, products }: BasketProps) => {
           )}
         </div>
       </div>
-
-      {/* Bottom */}
       <div
         ref={bottomRef}
         className="absolute bottom-0 left-0 w-full px-4 py-6 shadow-[inset_0_4px_0_rgba(128,128,128,0.2)] bg-white flex flex-col gap-4"
@@ -128,7 +132,7 @@ const Basket = ({ basketText, ordersText, products }: BasketProps) => {
           {items} {basketItems.reduce((acc, item) => acc + item.quantity, 0)}
         </p>
         <p>
-          {total}: {getTotalPrice().toFixed(2)},-
+          {total} {getTotalPrice().toFixed(2)},-
         </p>
         {isSignedIn ? (
           <button
@@ -146,7 +150,7 @@ const Basket = ({ basketText, ordersText, products }: BasketProps) => {
           </SignInButton>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

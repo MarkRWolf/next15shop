@@ -22,14 +22,17 @@ interface HeaderMobileProps {
 
 function HeaderMobile({ globals, navTexts }: HeaderMobileProps) {
   const pathname = usePathname();
+  const activePath = pathname.split("/")[1] || "home";
   const { lang, setLang } = useLangStore();
   const { items, shaking, basketOpen, setBasketOpen } = useBasketStore();
   const { user } = useUser();
+
   const [langOpen, setLangOpen] = useState(false);
   const [burgerOpen, setBurgerOpen] = useState(false);
-  const signIn = useText(globals, "signIn", "single");
-  const activePath = pathname.split("/")[1] || "home";
   const burgerRef = useRef<HTMLInputElement>(null);
+
+  const signIn = useText(globals, "signIn", "single");
+
   const uniqueItems = items.length;
 
   useEffect(() => {
@@ -138,7 +141,7 @@ function HeaderMobile({ globals, navTexts }: HeaderMobileProps) {
         </ClerkLoaded>
 
         {/* Basket */}
-        <span onClick={() => setBasketOpen(!basketOpen)} className="relative">
+        <span onClick={() => setBasketOpen(!basketOpen)} className="relative cursor-pointer">
           <HiOutlineShoppingBag
             className="w-6 h-6 transition-all duration-150"
             style={{
@@ -163,5 +166,3 @@ function HeaderMobile({ globals, navTexts }: HeaderMobileProps) {
 }
 
 export default HeaderMobile;
-/*
- */
