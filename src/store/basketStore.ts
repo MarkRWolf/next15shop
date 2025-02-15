@@ -11,8 +11,10 @@ export interface BasketItem {
 
 interface BasketState {
   items: BasketItem[];
+  basketOpen: boolean;
   basketReduced: boolean;
   shaking: boolean;
+  setBasketOpen: (value: boolean) => void;
   shake: () => void;
   setBasketReduced: (value: boolean) => void;
   addItem: (product: Product, size: ProductSize) => void;
@@ -28,6 +30,8 @@ const useBasketStore = create<BasketState>()(
   persist(
     (set, get) => ({
       items: [],
+      basketOpen: false,
+      setBasketOpen: (value: boolean) => set({ basketOpen: value }),
       basketReduced: false,
       setBasketReduced: (value: boolean) => set({ basketReduced: value }),
       shaking: false,

@@ -2,7 +2,7 @@
 
 import useBasketStore from "@/store/basketStore";
 import { useEffect, useState } from "react";
-import { Language } from "../../../sanity.types";
+import { Language } from "../../../../sanity.types";
 import useText from "@/hooks/useText";
 
 const BasketMessage = ({ globals }: { globals: Language[] }) => {

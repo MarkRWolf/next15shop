@@ -80,7 +80,7 @@ export const productType = defineType({
           },
         },
       ],
-      validation: (Rule) => Rule.min(1).error("At least one image is required."),
+      validation: (Rule) => Rule.required().min(1).error("At least one image is required."),
     }),
     defineField({
       name: "price",

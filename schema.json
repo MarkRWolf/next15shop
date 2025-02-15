@@ -1778,7 +1778,7 @@
             }
           }
         },
-        "optional": true
+        "optional": false
       },
       "price": {
         "type": "objectAttribute",

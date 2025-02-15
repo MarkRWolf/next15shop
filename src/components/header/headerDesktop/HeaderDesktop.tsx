@@ -20,7 +20,7 @@ interface HeaderDesktopProps {
 
 function HeaderDesktop({ globals, navTexts }: HeaderDesktopProps) {
   const { lang, setLang } = useLangStore();
-  const { items, shaking } = useBasketStore();
+  const { items, shaking, basketOpen, setBasketOpen } = useBasketStore();
   const { user } = useUser();
   const [langOpen, setLangOpen] = useState(false);
   const signIn = useText(globals, "signIn", "single");
@@ -81,21 +81,20 @@ function HeaderDesktop({ globals, navTexts }: HeaderDesktopProps) {
         </ClerkLoaded>
 
         {/* Basket */}
-        <BetterLink href={"/basket"} className="relative">
+        <span className="relative" onClick={() => setBasketOpen(!basketOpen)}>
+          <HiOutlineShoppingBag
+            className="w-6 h-6 transition-all duration-150 cursor-pointer"
+            style={{
+              transform: shaking ? "rotate(10deg)" : "rotate(0deg)",
+            }}
+          />
           {/* Number if items in cart */}
           {uniqueItems > 0 && (
             <div className="absolute top-full left-0 w-full flex items-center pt-[1px] justify-center leading-none text-xs">
               {uniqueItems}
             </div>
           )}
-          <HiOutlineShoppingBag
-            className="w-6 h-6 transition-all duration-150"
-            style={{
-              transform: shaking ? "rotate(10deg)" : "rotate(0deg)",
-            }}
-          />
-        </BetterLink>
-
+        </span>
         {/* Sign in or user button */}
         <ClerkLoaded>
           {user ? <UserButton /> : <SignInButton mode="modal">{signIn}</SignInButton>}

@@ -3,7 +3,7 @@ import useBasketStore from "@/store/basketStore";
 import { PRODUCT_SIZES, ProductSize } from "@/types/productSizes";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { Product } from "../../sanity.types";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { FaX } from "react-icons/fa6";
 
 interface AddToBasketProps {
@@ -11,7 +11,8 @@ interface AddToBasketProps {
 }
 
 const AddToBasket = ({ product }: AddToBasketProps) => {
-  const { items, addItem, removeItem, getItemCount, shaking, shake } = useBasketStore();
+  const { items, basketOpen, setBasketOpen, addItem, removeItem, getItemCount, shaking, shake } =
+    useBasketStore();
   const [sizeHovered, setSizeHovered] = useState<ProductSize | null>(null);
   const [isMobile, setIsMobile] = useState(() => window.innerWidth < 1024);
 
@@ -22,15 +23,9 @@ const AddToBasket = ({ product }: AddToBasketProps) => {
   }, []);
 
   return (
-    <div
-      onClick={(e) => {
-        e.stopPropagation();
-        e.preventDefault();
-      }}
-      className="grow max-w-[360px] h-[41px] max-h-[41px] border-b border-stone-400 flex items-stretch"
-    >
+    <div className="grow max-w-[360px] h-[41px] max-h-[41px] border-b border-stone-400 flex items-stretch">
       {/* Left Icon */}
-      <div className="relative basis-1/6 p-1 flex justify-center items-center bg-stone-800 text-white cursor-default">
+      <div className="relative basis-1/6 p-1 flex justify-center items-center bg-stone-800 text-white cursor-pointer">
         {/* X Overlay on mobile when size active */}
         <div
           className="absolute inset-0 w-full h-full flex justify-center items-center bg-stone-800"
@@ -41,7 +36,7 @@ const AddToBasket = ({ product }: AddToBasketProps) => {
           <FaX className="w-5 h-4" />
         </div>
         {/* Shopping Bag Icon */}
-        <span className="w-6 h-6">
+        <span className="w-6 h-6" onClick={() => setBasketOpen(!basketOpen)}>
           <HiOutlineShoppingBag
             className="w-full h-full transition-all duration-150"
             style={{

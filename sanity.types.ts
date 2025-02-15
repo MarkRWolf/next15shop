@@ -270,7 +270,7 @@ export type Product = {
     _key: string;
   }>;
   slug: Slug;
-  images?: Array<{
+  images: Array<{
     asset?: {
       _ref: string;
       _type: "reference";
@@ -531,7 +531,7 @@ export type MY_ORDERS_QUERYResult = Array<{
         _key: string;
       }>;
       slug: Slug;
-      images?: Array<{
+      images: Array<{
         asset?: {
           _ref: string;
           _type: "reference";
@@ -655,7 +655,7 @@ export type ALL_PRODUCTS_QUERYResult = Array<{
     _key: string;
   }>;
   slug: Slug;
-  images?: Array<{
+  images: Array<{
     asset?: {
       _ref: string;
       _type: "reference";
@@ -762,7 +762,7 @@ export type PRODUCT_BY_SLUG_QUERYResult = {
     _key: string;
   }>;
   slug: Slug;
-  images?: Array<{
+  images: Array<{
     asset?: {
       _ref: string;
       _type: "reference";
@@ -862,7 +862,7 @@ export type PRODUCTS_BY_CATEGORY_QUERYResult = Array<{
     _key: string;
   }>;
   slug: Slug;
-  images?: Array<{
+  images: Array<{
     asset?: {
       _ref: string;
       _type: "reference";
@@ -972,7 +972,7 @@ export type PRODUCTS_IN_RANGE_QUERYResult = Array<{
     _key: string;
   }>;
   slug: Slug;
-  images?: Array<{
+  images: Array<{
     asset?: {
       _ref: string;
       _type: "reference";
@@ -1072,7 +1072,7 @@ export type PRODUCTS_BY_CATEGORY_QUERY_OLDResult = Array<{
     _key: string;
   }>;
   slug: Slug;
-  images?: Array<{
+  images: Array<{
     asset?: {
       _ref: string;
       _type: "reference";
@@ -1174,7 +1174,7 @@ export type PRODUCT_SEARCH_QUERYResult = Array<{
     _key: string;
   }>;
   slug: Slug;
-  images?: Array<{
+  images: Array<{
     asset?: {
       _ref: string;
       _type: "reference";
