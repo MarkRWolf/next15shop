@@ -22,14 +22,17 @@ interface HeaderMobileProps {
 
 function HeaderMobile({ globals, navTexts }: HeaderMobileProps) {
   const pathname = usePathname();
+  const activePath = pathname.split("/")[1] || "home";
   const { lang, setLang } = useLangStore();
-  const { items, shaking } = useBasketStore();
+  const { items, shaking, basketOpen, setBasketOpen } = useBasketStore();
   const { user } = useUser();
+
   const [langOpen, setLangOpen] = useState(false);
   const [burgerOpen, setBurgerOpen] = useState(false);
-  const signIn = useText(globals, "signIn", "single");
-  const activePath = pathname.split("/")[1] || "home";
   const burgerRef = useRef<HTMLInputElement>(null);
+
+  const signIn = useText(globals, "signIn", "single");
+
   const uniqueItems = items.length;
 
   useEffect(() => {
@@ -138,7 +141,7 @@ function HeaderMobile({ globals, navTexts }: HeaderMobileProps) {
         </ClerkLoaded>
 
         {/* Basket */}
-        <BetterLink href={"/basket"} className="relative">
+        <span onClick={() => setBasketOpen(!basketOpen)} className="relative cursor-pointer">
           {/* Number if items in cart */}
           {uniqueItems > 0 && (
             <div className="absolute top-full left-0 w-full flex items-center pt-[1px] justify-center leading-none text-xs">
@@ -151,7 +154,7 @@ function HeaderMobile({ globals, navTexts }: HeaderMobileProps) {
               transform: shaking ? "rotate(10deg)" : "rotate(0deg)",
             }}
           />
-        </BetterLink>
+        </span>
 
         {/* pfp clerk modal || sign in */}
         <ClerkLoaded>
@@ -163,5 +166,3 @@ function HeaderMobile({ globals, navTexts }: HeaderMobileProps) {
 }
 
 export default HeaderMobile;
-/*
- */
