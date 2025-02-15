@@ -12,6 +12,7 @@ import useLangStore from "@/store/langStore";
 import useText from "@/hooks/useText";
 import QuantityControls from "./QuantityControls";
 import { motion } from "framer-motion";
+import { usePathname } from "next/navigation";
 
 interface BasketProps {
   basketText: Language[];
@@ -20,6 +21,7 @@ interface BasketProps {
 }
 
 const Basket = ({ basketText, ordersText, products }: BasketProps) => {
+  const pathname = usePathname();
   const router = useTransitionRouter();
   const basketItems = useBasketStore((state) => state.getGroupedItems());
   const { basketOpen, setBasketOpen, getTotalPrice } = useBasketStore();
@@ -33,6 +35,7 @@ const Basket = ({ basketText, ordersText, products }: BasketProps) => {
   const summary = useText(basketText, "summary", "single");
   const items = useText(basketText, "items", "single");
   const total = useText(basketText, "total", "single");
+  const processing = useText(basketText, "processing", "single");
   const checkout = useText(basketText, "checkout", "single");
   const empty = useText(basketText, "empty", "single");
   const signin = useText(basketText, "signin", "single");
@@ -43,7 +46,9 @@ const Basket = ({ basketText, ordersText, products }: BasketProps) => {
     useBasketStore.getState().validateBasket(products);
   }, [products, lang]);
 
-  useEffect(() => {});
+  useEffect(() => {
+    setBasketOpen(false);
+  }, [pathname]);
 
   const handleCheckout = async () => {
     if (!isSignedIn) return;
@@ -143,11 +148,11 @@ const Basket = ({ basketText, ordersText, products }: BasketProps) => {
         </p>
         {isSignedIn ? (
           <button
-            onClick={handleCheckout}
+            onClick={() => basketItems.length && handleCheckout()}
             disabled={isLoading}
             className="mt-4 w-full bg-black/90 hover:bg-black/85 text-white px-4 py-2 rounded disabled:bg-gray-400"
           >
-            {isLoading ? "Processing..." : checkout}
+            {isLoading ? processing : checkout}
           </button>
         ) : (
           <SignInButton mode="modal">

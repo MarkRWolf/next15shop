@@ -21,6 +21,9 @@ function Orders({ orders, ordersText }: OrdersProps) {
   const items = useText(ordersText, "items", "single");
   const quantity = useText(ordersText, "quantity", "single");
   const none = useText(ordersText, "none", "single");
+  const discount = useText(ordersText, "discount", "single");
+  const original = useText(ordersText, "original", "single");
+  const status = useText(ordersText, "status", "single");
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 p-4">
@@ -52,7 +55,7 @@ function Orders({ orders, ordersText }: OrdersProps) {
                   </div>
                   <div className="flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center">
                     <div className="flex items-center">
-                      <span className="tex-tsm mr-2">Status:</span>
+                      <span className="tex-tsm mr-2">{status}</span>
                       <span
                         className={`px-4 py-1.5 rounded-full text-sm ${order.status === "paid" ? "bg-black/90 text-white/95" : "bg-gray-100 text-gray-800"}`}
                       >
@@ -69,11 +72,10 @@ function Orders({ orders, ordersText }: OrdersProps) {
                   {order.discountAmount ? (
                     <div className="mt-4 p-3 sm:p-4 bg-red-50 rounded-lg">
                       <p className="text-red-600 font-medium mb-1 text-sm sm:text-base">
-                        Discount Applied:
-                        {formatCurrency(order.discountAmount, order.currency)}
+                        {discount} {formatCurrency(order.discountAmount, order.currency)}
                       </p>
                       <p className="text-sm text-gray-600">
-                        Original Subtotal:
+                        {original}{" "}
                         {formatCurrency(
                           (order.totalPrice ?? 0) + order.discountAmount,
                           order.currency

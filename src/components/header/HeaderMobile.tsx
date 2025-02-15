@@ -72,7 +72,10 @@ function HeaderMobile({ globals, navTexts }: HeaderMobileProps) {
               ref={burgerRef}
               className="hidden peer"
               type="checkbox"
-              onClick={() => setBurgerOpen((prev) => !prev)}
+              onClick={() => {
+                setBurgerOpen((prev) => !prev);
+                setBasketOpen(false);
+              }}
             />
             <div className="w-[50%] h-[2px] bg-black rounded-sm transition-all duration-300 origin-left translate-y-[0.45rem] peer-checked:rotate-[-45deg]"></div>
             <div className="w-[50%] h-[2px] bg-black rounded-md transition-all duration-300 origin-center peer-checked:hidden"></div>
