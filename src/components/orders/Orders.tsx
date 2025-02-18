@@ -26,25 +26,25 @@ function Orders({ orders, ordersText }: OrdersProps) {
   const status = useText(ordersText, "status", "single");
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 p-4">
-      <div className="bg-white p-4 sm:p-8 rounded-xl shadow-lg w-full max-w-4xl">
+    <div className="container-main px-2 sm:px-0">
+      <div className="bg-stone-100 p-4 sm:p-8 rounded-xl">
         <h1 className="text-4xl font-bold text-gray-900 tracking-tight mb-8">{ordersHeader}</h1>
         {orders.length === 0 ? (
           <div className="text-center text-gray-600">
             <p>{none}</p>
           </div>
         ) : (
-          <div className="space-y-6 sm:space-y-8">
+          <div className="flex flex-col gap-6">
             {orders.map((order) => (
               <div
                 key={order.orderNumber}
-                className="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden"
+                className="bg-stone-100 border border-gray-300 rounded-lg shadow-sm overflow-hidden"
               >
                 <div className="p-4 sm:p-6 borer-b border-gray-200">
                   <div className="flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center mb-4">
                     <div>
                       <p className="text-sm text-gray-600 mb-1 font-bold">{number}</p>
-                      <p className=" text-sm  break-all">{order.orderNumber}</p>
+                      <p className="text-sm  break-all">{order.orderNumber}</p>
                     </div>
                     <div className="sm:text-right">
                       <p className="text-sm text-gray-600 mb-1">{date}</p>
@@ -69,6 +69,7 @@ function Orders({ orders, ordersText }: OrdersProps) {
                       </p>
                     </div>
                   </div>
+                  {/* Discount if applied */}
                   {order.discountAmount ? (
                     <div className="mt-4 p-3 sm:p-4 bg-red-50 rounded-lg">
                       <p className="text-red-600 font-medium mb-1 text-sm sm:text-base">
@@ -86,39 +87,37 @@ function Orders({ orders, ordersText }: OrdersProps) {
                 </div>
                 <div className="px-4 py-3 sm:px-6 sm:py-4">
                   <p className="text-sm font-semibold text-gray-600 mb-3 sm:mb-4">{items}</p>
-                  <div className="space-y-3 sm:space-y-4">
-                    {order.products?.map((product) => (
-                      <div
-                        key={product.size! + product.product?._id}
-                        className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 py-2 border-b last:border-b-0"
-                      >
-                        <div className="flex items-center gap-3 sm:gap-4">
-                          {product.product?.images && (
-                            <div className="relative h-14 w-14 sm:h-16 flex-shrink-0 rounded-md overflow-hidden">
-                              <Image
-                                src={imageUrl(product.product.images[0]).url()}
-                                alt={
-                                  product.product?.[`name_${lang}`] ??
-                                  product.product?.[`name_${DEFAULT_LANGUAGE}`] ??
-                                  ""
-                                }
-                                className="object-cover"
-                                fill
-                              />
-                            </div>
-                          )}
-                          <div>
-                            <p className="font-medium text-sm sm:text-base">
-                              {product.product?.[`name_${lang}`] ??
+                  {order.products?.map((product) => (
+                    <div
+                      key={product.size! + product.product?._id}
+                      className="py-2 border-b last:border-b-0"
+                    >
+                      <div className="flex w-full items-center gap-3">
+                        {product.product?.images && (
+                          <div className="relative w-16 h-16">
+                            <Image
+                              src={imageUrl(product.product.images[0]).url()}
+                              alt={
+                                product.product?.[`name_${lang}`] ??
                                 product.product?.[`name_${DEFAULT_LANGUAGE}`] ??
-                                "Unknown product"}
-                            </p>
-                            <p>
-                              {product.quantity ?? "N/A"}x {product.size}
-                            </p>
+                                ""
+                              }
+                              className="object-cover"
+                              fill
+                            />
                           </div>
+                        )}
+                        <div>
+                          <p className="font-medium text-sm sm:text-base">
+                            {product.product?.[`name_${lang}`] ??
+                              product.product?.[`name_${DEFAULT_LANGUAGE}`] ??
+                              "Unknown product"}
+                          </p>
+                          <p>
+                            {product.quantity ?? "N/A"}x {product.size}
+                          </p>
                         </div>
-                        <p className="font-medium text-right">
+                        <p className="font-medium grow text-right">
                           {product.product?.price && product.quantity
                             ? formatCurrency(
                                 product.product.price * product.quantity,
@@ -127,8 +126,8 @@ function Orders({ orders, ordersText }: OrdersProps) {
                             : "N/A"}
                         </p>
                       </div>
-                    ))}
-                  </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             ))}
