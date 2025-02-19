@@ -91,10 +91,16 @@ const useBasketStore = create<BasketState>()(
             const dbProduct: Product | undefined = products.find(
               (prod) => prod._id === item.product._id
             );
-            if (!dbProduct) return false;
+            if (!dbProduct) {
+              set({ basketReduced: true });
+              return false;
+            }
             const availableStock = dbProduct[`stock${item.size}`];
 
-            if (availableStock < 1) return false;
+            if (availableStock < 1) {
+              set({ basketReduced: true });
+              return false;
+            }
             if (item.quantity > availableStock) {
               set({ basketReduced: true });
               item.quantity = availableStock;
