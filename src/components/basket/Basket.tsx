@@ -88,7 +88,7 @@ const Basket = ({ basketText, ordersText, products }: BasketProps) => {
       }}
     >
       <div className="w-full h-full px-4 flex flex-col gap-6 bg-gradient-to-bl from-white/95 to-white/90 shadow-[inset_0_3px_0_rgba(128,128,128,0.4)]">
-        <h2 className="text-3xl text-center py-6 mb-6 border-b border-black/80">{basket}</h2>
+        <h2 className="text-3xl text-center py-7 mb-6 border-b border-black/80">{basket}</h2>
         <div
           className="flex flex-col gap-8 overflow-scroll no-scrollbar"
           style={{ paddingBottom: bottomRef.current?.offsetHeight ?? 0, marginBottom: "16px" }}
