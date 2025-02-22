@@ -5,10 +5,12 @@ import { arrayFromNewLines } from "@/utils/stringUtils";
 
 interface AboutProps {
   aboutText: Language[];
+  examplesText: Language[];
 }
 
-const About = ({ aboutText }: AboutProps) => {
+const About = ({ aboutText, examplesText }: AboutProps) => {
   const about = useText(aboutText, "chap", "chapters");
+  const examples = useText(examplesText, "exampleTitle", "chapters");
 
   return about?.length ? (
     <div className="container-main w-full px-2 sm:px-0">
@@ -24,6 +26,19 @@ const About = ({ aboutText }: AboutProps) => {
             </div>
           )
         )}
+        <div className="space-y-12">
+          {examples?.length
+            ? examples.map((ex, index) => (
+                <div key={index} className="space-y-4">
+                  <h2 className="font-semibold text-lg">{ex}</h2>
+                  <video controls className="w-full" muted>
+                    <source src={`/example_${index + 1}.mp4`} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+              ))
+            : null}
+        </div>
       </div>
     </div>
   ) : null;
