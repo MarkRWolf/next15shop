@@ -11,7 +11,7 @@ import useBasketStore from "@/store/basketStore";
 import useLangStore from "@/store/langStore";
 import useText from "@/hooks/useText";
 import QuantityControls from "./QuantityControls";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 
 interface BasketProps {
@@ -32,6 +32,8 @@ const Basket = ({ basketText, ordersText, products }: BasketProps) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const basket = useText(basketText, "basket", "single");
+  const cardNr = useText(basketText, "cardNr", "single");
+  const atCheckout = useText(basketText, "atCheckout", "single");
   const summary = useText(basketText, "summary", "single");
   const items = useText(basketText, "items", "single");
   const total = useText(basketText, "total", "single");
@@ -88,51 +90,70 @@ const Basket = ({ basketText, ordersText, products }: BasketProps) => {
       }}
     >
       <div className="w-full h-full px-4 flex flex-col gap-6 bg-gradient-to-bl from-white/95 to-white/90 shadow-[inset_0_3px_0_rgba(128,128,128,0.4)]">
-        <h2 className="text-3xl text-center py-7 mb-6 border-b border-black/80">{basket}</h2>
+        <div className="text-center py-7 mb-6 border-b border-black/80">
+          <h2 className="text-3xl">{basket}</h2>
+          <p>{cardNr}</p>
+          <p className="font-semibold">4242 4242 4242 4242</p>
+          <p>{atCheckout}</p>
+        </div>
         <div
           className="flex flex-col gap-8 overflow-scroll no-scrollbar"
           style={{ paddingBottom: bottomRef.current?.offsetHeight ?? 0, marginBottom: "16px" }}
         >
-          {basketItems.length ? (
-            basketItems.map((item) => {
-              const dbProduct = products.find((product) => product._id === item.product._id)!;
-              return (
-                <div
-                  key={item.size + item.product._id}
-                  className="flex h-28 items-stretch justify-between"
-                >
-                  <NextImage
-                    src={imageUrl(item.product.images[0]).url()}
-                    alt={
-                      item.product[`name_${lang}`] ||
-                      item.product[`name_${DEFAULT_LANGUAGE}`] ||
-                      "Product image"
-                    }
-                    className="h-full object-contain rounded cursor-pointer"
-                    width={96}
-                    height={96}
-                    onClick={() =>
-                      router.push(
-                        `/products/${item?.product?.category?.toLowerCase()}/${item?.product?.slug.current}`
-                      )
-                    }
-                  />
-                  <div className="flex flex-col items-end justify-between">
-                    <h3 className="text-lg sm:text-xl font-semibold truncate">
-                      {item.size}{" "}
-                      {item.product[`name_${lang}`] || item.product[`name_${DEFAULT_LANGUAGE}`]}
-                    </h3>
-                    <p className="text-sm xl:text-lg sm:text-base">
-                      {((item.product.price ?? 0) * item.quantity).toFixed(2)},-
-                    </p>
-                    <QuantityControls item={item} dbProduct={dbProduct} />
-                  </div>
-                </div>
-              );
-            })
-          ) : (
-            <h3 className="text-center text-2xl">{empty}</h3>
-          )}
+          <AnimatePresence>
+            {basketItems.length ? (
+              basketItems.map((item) => {
+                const dbProduct = products.find((product) => product._id === item.product._id)!;
+                return (
+                  <motion.div
+                    key={item.size + item.product._id}
+                    initial={{ x: 350, opacity: 1 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    exit={{ x: 350, opacity: 0 }}
+                    transition={{
+                      duration: 0.4,
+                      ease: [0, 0.71, 0.2, 1.01],
+                    }}
+                    style={{
+                      display: "flex",
+                      height: "7rem",
+                      alignItems: "stretch",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <NextImage
+                      src={imageUrl(item.product.images[0]).url()}
+                      alt={
+                        item.product[`name_${lang}`] ||
+                        item.product[`name_${DEFAULT_LANGUAGE}`] ||
+                        "Product image"
+                      }
+                      className="h-full object-contain rounded cursor-pointer"
+                      width={96}
+                      height={96}
+                      onClick={() =>
+                        router.push(
+                          `/products/${item?.product?.category?.toLowerCase()}/${item?.product?.slug.current}`
+                        )
+                      }
+                    />
+                    <div className="flex flex-col items-end justify-between">
+                      <h3 className="text-lg sm:text-xl font-semibold truncate">
+                        {item.size}{" "}
+                        {item.product[`name_${lang}`] || item.product[`name_${DEFAULT_LANGUAGE}`]}
+                      </h3>
+                      <p className="text-sm xl:text-lg sm:text-base">
+                        {((item.product.price ?? 0) * item.quantity).toFixed(2)},-
+                      </p>
+                      <QuantityControls item={item} dbProduct={dbProduct} />
+                    </div>
+                  </motion.div>
+                );
+              })
+            ) : (
+              <h3 className="text-center text-2xl">{empty}</h3>
+            )}
+          </AnimatePresence>
         </div>
       </div>
       <div
