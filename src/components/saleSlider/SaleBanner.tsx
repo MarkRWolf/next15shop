@@ -23,6 +23,7 @@ const SaleBanner = ({ sale, salesText }: { sale: Sale; salesText: Language[] }) 
           className={`object-cover w-full h-full`}
           src={imageUrl(sale.image).url()}
           alt={title ?? "Product Image"}
+          priority
           width={1920}
           height={1080}
           quality={65}

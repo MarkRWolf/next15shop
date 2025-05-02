@@ -20,6 +20,7 @@ const HeroBanner = ({ hero }: { hero: Hero }) => {
           className={`object-cover w-full h-full`}
           src={imageUrl(hero.image).url()}
           alt={title ?? "Product Image"}
+          priority
           width={1920}
           height={1080}
         />
