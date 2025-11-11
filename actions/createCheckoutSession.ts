@@ -49,8 +49,8 @@ export const createCheckoutSession = async (
       metadata,
       mode: "payment",
       allow_promotion_codes: true,
-      success_url: `${process.env.NEXT_PUBLIC_BASE_URL ? process.env.VERCEL_URL : `https://next15shop.vercel.app`}/success?session_id={CHECKOUT_SESSION_ID}&orderNumber=${metadata.orderNumber}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL ? process.env.VERCEL_URL : `https://next15shop.vercel.app`}/`,
+      success_url: `${process.env.NEXT_PUBLIC_BASE_URL ?? `https://next15shop.vercel.app`}/success?session_id={CHECKOUT_SESSION_ID}&orderNumber=${metadata.orderNumber}`,
+      cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL ?? `https://next15shop.vercel.app`}/`,
       line_items: items.map((item) => ({
         price_data: {
           currency: "dkk",
